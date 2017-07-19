@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.stannytestobject.activity.TableActivity">
+
+    <com.zx.zxutils.views.TableView.ZXTableView
+        android:layout_width="match_parent"
+        android:id="@+id/zxTv_table"
+        android:layout_height="wrap_content">
+
+    </com.zx.zxutils.views.TableView.ZXTableView>
+
+</RelativeLayout>

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_unzip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="解压zip"/>
+
+            <com.zx.zxutils.views.BubSeekBar.ZXSeekBar
+                android:id="@+id/sb_bub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_openBubbleLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="bubble测试"/>
+
+            <ImageView
+                android:id="@+id/iv_iamgeloader"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_mac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_testMac2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mac地址2"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_testMac1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mac地址1"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_testPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="网络测试-post"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_testGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="网络测试-get"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/pb_upload"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/btn_upload_start"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="开始up"/>
+
+                <Button
+                    android:id="@+id/btn_upload_cancel"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="取消"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/pb_down"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/btn_down_start"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="开始down"/>
+
+                <Button
+                    android:id="@+id/btn_down_pause"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="暂停"/>
+
+                <Button
+                    android:id="@+id/btn_down_cancel"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="取消"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_testStopService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="服务测试-stop"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_testStartService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="服务测试-start"/>
+
+            <Button
+                android:id="@+id/btn_openSRLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="下拉刷新view"/>
+
+            <com.zx.zxutils.views.ZXSpinner
+                android:id="@+id/sp_myspinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_openBroadCast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="广播工具测试"/>
+
+
+            <Button
+                android:id="@+id/btn_openEdittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="滑动删除测试"/>
+
+            <Button
+                android:id="@+id/btn_openSliding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="侧边栏测试"/>
+
+            <Button
+                android:id="@+id/btn_openPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="线程池暂停与继续"/>
+
+            <Button
+                android:id="@+id/btn_openThread"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="线程池测试"/>
+
+            <Button
+                android:id="@+id/btn_openTable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="表格"/>
+
+            <Button
+                android:id="@+id/btn_openFloat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="顶部悬浮ScrollView"/>
+
+            <Button
+                android:id="@+id/btn_openChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="图表chart"/>
+
+            <Button
+                android:id="@+id/btn_openTabLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="自定义tablayout"/>
+
+            <com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView
+                android:id="@+id/mprv_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
+
+            <ImageView
+                android:id="@+id/btn_openAnimTest"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/test"/>
+
+            <Button
+                android:id="@+id/btn_openShortCutIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="系统工具测试"/>
+
+            <Button
+                android:id="@+id/btn_openDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="时间测试"/>
+
+            <Button
+                android:id="@+id/btn_openbitmap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="圆形bitmap"/>
+
+            <Button
+                android:id="@+id/btn_openSharedPrefrences"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="sharedpreferences测试"/>
+
+            <Button
+                android:id="@+id/btn_openCustomNotify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="自定义notify"/>
+
+            <Button
+                android:id="@+id/btn_openprogressNotify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="进度notify"/>
+
+            <Button
+                android:id="@+id/btn_openMessageNotify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="大图片notify"/>
+
+            <Button
+                android:id="@+id/btn_openSingleLineNotify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="多条notify"/>
+
+            <Button
+                android:id="@+id/btn_openLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="展示log"/>
+
+            <Button
+                android:id="@+id/btn_openSnackBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开snackbar"/>
+
+            <Button
+                android:id="@+id/btn_openImgToast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开带图片的Toast"/>
+
+            <Button
+                android:id="@+id/btn_openToast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开简单Toast"/>
+
+            <Button
+                android:id="@+id/btn_openSimpleDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开普通loaddialog"/>
+
+            <Button
+                android:id="@+id/btn_openProgressDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开进度loaddialog"/>
+
+            <Button
+                android:id="@+id/btn_openInfoDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开信息dialog"/>
+
+            <Button
+                android:id="@+id/btn_openyesnoDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开确认dialog"/>
+
+            <Button
+                android:id="@+id/btn_openOtherBtnDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开中性dialog"/>
+
+            <Button
+                android:id="@+id/btn_openCheckListDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开列表选择dialog"/>
+
+            <Button
+                android:id="@+id/btn_openListDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开列表dialog"/>
+
+            <Button
+                android:id="@+id/btn_openViewDilog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="打开Viewdialog"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coorContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
