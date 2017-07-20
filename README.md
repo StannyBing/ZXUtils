@@ -70,6 +70,18 @@ A commonly used tool library for Android<br>
 　　ZXStatusBarCompat 透明状态栏<br>
   <br>
 ### 5.使用方法<br>
+
+    先导入依赖包
+    ···
+    compile 'com.github.StannyBing:ZXUtils:1.0'
+    ···
+    注意需要在项目的build里面添加以下代码
+    ···
+    maven {
+            url "https://jitpack.io"
+        }
+    ···
+
 　　在你的Application的onCreate中添加以下代码<br>
 　　`ZXApp.init(this, true);`<br>
 　　第二个参数是指是否为debug模式，如果为false，将停止工具类中的log输出，同时开始线程崩溃处理工具<br>
