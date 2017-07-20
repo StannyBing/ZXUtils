@@ -76,8 +76,9 @@ A commonly used tool library for Android<br>
     compile 'com.github.StannyBing:ZXUtils:1.0'
     ···
     注意需要在项目的build里面添加以下代码
+    
     ···
-    maven {
+    maven {
             url "https://jitpack.io"
         }
     ···
