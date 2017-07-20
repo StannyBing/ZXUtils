@@ -71,11 +71,11 @@ A commonly used tool library for Android<br>
   <br>
 ### 5.使用方法<br>
 
-    先导入依赖包
+    先导入依赖包<br>
     ···
     compile 'com.github.StannyBing:ZXUtils:1.0'
     ···
-    注意需要在项目的build里面添加以下代码
+    注意需要在项目的build里面添加以下代码<br>
     
     ···
     maven {
