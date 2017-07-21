@@ -29,6 +29,7 @@ public class ZXSharedPrefUtil {
 
     /**
      * 插入任意类型
+     *
      * @param key
      * @param value
      */
@@ -64,7 +65,11 @@ public class ZXSharedPrefUtil {
      * @return
      */
     public String getString(String key) {
-        return preferences.getString(key, "");
+        return getString(key, "");
+    }
+
+    public String getString(String key, String defaultVal) {
+        return preferences.getString(key, defaultVal);
     }
 
     /**
@@ -79,13 +84,17 @@ public class ZXSharedPrefUtil {
     }
 
     /**
-     * 取出String类型参数
+     * 取出int类型参数
      *
      * @param key key值
      * @return
      */
     public int getInt(String key) {
-        return preferences.getInt(key, 0);
+        return getInt(key, 0);
+    }
+
+    public int getInt(String key, int defaultVal) {
+        return preferences.getInt(key, defaultVal);
     }
 
     /**
@@ -106,7 +115,11 @@ public class ZXSharedPrefUtil {
      * @return
      */
     public boolean getBool(String key) {
-        return preferences.getBoolean(key, false);
+        return getBool(key, false);
+    }
+
+    public boolean getBool(String key, boolean defaultVal) {
+        return preferences.getBoolean(key, defaultVal);
     }
 
     /**
@@ -127,7 +140,11 @@ public class ZXSharedPrefUtil {
      * @return
      */
     public float getFloat(String key) {
-        return preferences.getFloat(key, 0);
+        return getFloat(key, 0);
+    }
+
+    public float getFloat(String key, float defaultVal) {
+        return preferences.getFloat(key, defaultVal);
     }
 
     /**
@@ -148,7 +165,11 @@ public class ZXSharedPrefUtil {
      * @return
      */
     public long getLong(String key) {
-        return preferences.getLong(key, 0);
+        return getLong(key, 0);
+    }
+
+    public long getLong(String key, long defaultVal) {
+        return preferences.getLong(key, defaultVal);
     }
 
     /**
