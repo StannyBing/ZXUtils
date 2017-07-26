@@ -249,8 +249,10 @@ public class ZXDialogUtil {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setItems(itemName, itemClickListener);
-        buider.setPositiveButton("确定", yesListener);
-        buider.setNegativeButton("取消", null);
+        if (yesListener != null) {
+            buider.setPositiveButton("确定", yesListener);
+            buider.setNegativeButton("取消", null);
+        }
         dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
     }
@@ -277,11 +279,7 @@ public class ZXDialogUtil {
      * @param itemClickListener item点击事件
      */
     public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
-        AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
-        buider.setItems(itemName, itemClickListener);
-        dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        showListDialog(context, title, itemName, itemClickListener, null);
     }
 
     /**
