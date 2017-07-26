@@ -104,12 +104,12 @@ public class ZXDialogUtil {
             handler.post(new Runnable() {
                 public void run() {
                     if (null != loadingDialog && loadingDialog.isShowing()) {
-                        try {
+//                        try {
                             loadingDialog.dismiss();
                             loadingDialog = null;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 }
             });
