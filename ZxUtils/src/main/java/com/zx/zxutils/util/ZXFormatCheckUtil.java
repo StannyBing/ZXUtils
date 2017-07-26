@@ -114,6 +114,24 @@ public class ZXFormatCheckUtil {
     }
 
     /**
+     * 检测是否包含中文
+     *
+     * @param name
+     * @return
+     */
+    public static boolean isContainsChinese(String name) {
+        boolean res = false;
+        char[] cTemp = name.toCharArray();
+        for (int i = 0; i < name.length(); i++) {
+            if (isChinese(cTemp[i])) {
+                res = true;
+                break;
+            }
+        }
+        return res;
+    }
+
+    /**
      * 判断是否是银行卡号
      *
      * @param cardId
