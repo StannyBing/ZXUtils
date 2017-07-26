@@ -106,6 +106,7 @@ public class ZXDialogUtil {
                     if (null != loadingDialog && loadingDialog.isShowing()) {
                         try {
                             loadingDialog.dismiss();
+                            loadingDialog = null;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
