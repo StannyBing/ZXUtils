@@ -28,6 +28,9 @@ public class ZXDialogUtil {
      */
     public static ProgressDialog showLoadingDialog(Context context, String message) {
         try {
+            if (loadingDialog.isShowing()){
+                loadingDialog.dismiss();
+            }
             if (hasProgress == true || loadingDialog == null) {
                 showSimple(context, message);
             } else {
@@ -58,6 +61,9 @@ public class ZXDialogUtil {
      */
     public static ProgressDialog showLoadingDialog(Context context, String message, int progress) {
         try {
+            if (loadingDialog.isShowing()){
+                loadingDialog.dismiss();
+            }
             if (hasProgress == false || loadingDialog == null) {
                 showProgress(context, message, progress);
             } else {
@@ -104,12 +110,11 @@ public class ZXDialogUtil {
             handler.post(new Runnable() {
                 public void run() {
                     if (null != loadingDialog && loadingDialog.isShowing()) {
-//                        try {
+                        try {
                             loadingDialog.dismiss();
-                            loadingDialog = null;
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });

@@ -393,17 +393,19 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 });
                 break;
             case R.id.btn_openSimpleDilog://简单dialog
-                if (ZXDialogUtil.isLoadingDialogShow()) {
-                    ZXDialogUtil.dismissLoadingDialog();
-                } else {
-                    ZXDialogUtil.showLoadingDialog(this, "正在加载中");
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            ZXDialogUtil.dismissLoadingDialog();
-                        }
-                    }, 2000);
-                }
+//                if (ZXDialogUtil.isLoadingDialogShow()) {
+//                    ZXDialogUtil.dismissLoadingDialog();
+//                } else {
+//                    ZXDialogUtil.showLoadingDialog(this, "正在加载中");
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            ZXDialogUtil.dismissLoadingDialog();
+//                        }
+//                    }, 2000);
+//                }
+                ZXDialogUtil.showLoadingDialog(this,"无进度条");
+                ZXDialogUtil.showLoadingDialog(this, "有进度条",30);
                 break;
             case R.id.btn_openProgressDilog://进度条dialog
                 if (ZXDialogUtil.isLoadingDialogShow()) {
