@@ -267,7 +267,7 @@ public class ZXDialogUtil {
      * @param yesListener       确定按钮点击事件
      */
     public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
-        showListDialog(context, title, (String[]) itemName.toArray(), itemClickListener, yesListener);
+        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener, yesListener);
     }
 
     /**
@@ -291,7 +291,7 @@ public class ZXDialogUtil {
      * @param itemClickListener item点击事件
      */
     public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
-        showListDialog(context, title, (String[]) itemName.toArray(), itemClickListener);
+        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener);
     }
 
     /**
