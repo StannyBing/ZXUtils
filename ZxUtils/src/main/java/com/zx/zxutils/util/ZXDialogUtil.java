@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import java.util.List;
+
 /**
  * Created by Xiangb on 2017/3/24.
  * 功能：专用于dialog的工具类
@@ -28,7 +30,7 @@ public class ZXDialogUtil {
      */
     public static ProgressDialog showLoadingDialog(Context context, String message) {
         try {
-            if (loadingDialog.isShowing()){
+            if (loadingDialog.isShowing()) {
                 loadingDialog.dismiss();
             }
             if (hasProgress == true || loadingDialog == null) {
@@ -61,7 +63,7 @@ public class ZXDialogUtil {
      */
     public static ProgressDialog showLoadingDialog(Context context, String message, int progress) {
         try {
-            if (loadingDialog.isShowing()){
+            if (loadingDialog.isShowing()) {
                 loadingDialog.dismiss();
             }
             if (hasProgress == false || loadingDialog == null) {
@@ -254,6 +256,19 @@ public class ZXDialogUtil {
     }
 
     /**
+     * 带list的勾选事件，不提供确认取消按钮的文字
+     *
+     * @param context           上下文
+     * @param title             标题
+     * @param itemName          item项
+     * @param itemClickListener item点击事件
+     * @param yesListener       确定按钮点击事件
+     */
+    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        showListDialog(context, title, (String[]) itemName.toArray(), itemClickListener, yesListener);
+    }
+
+    /**
      * 带list的勾选事件，不提供按钮
      *
      * @param context           上下文
@@ -267,6 +282,18 @@ public class ZXDialogUtil {
         buider.setItems(itemName, itemClickListener);
         dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
+    }
+
+    /**
+     * 带list的勾选事件，不提供按钮
+     *
+     * @param context           上下文
+     * @param title             标题
+     * @param itemName          item项
+     * @param itemClickListener item点击事件
+     */
+    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
+        showListDialog(context, title, (String[]) itemName.toArray(), itemClickListener);
     }
 
     /**
