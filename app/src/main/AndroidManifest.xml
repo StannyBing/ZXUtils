@@ -66,11 +66,11 @@
         </activity>
         <activity android:name=".activity.RecylerDeleteActivity">
         </activity>
-        <activity android:name=".activity.CodeTestActivity">
-        </activity>
         <activity android:name=".activity.SwipeRefreshRecylerActivity">
         </activity>
         <activity android:name=".activity.IRecycleActivity">
+        </activity>
+        <activity android:name=".kotlin.KotlinCodeTestActivty">
         </activity>
     </application>
 

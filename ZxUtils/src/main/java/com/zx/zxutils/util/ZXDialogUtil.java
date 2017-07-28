@@ -251,7 +251,9 @@ public class ZXDialogUtil {
         buider.setItems(itemName, itemClickListener);
         if (yesListener != null) {
             buider.setPositiveButton("确定", yesListener);
-            buider.setNegativeButton("取消", null);
+//            buider.setNegativeButton("取消", null);
+        } else {
+            buider.setPositiveButton("确定", null);
         }
         dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     useLibrary 'org.apache.http.legacy'
@@ -41,4 +43,8 @@ dependencies {
     //    compile 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-5'
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
