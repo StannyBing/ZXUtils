@@ -36,6 +36,7 @@ A commonly used tool library for Android<br>
 　　ZXUniqueIdUtil 唯一码工具类<br>
 　　ZXUnZipRarUtil 解压工具<br>
 　　ZXWindowUtil 窗口工具类<br>
+　　ZXRecordUtil 录音及播放类<br>
 <br>
 ### 2.网络请求框架：<br>
 　　网络请求进行了深度封装，使用时新建一个网络请求类继承ZXHttpApi，实现<br>
