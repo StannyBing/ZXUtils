@@ -49,6 +49,9 @@ import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.util.ZXUnZipRarUtil;
 import com.zx.zxutils.views.BubSeekBar.ZXSeekBar;
 import com.zx.zxutils.views.BubbleView.ZXBubbleView;
+import com.zx.zxutils.views.PhotoPicker.PhotoPickUtils;
+import com.zx.zxutils.views.PhotoPicker.ZXPhotoPreview;
+import com.zx.zxutils.views.PhotoPicker.listener.OnPhotoItemClickListener;
 import com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView;
 import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
 import com.zx.zxutils.views.ZXSpinner;
@@ -74,6 +77,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
     private ZXSeekBar sb_bub;
     private TextView tvmac;
     private ImageView ivLoader;
+    private ArrayList<String> photoList = new ArrayList<>();
     private ApiData downloadApi = new ApiData(3);
     private ApiData uploadApi = new ApiData(2);
     private ApiData loginApi1 = new ApiData(1);
@@ -146,13 +150,25 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
         mSpinner = (ZXSpinner) findViewById(R.id.sp_myspinner);
 
         //图片选择器
-        final ArrayList<String> photoList = new ArrayList<>();
         photoList.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3563933861,850005699&fm=117&gp=0.jpg");
         photoList.add("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=40913571,471421714&fm=58");
         photoList.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1735278598,1624226652&fm=117&gp=0.jpg");
         photoList.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=468291096,4071036468&fm=117&gp=0.jpg");
         photoList.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3390905199,613944351&fm=117&gp=0.jpg");
-        mprv_photo.init(this, ZXPhotoPickerView.ACTION_SELECT, photoList);
+        mprv_photo.init(this, ZXPhotoPickerView.ACTION_SELECT, photoList, new OnPhotoItemClickListener() {
+            @Override
+            public void onPhotoItemClick(int position) {
+                if (position == photoList.size()) {
+                    PhotoPickUtils.startPick(ModuleTestActivity.this, false, 9, photoList);
+                } else {
+                    ZXPhotoPreview.builder()
+                            .setPhotos(photoList)
+                            .setAction(ZXPhotoPickerView.ACTION_SELECT)
+                            .setCurrentItem(position)
+                            .start(ModuleTestActivity.this);
+                }
+            }
+        });
 //        mprv_photo.init(this, ZXPhotoPickerView.ACTION_SELECT, null);
 
         //广播
@@ -347,7 +363,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 bit = ZXBitmapUtil.getRoundBitmap(bit, 40);
                 ImageView ima = new ImageView(this);
                 ima.setImageBitmap(bit);
-                ZXDialogUtil.showCustomViewDialog(this, "测试", "测试消息", ima, null);
+                ZXDialogUtil.showCustomViewDialog(this, "测试", ima, null);
                 break;
             case R.id.btn_openSharedPrefrences://共享参数
                 ZXSharedPrefUtil sharedPrefUtil = new ZXSharedPrefUtil();
@@ -404,8 +420,8 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
 //                        }
 //                    }, 2000);
 //                }
-                ZXDialogUtil.showLoadingDialog(this,"无进度条");
-                ZXDialogUtil.showLoadingDialog(this, "有进度条",30);
+                ZXDialogUtil.showLoadingDialog(this, "无进度条");
+                ZXDialogUtil.showLoadingDialog(this, "有进度条", 30);
                 break;
             case R.id.btn_openProgressDilog://进度条dialog
                 if (ZXDialogUtil.isLoadingDialogShow()) {
@@ -452,7 +468,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                         Toast.makeText(ModuleTestActivity.this, "点击viewl", Toast.LENGTH_SHORT).show();
                     }
                 });
-                ZXDialogUtil.showCustomViewDialog(this, "提示", "下面是View", iv, null);
+                ZXDialogUtil.showCustomViewDialog(this, "提示", iv, null);
                 break;
             case R.id.btn_openToast://toast
                 ZXToastUtil.showToast("123456");

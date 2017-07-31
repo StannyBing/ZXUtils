@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.PhotoPicker.PhotoPickUtils;
 import com.zx.zxutils.views.PhotoPicker.ZXPhotoPreview;
 import com.zx.zxutils.views.PhotoPicker.listener.OnDeleteListener;
+import com.zx.zxutils.views.PhotoPicker.listener.OnPhotoItemClickListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     private ArrayList<String> photoPaths;
     private LayoutInflater inflater;
     private OnDeleteListener deleteListener;
+    private OnPhotoItemClickListener photoItemClickListener;
 
     private Context mContext;
     public int maxNum = 9;
@@ -39,19 +41,15 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     private int action;
 
-
-    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths) {
-        this.photoPaths = photoPaths;
-        this.mContext = mContext;
-        inflater = LayoutInflater.from(mContext);
-        padding = dip2Px(8);
-
-    }
-
-    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths, OnDeleteListener deleteListener) {
+    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths, OnDeleteListener deleteListener, OnPhotoItemClickListener onPhotoItemClickListener) {
         this.photoPaths = photoPaths;
         this.mContext = mContext;
         this.deleteListener = deleteListener;
+        if (onPhotoItemClickListener != null) {
+            photoItemClickListener = onPhotoItemClickListener;
+        } else {
+            photoItemClickListener = defaultListener;
+        }
         inflater = LayoutInflater.from(mContext);
         padding = dip2Px(8);
     }
@@ -114,16 +112,17 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                         .placeholder(R.mipmap.icon_pic_default)
                         .error(R.mipmap.icon_pic_default)
                         .into(holder.ivPhoto);
-                holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (photoPaths != null && photoPaths.size() >= maxNum) {
-                            Toast.makeText(mContext, "图片数已到达上限", Toast.LENGTH_SHORT).show();
-                        } else {
-                            PhotoPickUtils.startPick((Activity) mContext, false, 9, photoPaths);
-                        }
-                    }
-                });
+//                holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        photoItemClickListener.onPhotoItemClick(ZXPhotoPickerView.ACTION_SELECT, position);
+//                        if (photoPaths != null && photoPaths.size() >= maxNum) {
+//                            Toast.makeText(mContext, "图片数已到达上限", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            PhotoPickUtils.startPick((Activity) mContext, false, 9, photoPaths);
+//                        }
+//                    }
+//                });
 
                 holder.deleteBtn.setVisibility(View.GONE);
 
@@ -154,16 +153,16 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                     }
                 });
 
-                holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ZXPhotoPreview.builder()
-                                .setPhotos(photoPaths)
-                                .setAction(action)
-                                .setCurrentItem(position)
-                                .start((Activity) mContext);
-                    }
-                });
+//                holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        ZXPhotoPreview.builder()
+//                                .setPhotos(photoPaths)
+//                                .setAction(action)
+//                                .setCurrentItem(position)
+//                                .start((Activity) mContext);
+//                    }
+//                });
             }
         } else if (action == ZXPhotoPickerView.ACTION_ONLY_SHOW) {
             //Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
@@ -178,17 +177,17 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                     .error(R.mipmap.__picker_ic_broken_image_black_48dp)
                     .into(holder.ivPhoto);
 
-            holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    ZXPhotoPreview.builder()
-                            .setPhotos(photoPaths)
-                            .setAction(action)
-                            .setCurrentItem(position)
-                            .start((Activity) mContext);
-                }
-            });
+//            holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+////                    ZXPhotoPreview.builder()
+////                            .setPhotos(photoPaths)
+////                            .setAction(action)
+////                            .setCurrentItem(position)
+////                            .start((Activity) mContext);
+//                }
+//            });
         } else if (action == ZXPhotoPickerView.ACTION_DELETE) {
 //Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
             //Uri uri = Uri.parse(photoPaths.get(position));
@@ -208,22 +207,51 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                     deleteListener.OnDetele(position);
                 }
             });
-            holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    ZXPhotoPreview.builder()
-                            .setPhotos(photoPaths)
-                            .setAction(action)
-                            .setCurrentItem(position)
-                            .start((Activity) mContext);
-                }
-            });
+//            holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    ZXPhotoPreview.builder()
+//                            .setPhotos(photoPaths)
+//                            .setAction(action)
+//                            .setCurrentItem(position)
+//                            .start((Activity) mContext);
+//                }
+//            });
         }
-
+        holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photoItemClickListener.onPhotoItemClick(position);
+//                ZXPhotoPreview.builder()
+//                        .setPhotos(photoPaths)
+//                        .setAction(action)
+//                        .setCurrentItem(position)
+//                        .start((Activity) mContext);
+            }
+        });
 
     }
 
+
+    private OnPhotoItemClickListener defaultListener = new OnPhotoItemClickListener() {
+        @Override
+        public void onPhotoItemClick(int position) {
+            if (action == ZXPhotoPickerView.ACTION_SELECT && position == getItemCount() - 1) {
+                if (photoPaths != null && photoPaths.size() >= maxNum) {
+                    ZXToastUtil.showToast("图片数已到达上限");
+                } else {
+                    PhotoPickUtils.startPick((Activity) mContext, false, 9, photoPaths);
+                }
+            } else {
+                ZXPhotoPreview.builder()
+                        .setPhotos(photoPaths)
+                        .setAction(action)
+                        .setCurrentItem(position)
+                        .start((Activity) mContext);
+            }
+        }
+    };
 
     @Override
     public int getItemCount() {
@@ -248,5 +276,4 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             deleteBtn.setVisibility(View.GONE);
         }
     }
-
 }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.zx.zxutils.views.PhotoPicker.PhotoPickUtils;
 import com.zx.zxutils.views.PhotoPicker.listener.OnDeleteListener;
+import com.zx.zxutils.views.PhotoPicker.listener.OnPhotoItemClickListener;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -97,30 +98,18 @@ public class ZXPhotoPickerView extends FrameLayout {
     }
 
     public void init(Activity context, @MultiPicAction int action, ArrayList<String> photos) {
-        this.action = action;
-        if (action == ZXPhotoPickerView.ACTION_ONLY_SHOW) {//当只用作显示图片时,一行显示3张
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
-        }
+        init(context, action, photos, null, null);
+    }
 
-        if (photos == null) {
-            selectedPhotos = new ArrayList<>();
-        } else {
-            selectedPhotos = photos;
-        }
-
-        this.action = action;
-//        if (photos != null && photos.size() > 0) {
-//            selectedPhotos.addAll(photos);
-//        }
-        photoAdapter = new PhotoAdapter(context, selectedPhotos);
-        photoAdapter.maxNum = maxNum;
-        photoAdapter.setAction(action);
-        recyclerView.setAdapter(photoAdapter);
-        //recyclerView.setLayoutFrozen(true);
-
+    public void init(Activity context, @MultiPicAction int action, ArrayList<String> photos, OnPhotoItemClickListener onPhotoItemClickListener) {
+        init(context, action, photos, null, onPhotoItemClickListener);
     }
 
     public void init(Activity context, @MultiPicAction int action, ArrayList<String> photos, OnDeleteListener deleteListener) {
+        init(context, action, photos, deleteListener, null);
+    }
+
+    public void init(Activity context, @MultiPicAction int action, ArrayList<String> photos, OnDeleteListener deleteListener, OnPhotoItemClickListener onPhotoItemClickListener) {
         this.action = action;
         if (action == ZXPhotoPickerView.ACTION_ONLY_SHOW) {//当只用作显示图片时,一行显示3张
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
@@ -137,7 +126,7 @@ public class ZXPhotoPickerView extends FrameLayout {
 //            selectedPhotos.addAll(photos);
 //        }
 //        if (action == ZXPhotoPickerView.ACTION_DELETE) {
-        photoAdapter = new PhotoAdapter(context, selectedPhotos, deleteListener);
+        photoAdapter = new PhotoAdapter(context, selectedPhotos, deleteListener, onPhotoItemClickListener);
         photoAdapter.maxNum = maxNum;
 // } else {
 //            photoAdapter = new PhotoAdapter(context, selectedPhotos);

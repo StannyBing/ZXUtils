@@ -1,7 +1,5 @@
 package com.stannytestobject.kotlin
 
-import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -12,13 +10,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.stannytestobject.R
 import com.stannytestobject.kotlin.KotlinCodeTestActivty.MyAdapter.KHolder
+import com.zx.zxutils.forutil.ZXRecordListener
 import com.zx.zxutils.other.ZXItemClickSupport
 import com.zx.zxutils.util.ZXRecordUtil
+import com.zx.zxutils.util.ZXSystemUtil
 import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_kotlin_code_test_activty.*
 import java.io.File
 
-class KotlinCodeTestActivty : AppCompatActivity() {
+class KotlinCodeTestActivty : AppCompatActivity(), ZXRecordListener {
+
     var datalist = arrayListOf<MyEntity>()
     var recordUtil = ZXRecordUtil(this)
 
@@ -32,18 +33,31 @@ class KotlinCodeTestActivty : AppCompatActivity() {
     fun initView() {
         rv_records.layoutManager = GridLayoutManager(this, 4)
         rv_records.adapter = MyAdapter(datalist)
+        recordUtil.playMedia("")
         ZXItemClickSupport
                 .addTo(rv_records)
                 .setOnItemClickListener { recyclerView, position, view ->
-                    var uri = Uri.fromFile(datalist[position].file)
-                    MediaPlayer.create(this, uri).start()
+                    recordUtil.playMedia(datalist[position].file)
+//                    var uri = Uri.fromFile(datalist[position].file)
+//                    MediaPlayer.create(this, uri).start()
                 }
         recordUtil.bindView(btn_record)
-        recordUtil.setOnFinishedRecordListener {
-            ZXToastUtil.showToast("地址:" + it.absolutePath)
-            datalist.add(MyEntity(it.name, it))
-            rv_records.adapter.notifyDataSetChanged()
-        }
+        recordUtil.setOnRecordListener(this)
+//        recordUtil.setOnFinishedRecordListener {
+//            ZXToastUtil.showToast("地址:" + it.absolutePath)
+//            datalist.add(MyEntity(it.name, it))
+//            rv_records.adapter.notifyDataSetChanged()
+//        }
+    }
+
+    override fun onInitPath(): String {
+        return ZXSystemUtil.getSDCardPath() + System.currentTimeMillis().toString() + "x.amr"
+    }
+
+    override fun onSuccess(file: File) {
+        ZXToastUtil.showToast("地址:" + file.absolutePath)
+        datalist.add(MyEntity(file.name, file))
+        rv_records.adapter.notifyDataSetChanged()
     }
 
     class MyAdapter(var datalist: ArrayList<MyEntity>) : RecyclerView.Adapter<KHolder>() {
