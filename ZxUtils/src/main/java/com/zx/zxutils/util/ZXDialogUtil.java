@@ -301,17 +301,29 @@ public class ZXDialogUtil {
      *
      * @param context     上下文
      * @param title       标题
-     * @param message     内容
      * @param view        填入的view
      * @param yesListener 确定按钮的点击事件
      */
-    public static void showCustomViewDialog(Context context, String title, String message, View view, @Nullable DialogInterface.OnClickListener yesListener) {
+    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener) {
+        showCustomViewDialog(context, title, view, yesListener, null);
+    }
+
+    /**
+     * 带一个view的dialog，view内部事件处理需要在添加前进行设置
+     *
+     * @param context     上下文
+     * @param title       标题
+     * @param view        填入的view
+     * @param yesListener 确定按钮的点击事件
+     */
+    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
-        buider.setMessage(message);
         buider.setView(view, 20, 10, 20, 10);
         buider.setPositiveButton("确定", yesListener);
-        buider.setNegativeButton("取消", null);
+        if (noListener != null) {
+            buider.setNegativeButton("取消", noListener);
+        }
         dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
     }

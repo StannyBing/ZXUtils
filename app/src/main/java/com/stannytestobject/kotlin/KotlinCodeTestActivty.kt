@@ -1,13 +1,26 @@
 package com.stannytestobject.kotlin
 
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.MotionEvent
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import com.stannytestobject.R
-import com.zx.zxutils.util.ZXLogUtil
+import com.stannytestobject.kotlin.KotlinCodeTestActivty.MyAdapter.KHolder
+import com.zx.zxutils.other.ZXItemClickSupport
+import com.zx.zxutils.util.ZXRecordUtil
+import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_kotlin_code_test_activty.*
+import java.io.File
 
 class KotlinCodeTestActivty : AppCompatActivity() {
+    var datalist = arrayListOf<MyEntity>()
+    var recordUtil = ZXRecordUtil(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,22 +30,43 @@ class KotlinCodeTestActivty : AppCompatActivity() {
     }
 
     fun initView() {
-        btn_openRecord.setOnClickListener {
-            //TODO
-        }
-        btn_startRecord.setOnTouchListener { view, motionEvent ->
-            when (motionEvent.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    ZXLogUtil.loge("按住了")
+        rv_records.layoutManager = GridLayoutManager(this, 4)
+        rv_records.adapter = MyAdapter(datalist)
+        ZXItemClickSupport
+                .addTo(rv_records)
+                .setOnItemClickListener { recyclerView, position, view ->
+                    var uri = Uri.fromFile(datalist[position].file)
+                    MediaPlayer.create(this, uri).start()
                 }
-                MotionEvent.ACTION_UP -> {
-                    ZXLogUtil.loge("松开了")
-                }
-                else -> {
-
-                }
-            }
-            false
+        recordUtil.bindView(btn_record)
+        recordUtil.setOnFinishedRecordListener {
+            ZXToastUtil.showToast("地址:" + it.absolutePath)
+            datalist.add(MyEntity(it.name, it))
+            rv_records.adapter.notifyDataSetChanged()
         }
     }
+
+    class MyAdapter(var datalist: ArrayList<MyEntity>) : RecyclerView.Adapter<KHolder>() {
+
+
+        override fun onBindViewHolder(holder: KHolder, position: Int) {
+            holder.tvTime.text = datalist[position].name
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): KHolder? {
+            var view = LayoutInflater.from(parent!!.context).inflate(R.layout.item_record, parent, false)
+            return KHolder(view)
+        }
+
+        override fun getItemCount(): Int {
+            return datalist.size
+        }
+
+
+        class KHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            var tvTime: TextView = itemView.findViewById(R.id.tv_record_time) as TextView
+        }
+    }
+
+    data class MyEntity(var name: String, var file: File)
 }

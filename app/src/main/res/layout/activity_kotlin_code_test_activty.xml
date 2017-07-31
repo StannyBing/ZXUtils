@@ -19,17 +19,16 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_startRecord"
+                android:id="@+id/btn_record"
+                android:text="自建工具"
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="开始录音"/>
+                android:layout_height="wrap_content"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btn_openRecord"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="播放录音"/>
-
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
     </ScrollView>
