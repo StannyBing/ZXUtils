@@ -63,19 +63,33 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     }
 
     public void refresh(ArrayList<String> photoPaths, boolean preview) {
-        ArrayList<String> httpPath = new ArrayList<>();
+        ArrayList<String> tempList = new ArrayList<>();
+        tempList.addAll(this.photoPaths);
+        this.photoPaths.clear();
+        this.photoPaths.addAll(photoPaths);
         if (!preview) {
-            for (int i = 0; i < this.photoPaths.size(); i++) {
-                if (this.photoPaths.get(i).startsWith("http")) {
-                    httpPath.add(this.photoPaths.get(i));
+            for (int i = 0; i < tempList.size(); i++) {
+                if (tempList.get(i).startsWith("http")) {
+                    if (i > tempList.size() - 1) {
+                        this.photoPaths.add(tempList.get(i));
+                    } else {
+                        this.photoPaths.add(i, tempList.get(i));
+                    }
                 }
             }
         }
-        this.photoPaths.clear();
-        this.photoPaths.addAll(httpPath);
-        if (photoPaths != null && photoPaths.size() > 0) {
-            this.photoPaths.addAll(photoPaths);
-        }
+//        if (!preview) {
+//            for (int i = 0; i < this.photoPaths.size(); i++) {
+//                if (this.photoPaths.get(i).startsWith("http")) {
+//                    httpPath.add(this.photoPaths.get(i));
+//                }
+//            }
+//        }
+//        this.photoPaths.clear();
+//        this.photoPaths.addAll(httpPath);
+//        if (photoPaths != null && photoPaths.size() > 0) {
+//            this.photoPaths.addAll(photoPaths);
+//        }
         notifyDataSetChanged();
     }
 
