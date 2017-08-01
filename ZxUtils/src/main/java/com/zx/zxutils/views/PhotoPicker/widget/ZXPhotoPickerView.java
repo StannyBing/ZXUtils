@@ -49,7 +49,7 @@ public class ZXPhotoPickerView extends FrameLayout {
 
 
     android.support.v7.widget.RecyclerView recyclerView;
-    PhotoAdapter photoAdapter;
+    public PhotoAdapter photoAdapter;
     ArrayList<String> selectedPhotos;
 
     public ZXPhotoPickerView(Context context) {
