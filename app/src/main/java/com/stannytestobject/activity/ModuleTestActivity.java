@@ -447,6 +447,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 ZXDialogUtil.showCheckListDialog(this, "提示", new String[]{"11", "22", "33"}, new boolean[]{false, true, true}, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        ZXDialogUtil.showInfoDialog(ModuleTestActivity.this, "提示", "确定么", null);
                         Toast.makeText(ModuleTestActivity.this, "第" + which + "个" + (isChecked ? "被选中" : "被取消"), Toast.LENGTH_SHORT).show();
                     }
                 }, null);

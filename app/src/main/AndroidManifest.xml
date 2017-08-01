@@ -68,8 +68,6 @@
         </activity>
         <activity android:name=".activity.SwipeRefreshRecylerActivity">
         </activity>
-        <activity android:name=".activity.IRecycleActivity">
-        </activity>
         <activity android:name=".kotlin.KotlinCodeTestActivty">
         </activity>
     </application>

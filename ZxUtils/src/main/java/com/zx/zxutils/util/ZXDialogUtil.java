@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,8 @@ public class ZXDialogUtil {
     private static Handler handler = new Handler();
     private static boolean hasProgress = false;//是否为带进度条的loadingDialog
     private static ProgressDialog loadingDialog;//简单进度dialog，适用于单纯显示正在加载的情况
-    private static Dialog dialog;//用于显示各种信息的dialog
+    //    private static Dialog dialog;//用于显示各种信息的dialog
+    private static List<Dialog> dialogList = new ArrayList<>();
 
     /**
      * 显示简单加载dialog
@@ -131,12 +133,7 @@ public class ZXDialogUtil {
      * @param message 内容
      */
     public static void showInfoDialog(Context context, String title, String message) {
-        AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
-        buider.setMessage(message);
-        buider.setPositiveButton("确定", null);
-        dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        showInfoDialog(context, title, message, null);
     }
 
     /**
@@ -152,8 +149,9 @@ public class ZXDialogUtil {
         buider.setTitle(title);
         buider.setMessage(message);
         buider.setPositiveButton("确定", listener);
-        dialog = buider.show();
+        Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
+        dialogList.add(dialog);
     }
 
     /**
@@ -173,8 +171,9 @@ public class ZXDialogUtil {
         buider.setMessage(message);
         buider.setPositiveButton(yesBtnText, yesListener);
         buider.setNegativeButton(noBtnText, noListener);
-        dialog = buider.show();
+        Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
+        dialogList.add(dialog);
     }
 
     /**
@@ -186,13 +185,7 @@ public class ZXDialogUtil {
      * @param yesListener 确定按钮点击事件
      */
     public static void showYesNoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener yesListener) {
-        AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
-        buider.setMessage(message);
-        buider.setPositiveButton("确定", yesListener);
-        buider.setNegativeButton("取消", null);
-        dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        showYesNoDialog(context, title, message, "确定", "取消", yesListener, null);
     }
 
     /**
@@ -212,8 +205,9 @@ public class ZXDialogUtil {
         buider.setPositiveButton("确定", yesListener);
         buider.setNegativeButton("取消", null);
         buider.setNeutralButton(otherBtnText, otherBtnListener);
-        dialog = buider.show();
+        Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
+        dialogList.add(dialog);
     }
 
     /**
@@ -232,8 +226,9 @@ public class ZXDialogUtil {
         buider.setMultiChoiceItems(itemName, itemCheckStatus, choiceClickListener);
         buider.setPositiveButton("确定", yesListener);
         buider.setNegativeButton("取消", null);
-        dialog = buider.show();
+        Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
+        dialogList.add(dialog);
     }
 
     /**
@@ -255,8 +250,9 @@ public class ZXDialogUtil {
         } else {
             buider.setPositiveButton("确定", null);
         }
-        dialog = buider.show();
+        Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
+        dialogList.add(dialog);
     }
 
     /**
@@ -324,17 +320,27 @@ public class ZXDialogUtil {
         if (noListener != null) {
             buider.setNegativeButton("取消", noListener);
         }
-        dialog = buider.show();
+        Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(false);
+        dialogList.add(dialog);
     }
 
     /**
      * 关闭dialog
      */
     public static void dismissDialog() {
-        if (dialog != null) {
-            dialog.dismiss();
+        try {
+            if (dialogList.size() > 0) {
+                dialogList.get(dialogList.size() - 1).dismiss();
+                dialogList.remove(dialogList.size() - 1);
+            }
+        } catch (Exception e) {
+            dialogList.clear();
+            e.printStackTrace();
         }
+//        if (dialog != null) {
+//            dialog.dismiss();
+//        }
     }
 
 }
