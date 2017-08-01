@@ -68,23 +68,27 @@ public class PhotoPagerActivity extends AppCompatActivity {
                     finish();
                 }
             });
-            titlebar.setRitht(getApplicationContext().getResources().getDrawable(R.drawable.__picker_delete), "", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = pagerFragment.getViewPager().getCurrentItem();
-                    if (pagerFragment.getPaths().size() > 0) {
-                        pagerFragment.getPaths().remove(position);
-                        pagerFragment.getViewPager().getAdapter().notifyDataSetChanged();
-                        if (pagerFragment.getPaths().size() == 0) {
-                            titlebar.setTitle(getString(R.string.__picker_preview) + " " + getString(R.string.__picker_image_index, 0,
-                                    pagerFragment.getPaths().size()));
+            if (!showDelete) {
+                titlebar.getIvRight().setVisibility(View.GONE);
+            } else {
+                titlebar.setRitht(getApplicationContext().getResources().getDrawable(R.drawable.__picker_delete), "", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = pagerFragment.getViewPager().getCurrentItem();
+                        if (pagerFragment.getPaths().size() > 0) {
+                            pagerFragment.getPaths().remove(position);
+                            pagerFragment.getViewPager().getAdapter().notifyDataSetChanged();
+                            if (pagerFragment.getPaths().size() == 0) {
+                                titlebar.setTitle(getString(R.string.__picker_preview) + " " + getString(R.string.__picker_image_index, 0,
+                                        pagerFragment.getPaths().size()));
+                            }
+
                         }
 
+
                     }
-
-
-                }
-            });
+                });
+            }
         }
 
         titlebar.setTitle(getString(R.string.__picker_preview));

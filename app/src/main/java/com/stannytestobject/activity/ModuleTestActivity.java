@@ -163,6 +163,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 } else {
                     ZXPhotoPreview.builder()
                             .setPhotos(photoList)
+                            .setShowDeleteButton(false)
                             .setAction(ZXPhotoPickerView.ACTION_SELECT)
                             .setCurrentItem(position)
                             .start(ModuleTestActivity.this);
