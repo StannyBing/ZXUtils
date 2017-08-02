@@ -32,7 +32,7 @@ public class ZXDialogUtil {
      */
     public static ProgressDialog showLoadingDialog(Context context, String message) {
         try {
-            if (loadingDialog.isShowing()) {
+            if (hasProgress == true && loadingDialog.isShowing()) {
                 loadingDialog.dismiss();
             }
             if (hasProgress == true || loadingDialog == null) {
@@ -65,7 +65,7 @@ public class ZXDialogUtil {
      */
     public static ProgressDialog showLoadingDialog(Context context, String message, int progress) {
         try {
-            if (loadingDialog.isShowing()) {
+            if (hasProgress == false && loadingDialog.isShowing()) {
                 loadingDialog.dismiss();
             }
             if (hasProgress == false || loadingDialog == null) {
