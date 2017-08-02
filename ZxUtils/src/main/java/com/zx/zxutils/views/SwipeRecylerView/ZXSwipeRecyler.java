@@ -84,7 +84,7 @@ public class ZXSwipeRecyler extends LinearLayout {
 
     //添加分隔线
     public ZXSwipeRecyler addDivider() {
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         return this;
     }
 
