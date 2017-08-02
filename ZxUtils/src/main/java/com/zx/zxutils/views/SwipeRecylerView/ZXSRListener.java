@@ -5,10 +5,10 @@ package com.zx.zxutils.views.SwipeRecylerView;
  * 功能：
  */
 
-public interface ZXSRListener {
-    void onItemClick(Object item, int position);//点击事件
+public interface ZXSRListener<T> {
+    void onItemClick(T item, int position);//点击事件
 
-    void onItemLongClick(Object item, int position);//长按事件
+    void onItemLongClick(T item, int position);//长按事件
 
     void onRefresh();//刷新事件
 

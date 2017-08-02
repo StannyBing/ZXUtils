@@ -3,6 +3,7 @@ package com.zx.zxutils.views.SwipeRecylerView;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -25,7 +26,7 @@ public class ZXSwipeRecyler extends LinearLayout {
     private RecyclerView recyclerView;
     private ZXSRListener zxsrListener;
     private ZXRecycleAdapter adapter;
-    public int pageNum = 1, totalNum = 0, pageSize = 10;
+    private int pageNum = 1, totalNum = 0, pageSize = 10;
 
     public ZXSwipeRecyler(Context context) {
         super(context);
@@ -78,6 +79,12 @@ public class ZXSwipeRecyler extends LinearLayout {
      */
     public ZXSwipeRecyler setLayoutManager(RecyclerView.LayoutManager layoutManager) {
         recyclerView.setLayoutManager(layoutManager);
+        return this;
+    }
+
+    //添加分隔线
+    public ZXSwipeRecyler addDivider() {
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL));
         return this;
     }
 
@@ -198,5 +205,17 @@ public class ZXSwipeRecyler extends LinearLayout {
         if (adapter != null && adapter.footerViewHolder != null) {
             adapter.footerViewHolder.setStatus(pageNum, totalNum);
         }
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public int getTotalNum() {
+        return totalNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
     }
 }

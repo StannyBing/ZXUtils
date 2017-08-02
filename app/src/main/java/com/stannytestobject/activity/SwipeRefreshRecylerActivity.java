@@ -31,14 +31,14 @@ public class SwipeRefreshRecylerActivity extends AppCompatActivity {
         swipeRecyler = (ZXSwipeRecyler) findViewById(R.id.sr_layout);
         swipeRecyler.setAdapter(new TestAdapter())
                 .showLoadInfo(true)
-                .setSRListener(new ZXSRListener() {
+                .setSRListener(new ZXSRListener<String>() {
                     @Override
-                    public void onItemClick(Object item, int position) {
+                    public void onItemClick(String item, int position) {
                         ZXToastUtil.showToast("点击:" + item.toString());
                     }
 
                     @Override
-                    public void onItemLongClick(Object item, int position) {
+                    public void onItemLongClick(String item, int position) {
                         ZXToastUtil.showToast("长按:" + item.toString());
                     }
 
