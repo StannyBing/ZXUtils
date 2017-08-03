@@ -125,15 +125,16 @@ public class ZXDialogUtil {
         }
     }
 
-    /**
-     * 用于展示单纯信息的dialog,不添加点击事件
-     *
-     * @param context 上下文
-     * @param title   标题
-     * @param message 内容
-     */
     public static void showInfoDialog(Context context, String title, String message) {
-        showInfoDialog(context, title, message, null);
+        showInfoDialog(context, title, message, null, false);
+    }
+
+    public static void showInfoDialog(Context context, String title, String message, boolean canceledOnTouchOutSide) {
+        showInfoDialog(context, title, message, null, canceledOnTouchOutSide);
+    }
+
+    public static void showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener) {
+        showInfoDialog(context, title, message, listener, false);
     }
 
     /**
@@ -144,13 +145,13 @@ public class ZXDialogUtil {
      * @param message  内容
      * @param listener 确定监听
      */
-    public static void showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener) {
+    public static void showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMessage(message);
         buider.setPositiveButton("确定", listener);
         Dialog dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
     }
 
@@ -166,13 +167,17 @@ public class ZXDialogUtil {
      * @param noListener  取消按钮监听器
      */
     public static void showYesNoDialog(Context context, String title, String message, String yesBtnText, String noBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener noListener) {
+        showYesNoDialog(context, title, message, yesBtnText, noBtnText, yesListener, noListener, false);
+    }
+
+    public static void showYesNoDialog(Context context, String title, String message, String yesBtnText, String noBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMessage(message);
         buider.setPositiveButton(yesBtnText, yesListener);
         buider.setNegativeButton(noBtnText, noListener);
         Dialog dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
     }
 
@@ -185,7 +190,11 @@ public class ZXDialogUtil {
      * @param yesListener 确定按钮点击事件
      */
     public static void showYesNoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener yesListener) {
-        showYesNoDialog(context, title, message, "确定", "取消", yesListener, null);
+        showYesNoDialog(context, title, message, "确定", "取消", yesListener, null, false);
+    }
+
+    public static void showYesNoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+        showYesNoDialog(context, title, message, "确定", "取消", yesListener, null, canceledOnTouchOutSide);
     }
 
     /**
@@ -199,6 +208,10 @@ public class ZXDialogUtil {
      * @param otherBtnListener 中性按钮点击事件
      */
     public static void showWithOtherBtnDialog(Context context, String title, String message, String otherBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener otherBtnListener) {
+        showWithOtherBtnDialog(context, title, message, otherBtnText, yesListener, otherBtnListener, false);
+    }
+
+    public static void showWithOtherBtnDialog(Context context, String title, String message, String otherBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener otherBtnListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMessage(message);
@@ -206,7 +219,7 @@ public class ZXDialogUtil {
         buider.setNegativeButton("取消", null);
         buider.setNeutralButton(otherBtnText, otherBtnListener);
         Dialog dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
     }
 
@@ -221,13 +234,17 @@ public class ZXDialogUtil {
      * @param yesListener         确认的点击事件
      */
     public static void showCheckListDialog(Context context, String title, String[] itemName, boolean[] itemCheckStatus, @Nullable DialogInterface.OnMultiChoiceClickListener choiceClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        showCheckListDialog(context, title, itemName, itemCheckStatus, choiceClickListener, yesListener, false);
+    }
+
+    public static void showCheckListDialog(Context context, String title, String[] itemName, boolean[] itemCheckStatus, @Nullable DialogInterface.OnMultiChoiceClickListener choiceClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMultiChoiceItems(itemName, itemCheckStatus, choiceClickListener);
         buider.setPositiveButton("确定", yesListener);
         buider.setNegativeButton("取消", null);
         Dialog dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
     }
 
@@ -241,6 +258,10 @@ public class ZXDialogUtil {
      * @param yesListener       确定按钮点击事件
      */
     public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        showListDialog(context, title, itemName, itemClickListener, yesListener, false);
+    }
+
+    public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setItems(itemName, itemClickListener);
@@ -251,7 +272,7 @@ public class ZXDialogUtil {
             buider.setPositiveButton("确定", null);
         }
         Dialog dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
     }
 
@@ -268,6 +289,10 @@ public class ZXDialogUtil {
         showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener, yesListener);
     }
 
+    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener, yesListener, canceledOnTouchOutSide);
+    }
+
     /**
      * 带list的勾选事件，不提供按钮
      *
@@ -278,6 +303,10 @@ public class ZXDialogUtil {
      */
     public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
         showListDialog(context, title, itemName, itemClickListener, null);
+    }
+
+    public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
+        showListDialog(context, title, itemName, itemClickListener, null, canceledOnTouchOutSide);
     }
 
     /**
@@ -292,6 +321,10 @@ public class ZXDialogUtil {
         showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener);
     }
 
+    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
+        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener, canceledOnTouchOutSide);
+    }
+
     /**
      * 带一个view的dialog，view内部事件处理需要在添加前进行设置
      *
@@ -301,7 +334,11 @@ public class ZXDialogUtil {
      * @param yesListener 确定按钮的点击事件
      */
     public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener) {
-        showCustomViewDialog(context, title, view, yesListener, null);
+        showCustomViewDialog(context, title, view, yesListener, null, false);
+    }
+
+    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+        showCustomViewDialog(context, title, view, yesListener, null, canceledOnTouchOutSide);
     }
 
     /**
@@ -313,6 +350,10 @@ public class ZXDialogUtil {
      * @param yesListener 确定按钮的点击事件
      */
     public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener) {
+        showCustomViewDialog(context, title, view, yesListener, noListener, false);
+    }
+
+    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setView(view, 20, 10, 20, 10);
@@ -321,7 +362,7 @@ public class ZXDialogUtil {
             buider.setNegativeButton("取消", noListener);
         }
         Dialog dialog = buider.show();
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
     }
 
