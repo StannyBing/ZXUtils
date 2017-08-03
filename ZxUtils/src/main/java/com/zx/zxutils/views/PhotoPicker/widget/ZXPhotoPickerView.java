@@ -111,9 +111,9 @@ public class ZXPhotoPickerView extends FrameLayout {
 
     public void init(Activity context, @MultiPicAction int action, ArrayList<String> photos, OnDeleteListener deleteListener, OnPhotoItemClickListener onPhotoItemClickListener) {
         this.action = action;
-        if (action == ZXPhotoPickerView.ACTION_ONLY_SHOW) {//当只用作显示图片时,一行显示3张
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
-        }
+//        if (action == ZXPhotoPickerView.ACTION_ONLY_SHOW) {//当只用作显示图片时,一行显示3张
+//            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
+//        }
 
         if (photos == null) {
             selectedPhotos = new ArrayList<>();
