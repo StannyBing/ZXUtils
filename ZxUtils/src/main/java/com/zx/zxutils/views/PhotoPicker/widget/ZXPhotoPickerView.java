@@ -137,6 +137,11 @@ public class ZXPhotoPickerView extends FrameLayout {
 
     }
 
+    //设置一行最大个数
+    public void setLineMaxNum(int num) {
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(num, OrientationHelper.VERTICAL));
+    }
+
 
     public void showPics(List<String> paths) {
         if (paths != null) {
