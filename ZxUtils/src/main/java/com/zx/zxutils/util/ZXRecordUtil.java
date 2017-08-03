@@ -359,6 +359,14 @@ public class ZXRecordUtil {
         animation = (AnimationDrawable) mIvPlay.getDrawable();
         animation.start();
         startPlaying();
+        mPlayDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                }
+            }
+        });
         mPlayDialog.show();
     }
 
