@@ -46,7 +46,7 @@ public class ZXRecordUtil {
     /**
      * 最长录音时间
      **/
-    private int MAX_INTERVAL_TIME = 1000 * 10;
+    private int MAX_INTERVAL_TIME = 1000 * 60;
     private long mStartTime;
     private Dialog mRecordDialog, mPlayDialog;
     private ImageView mIvRecord, mIvPlay;
