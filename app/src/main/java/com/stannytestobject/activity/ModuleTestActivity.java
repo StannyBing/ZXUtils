@@ -455,7 +455,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 }, null);
                 break;
             case R.id.btn_openListDilog://列表dialog
-                ZXDialogUtil.showListDialog(this, "提示", new String[]{"确认", "缺不缺人", "的防辐射服", "还是会", "哈哈哈"}, new DialogInterface.OnClickListener() {
+                ZXDialogUtil.showListDialog(this, "提示","取消", new String[]{"确认", "缺不缺人", "的防辐射服", "还是会", "哈哈哈"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(ModuleTestActivity.this, "第" + which + "个", Toast.LENGTH_SHORT).show();

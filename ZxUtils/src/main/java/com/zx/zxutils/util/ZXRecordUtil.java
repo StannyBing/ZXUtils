@@ -46,7 +46,7 @@ public class ZXRecordUtil {
     /**
      * 最长录音时间
      **/
-    private int MAX_INTERVAL_TIME = 1000 * 60;
+    private int MAX_INTERVAL_TIME = 1000 * 10;
     private long mStartTime;
     private Dialog mRecordDialog, mPlayDialog;
     private ImageView mIvRecord, mIvPlay;
@@ -131,13 +131,15 @@ public class ZXRecordUtil {
                         initDialogAndStartRecord();
                         break;
                     case MotionEvent.ACTION_UP:
-                        int endY = (int) event.getY();
-                        if (startY < 0)
-                            return true;
-                        if (endY - startY < CANCLE_LENGTH) {
-                            cancelRecord();
-                        } else {
-                            finishRecord();
+                        if (mRecordDialog.isShowing()) {
+                            int endY = (int) event.getY();
+                            if (startY < 0)
+                                return true;
+                            if (endY - startY < CANCLE_LENGTH) {
+                                cancelRecord();
+                            } else {
+                                finishRecord();
+                            }
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
@@ -258,6 +260,7 @@ public class ZXRecordUtil {
                 if (System.currentTimeMillis() - mStartTime >= MAX_INTERVAL_TIME) {
                     // 如果超过最长录音时间
                     mVolumeHandler.sendEmptyMessage(CancelRecordWhat_102);
+                    return;
                 }
                 //发送时间
                 mVolumeHandler.sendEmptyMessage(Time_What_101);
