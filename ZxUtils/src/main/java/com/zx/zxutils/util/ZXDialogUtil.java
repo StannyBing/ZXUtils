@@ -257,19 +257,19 @@ public class ZXDialogUtil {
      * @param itemClickListener item点击事件
      * @param yesListener       确定按钮点击事件
      */
-    public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
-        showListDialog(context, title, itemName, itemClickListener, yesListener, false);
+    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        showListDialog(context, title, yesBtnText, itemName, itemClickListener, yesListener, false);
     }
 
-    public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setItems(itemName, itemClickListener);
         if (yesListener != null) {
-            buider.setPositiveButton("确定", yesListener);
+            buider.setPositiveButton(yesBtnText, yesListener);
 //            buider.setNegativeButton("取消", null);
         } else {
-            buider.setPositiveButton("确定", null);
+            buider.setPositiveButton(yesBtnText, null);
         }
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
@@ -285,28 +285,12 @@ public class ZXDialogUtil {
      * @param itemClickListener item点击事件
      * @param yesListener       确定按钮点击事件
      */
-    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
-        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener, yesListener);
+    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, yesListener);
     }
 
-    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
-        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener, yesListener, canceledOnTouchOutSide);
-    }
-
-    /**
-     * 带list的勾选事件，不提供按钮
-     *
-     * @param context           上下文
-     * @param title             标题
-     * @param itemName          item项
-     * @param itemClickListener item点击事件
-     */
-    public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
-        showListDialog(context, title, itemName, itemClickListener, null);
-    }
-
-    public static void showListDialog(Context context, String title, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
-        showListDialog(context, title, itemName, itemClickListener, null, canceledOnTouchOutSide);
+    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, yesListener, canceledOnTouchOutSide);
     }
 
     /**
@@ -317,12 +301,28 @@ public class ZXDialogUtil {
      * @param itemName          item项
      * @param itemClickListener item点击事件
      */
-    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
-        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener);
+    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
+        showListDialog(context, title, yesBtnText, itemName, itemClickListener, null);
     }
 
-    public static void showListDialog(Context context, String title, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
-        showListDialog(context, title, itemName.toArray(new String[0]), itemClickListener, canceledOnTouchOutSide);
+    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
+        showListDialog(context, title, yesBtnText, itemName, itemClickListener, null, canceledOnTouchOutSide);
+    }
+
+    /**
+     * 带list的勾选事件，不提供按钮
+     *
+     * @param context           上下文
+     * @param title             标题
+     * @param itemName          item项
+     * @param itemClickListener item点击事件
+     */
+    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
+        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener);
+    }
+
+    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
+        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, canceledOnTouchOutSide);
     }
 
     /**

@@ -155,6 +155,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
         photoList.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1735278598,1624226652&fm=117&gp=0.jpg");
         photoList.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=468291096,4071036468&fm=117&gp=0.jpg");
         photoList.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3390905199,613944351&fm=117&gp=0.jpg");
+        photoList.add("http://img.blog.csdn.net/20170804175543366?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvU3Rhbm55X0Jpbmc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center");
         mprv_photo.init(this, ZXPhotoPickerView.ACTION_SELECT, photoList, new OnPhotoItemClickListener() {
             @Override
             public void onPhotoItemClick(int position) {

@@ -116,6 +116,15 @@ public class ZXSystemUtil {
     }
 
     /**
+     * 获取app内部存储路径
+     * @param context
+     * @return
+     */
+    public static String getAppDataPath(Context context){
+        return context.getFilesDir().getAbsolutePath();
+    }
+
+    /**
      * 功能:获取PackageManager对象
      *
      * @return

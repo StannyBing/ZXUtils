@@ -12,13 +12,41 @@ import com.stannytestobject.R
 import com.stannytestobject.kotlin.KotlinCodeTestActivty.MyAdapter.KHolder
 import com.zx.zxutils.forutil.ZXRecordListener
 import com.zx.zxutils.other.ZXItemClickSupport
+import com.zx.zxutils.util.ZXLogUtil
 import com.zx.zxutils.util.ZXRecordUtil
 import com.zx.zxutils.util.ZXSystemUtil
 import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_kotlin_code_test_activty.*
 import java.io.File
 
-class KotlinCodeTestActivty : AppCompatActivity(), ZXRecordListener {
+class KotlinCodeTestActivty : AppCompatActivity(), ZXRecordListener, View.OnClickListener {
+    var num: Int = 0
+    var times: Int = 0
+
+    override fun onClick(p0: View?) {
+        when (p0!!.id) {
+            R.id.btn_mathTest -> {
+                num = (Math.random() * 10000).toInt()
+                times = 0
+                logNum()
+            }
+        }
+    }
+
+    fun logNum() {
+        times++
+        if (num == 1) {
+            ZXLogUtil.loge("计算完成,共$times 次")
+        } else if (num % 2 == 0) {
+            num = num / 2
+            ZXLogUtil.loge("${num * 2}->$num")
+            logNum()
+        } else {
+            num = num * 3 + 1
+            ZXLogUtil.loge("${(num - 1) / 3}->$num")
+            logNum()
+        }
+    }
 
     var datalist = arrayListOf<MyEntity>()
     var recordUtil = ZXRecordUtil(this)
@@ -26,7 +54,6 @@ class KotlinCodeTestActivty : AppCompatActivity(), ZXRecordListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin_code_test_activty)
-
         initView()
     }
 
@@ -38,16 +65,10 @@ class KotlinCodeTestActivty : AppCompatActivity(), ZXRecordListener {
                 .addTo(rv_records)
                 .setOnItemClickListener { recyclerView, position, view ->
                     recordUtil.playMedia(datalist[position].file)
-//                    var uri = Uri.fromFile(datalist[position].file)
-//                    MediaPlayer.create(this, uri).start()
                 }
         recordUtil.bindView(btn_record)
         recordUtil.setOnRecordListener(this)
-//        recordUtil.setOnFinishedRecordListener {
-//            ZXToastUtil.showToast("地址:" + it.absolutePath)
-//            datalist.add(MyEntity(it.name, it))
-//            rv_records.adapter.notifyDataSetChanged()
-//        }
+        btn_mathTest.setOnClickListener(this)
     }
 
     override fun onInitPath(): String {
