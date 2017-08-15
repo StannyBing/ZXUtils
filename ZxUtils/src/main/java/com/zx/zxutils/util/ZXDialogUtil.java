@@ -7,7 +7,13 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.zx.zxutils.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -261,10 +267,33 @@ public class ZXDialogUtil {
         showListDialog(context, title, yesBtnText, itemName, itemClickListener, yesListener, false);
     }
 
-    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+    public static void showListDialog(final Context context, String title, String yesBtnText, final String[] itemName, @Nullable final DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
-        buider.setItems(itemName, itemClickListener);
+        buider.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return itemName.length;
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return itemName[i];
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return i;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                View v = LayoutInflater.from(context).inflate(R.layout.item_listdialog, null);
+                ((TextView) v.findViewById(R.id.tv_text)).setText(itemName[i]);
+                return v;
+            }
+        }, itemClickListener);
+//        buider.setItems(itemName, itemClickListener);
         if (yesListener != null) {
             buider.setPositiveButton(yesBtnText, yesListener);
 //            buider.setNegativeButton("取消", null);
