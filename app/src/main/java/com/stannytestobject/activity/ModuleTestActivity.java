@@ -14,12 +14,15 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RemoteViews;
@@ -27,21 +30,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stannytestobject.R;
+import com.stannytestobject.adapter.MyAdapter;
+import com.stannytestobject.model.MyEntity;
 import com.stannytestobject.other.MyService;
 import com.stannytestobject.util.ApiData;
 import com.zx.zxutils.entity.KeyValueEntity;
+import com.zx.zxutils.forutil.ZXRecordListener;
 import com.zx.zxutils.forutil.ZXUnZipRarListener;
 import com.zx.zxutils.http.ZXBaseResult;
 import com.zx.zxutils.http.ZXHttpListener;
 import com.zx.zxutils.other.ThreadPool.ZXRunnable;
 import com.zx.zxutils.other.ThreadPool.ZXThreadPool;
 import com.zx.zxutils.other.ZXBroadCastManager;
+import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.util.ZXAnimUtil;
 import com.zx.zxutils.util.ZXBitmapUtil;
 import com.zx.zxutils.util.ZXDialogUtil;
 import com.zx.zxutils.util.ZXImageLoaderUtil;
 import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.util.ZXNotifyUtil;
+import com.zx.zxutils.util.ZXRecordUtil;
 import com.zx.zxutils.util.ZXSharedPrefUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.util.ZXTimeUtil;
@@ -65,6 +73,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import static com.stannytestobject.R.id.rv_records;
+
 public class ModuleTestActivity extends AppCompatActivity implements View.OnClickListener, ZXHttpListener {
 
     private ZXPhotoPickerView mprv_photo;
@@ -74,9 +84,13 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
     private CoordinatorLayout coordinatorLayout;
     private ZXSpinner mSpinner;
     private ProgressBar downBar, upBar;
+    private Button btnRecord;
     private ZXSeekBar sb_bub;
+    private RecyclerView rvRecord;
     private TextView tvmac;
     private ImageView ivLoader;
+    private ZXRecordUtil recordUtil;
+    private ArrayList<MyEntity> dataList = new ArrayList<>();
     private ArrayList<String> photoList = new ArrayList<>();
     private ApiData downloadApi = new ApiData(3);
     private ApiData uploadApi = new ApiData(2);
@@ -135,6 +149,8 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
         findViewById(R.id.btn_openBubbleLayout).setOnClickListener(this);
         findViewById(R.id.btn_unzip).setOnClickListener(this);
 
+        rvRecord = (RecyclerView) findViewById(rv_records);
+        btnRecord = (Button) findViewById(R.id.btn_record);
         sb_bub = (ZXSeekBar) findViewById(R.id.sb_bub);
         ivLoader = (ImageView) findViewById(R.id.iv_iamgeloader);
         tvmac = (TextView) findViewById(R.id.tv_mac);
@@ -215,6 +231,32 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
 
         //沉浸式状态栏
 //        ZXStatusBarCompat.translucentStatusBar(this);
+
+        final MyAdapter adapter = new MyAdapter(dataList);
+        rvRecord.setLayoutManager(new GridLayoutManager(this, 4));
+        rvRecord.setAdapter(adapter);
+        recordUtil = new ZXRecordUtil(this);
+        recordUtil.bindView(btnRecord);
+        ZXItemClickSupport.addTo(rvRecord)
+                .setOnItemClickListener(new ZXItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View view) {
+                        recordUtil.playMedia(dataList.get(position).getFile());
+                    }
+                });
+        recordUtil.setOnRecordListener(new ZXRecordListener() {
+            @Override
+            public String onInitPath() {
+                return ZXSystemUtil.getSDCardPath() + System.currentTimeMillis() + "x.amr";
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                ZXToastUtil.showToast("地址:" + file.getAbsolutePath());
+                dataList.add(new MyEntity(file.getName(), file));
+                adapter.notifyDataSetChanged();
+            }
+        });
 
     }
 
@@ -455,7 +497,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 }, null);
                 break;
             case R.id.btn_openListDilog://列表dialog
-                ZXDialogUtil.showListDialog(this, "提示","取消", new String[]{"确认", "缺不缺人", "的防辐射服", "还是会", "哈哈哈"}, new DialogInterface.OnClickListener() {
+                ZXDialogUtil.showListDialog(this, "提示", "取消", new String[]{"确认", "缺不缺人", "的防辐射服", "还是会", "哈哈哈"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(ModuleTestActivity.this, "第" + which + "个", Toast.LENGTH_SHORT).show();
