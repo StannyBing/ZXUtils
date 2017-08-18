@@ -386,7 +386,9 @@ public class ZXDialogUtil {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setView(view, 20, 10, 20, 10);
-        buider.setPositiveButton("确定", yesListener);
+        if (yesListener != null) {
+            buider.setPositiveButton("确定", yesListener);
+        }
         if (noListener != null) {
             buider.setNegativeButton("取消", noListener);
         }

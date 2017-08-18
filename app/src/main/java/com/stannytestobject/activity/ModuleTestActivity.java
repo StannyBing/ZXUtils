@@ -43,6 +43,7 @@ import com.zx.zxutils.other.ThreadPool.ZXRunnable;
 import com.zx.zxutils.other.ThreadPool.ZXThreadPool;
 import com.zx.zxutils.other.ZXBroadCastManager;
 import com.zx.zxutils.other.ZXItemClickSupport;
+import com.zx.zxutils.other.ZXOnDoubleClickListener;
 import com.zx.zxutils.util.ZXAnimUtil;
 import com.zx.zxutils.util.ZXBitmapUtil;
 import com.zx.zxutils.util.ZXDialogUtil;
@@ -228,7 +229,12 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 .setSectionMark(10, true)//设置分段
                 .setTrackColor(R.color.violet, R.color.__picker_item_selected_cover)//设置选择和未选的颜色
                 .setText(10, R.color.tan, 1);//设置刻度值的字体
+        sb_bub.setOnClickListener(new ZXOnDoubleClickListener() {
+            @Override
+            protected void onDoubleClick(View v) {
 
+            }
+        });
         //沉浸式状态栏
 //        ZXStatusBarCompat.translucentStatusBar(this);
 
@@ -407,7 +413,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 bit = ZXBitmapUtil.getRoundBitmap(bit, 40);
                 ImageView ima = new ImageView(this);
                 ima.setImageBitmap(bit);
-                ZXDialogUtil.showCustomViewDialog(this, "测试", ima, null);
+                ZXDialogUtil.showCustomViewDialog(this, "测试", ima, null,null);
                 break;
             case R.id.btn_openSharedPrefrences://共享参数
                 ZXSharedPrefUtil sharedPrefUtil = new ZXSharedPrefUtil();

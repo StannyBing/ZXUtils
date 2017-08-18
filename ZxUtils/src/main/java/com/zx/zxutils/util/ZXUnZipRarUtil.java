@@ -186,4 +186,14 @@ public class ZXUnZipRarUtil {
             }
         }).start();
     }
+
+    public static void unFile(final String filePath, final String outputPath, final ZXUnZipRarListener listener) {
+        if (filePath.endsWith("rar")) {
+            unRar(filePath, outputPath, listener);
+        } else if (filePath.endsWith("zip")) {
+            unZip(filePath, outputPath, listener);
+        } else {
+            listener.onError("解压失败，不是有效的解压文件");
+        }
+    }
 }
