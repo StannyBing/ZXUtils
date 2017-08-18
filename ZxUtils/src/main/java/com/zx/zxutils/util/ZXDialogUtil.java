@@ -131,16 +131,16 @@ public class ZXDialogUtil {
         }
     }
 
-    public static void showInfoDialog(Context context, String title, String message) {
-        showInfoDialog(context, title, message, null, false);
+    public static Dialog showInfoDialog(Context context, String title, String message) {
+        return showInfoDialog(context, title, message, null, false);
     }
 
-    public static void showInfoDialog(Context context, String title, String message, boolean canceledOnTouchOutSide) {
-        showInfoDialog(context, title, message, null, canceledOnTouchOutSide);
+    public static Dialog showInfoDialog(Context context, String title, String message, boolean canceledOnTouchOutSide) {
+        return showInfoDialog(context, title, message, null, canceledOnTouchOutSide);
     }
 
-    public static void showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener) {
-        showInfoDialog(context, title, message, listener, false);
+    public static Dialog showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener) {
+        return showInfoDialog(context, title, message, listener, false);
     }
 
     /**
@@ -151,7 +151,7 @@ public class ZXDialogUtil {
      * @param message  内容
      * @param listener 确定监听
      */
-    public static void showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener, boolean canceledOnTouchOutSide) {
+    public static Dialog showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMessage(message);
@@ -159,6 +159,7 @@ public class ZXDialogUtil {
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
+        return dialog;
     }
 
     /**
@@ -172,11 +173,11 @@ public class ZXDialogUtil {
      * @param yesListener 确定按钮监听器
      * @param noListener  取消按钮监听器
      */
-    public static void showYesNoDialog(Context context, String title, String message, String yesBtnText, String noBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener noListener) {
-        showYesNoDialog(context, title, message, yesBtnText, noBtnText, yesListener, noListener, false);
+    public static Dialog showYesNoDialog(Context context, String title, String message, String yesBtnText, String noBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener noListener) {
+        return showYesNoDialog(context, title, message, yesBtnText, noBtnText, yesListener, noListener, false);
     }
 
-    public static void showYesNoDialog(Context context, String title, String message, String yesBtnText, String noBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
+    public static Dialog showYesNoDialog(Context context, String title, String message, String yesBtnText, String noBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMessage(message);
@@ -185,6 +186,7 @@ public class ZXDialogUtil {
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
+        return dialog;
     }
 
     /**
@@ -195,12 +197,12 @@ public class ZXDialogUtil {
      * @param message     内容
      * @param yesListener 确定按钮点击事件
      */
-    public static void showYesNoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener yesListener) {
-        showYesNoDialog(context, title, message, "确定", "取消", yesListener, null, false);
+    public static Dialog showYesNoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener yesListener) {
+        return showYesNoDialog(context, title, message, "确定", "取消", yesListener, null, false);
     }
 
-    public static void showYesNoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
-        showYesNoDialog(context, title, message, "确定", "取消", yesListener, null, canceledOnTouchOutSide);
+    public static Dialog showYesNoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+        return showYesNoDialog(context, title, message, "确定", "取消", yesListener, null, canceledOnTouchOutSide);
     }
 
     /**
@@ -213,11 +215,11 @@ public class ZXDialogUtil {
      * @param yesListener      确定按钮点击事件
      * @param otherBtnListener 中性按钮点击事件
      */
-    public static void showWithOtherBtnDialog(Context context, String title, String message, String otherBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener otherBtnListener) {
-        showWithOtherBtnDialog(context, title, message, otherBtnText, yesListener, otherBtnListener, false);
+    public static Dialog showWithOtherBtnDialog(Context context, String title, String message, String otherBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener otherBtnListener) {
+        return showWithOtherBtnDialog(context, title, message, otherBtnText, yesListener, otherBtnListener, false);
     }
 
-    public static void showWithOtherBtnDialog(Context context, String title, String message, String otherBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener otherBtnListener, boolean canceledOnTouchOutSide) {
+    public static Dialog showWithOtherBtnDialog(Context context, String title, String message, String otherBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener otherBtnListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMessage(message);
@@ -227,6 +229,7 @@ public class ZXDialogUtil {
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
+        return dialog;
     }
 
     /**
@@ -239,11 +242,11 @@ public class ZXDialogUtil {
      * @param choiceClickListener 选择事件
      * @param yesListener         确认的点击事件
      */
-    public static void showCheckListDialog(Context context, String title, String[] itemName, boolean[] itemCheckStatus, @Nullable DialogInterface.OnMultiChoiceClickListener choiceClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
-        showCheckListDialog(context, title, itemName, itemCheckStatus, choiceClickListener, yesListener, false);
+    public static Dialog showCheckListDialog(Context context, String title, String[] itemName, boolean[] itemCheckStatus, @Nullable DialogInterface.OnMultiChoiceClickListener choiceClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        return showCheckListDialog(context, title, itemName, itemCheckStatus, choiceClickListener, yesListener, false);
     }
 
-    public static void showCheckListDialog(Context context, String title, String[] itemName, boolean[] itemCheckStatus, @Nullable DialogInterface.OnMultiChoiceClickListener choiceClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+    public static Dialog showCheckListDialog(Context context, String title, String[] itemName, boolean[] itemCheckStatus, @Nullable DialogInterface.OnMultiChoiceClickListener choiceClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setMultiChoiceItems(itemName, itemCheckStatus, choiceClickListener);
@@ -252,6 +255,7 @@ public class ZXDialogUtil {
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
+        return dialog;
     }
 
     /**
@@ -263,11 +267,11 @@ public class ZXDialogUtil {
      * @param itemClickListener item点击事件
      * @param yesListener       确定按钮点击事件
      */
-    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
-        showListDialog(context, title, yesBtnText, itemName, itemClickListener, yesListener, false);
+    public static Dialog showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        return showListDialog(context, title, yesBtnText, itemName, itemClickListener, yesListener, false);
     }
 
-    public static void showListDialog(final Context context, String title, String yesBtnText, final String[] itemName, @Nullable final DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+    public static Dialog showListDialog(final Context context, String title, String yesBtnText, final String[] itemName, @Nullable final DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setAdapter(new BaseAdapter() {
@@ -303,6 +307,7 @@ public class ZXDialogUtil {
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
+        return dialog;
     }
 
     /**
@@ -314,28 +319,12 @@ public class ZXDialogUtil {
      * @param itemClickListener item点击事件
      * @param yesListener       确定按钮点击事件
      */
-    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
-        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, yesListener);
+    public static Dialog showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener) {
+        return showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, yesListener);
     }
 
-    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
-        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, yesListener, canceledOnTouchOutSide);
-    }
-
-    /**
-     * 带list的勾选事件，不提供按钮
-     *
-     * @param context           上下文
-     * @param title             标题
-     * @param itemName          item项
-     * @param itemClickListener item点击事件
-     */
-    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
-        showListDialog(context, title, yesBtnText, itemName, itemClickListener, null);
-    }
-
-    public static void showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
-        showListDialog(context, title, yesBtnText, itemName, itemClickListener, null, canceledOnTouchOutSide);
+    public static Dialog showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+        return showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, yesListener, canceledOnTouchOutSide);
     }
 
     /**
@@ -346,12 +335,28 @@ public class ZXDialogUtil {
      * @param itemName          item项
      * @param itemClickListener item点击事件
      */
-    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
-        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener);
+    public static Dialog showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
+        return showListDialog(context, title, yesBtnText, itemName, itemClickListener, null);
     }
 
-    public static void showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
-        showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, canceledOnTouchOutSide);
+    public static Dialog showListDialog(Context context, String title, String yesBtnText, String[] itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
+        return showListDialog(context, title, yesBtnText, itemName, itemClickListener, null, canceledOnTouchOutSide);
+    }
+
+    /**
+     * 带list的勾选事件，不提供按钮
+     *
+     * @param context           上下文
+     * @param title             标题
+     * @param itemName          item项
+     * @param itemClickListener item点击事件
+     */
+    public static Dialog showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener) {
+        return showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener);
+    }
+
+    public static Dialog showListDialog(Context context, String title, String yesBtnText, List<String> itemName, @Nullable DialogInterface.OnClickListener itemClickListener, boolean canceledOnTouchOutSide) {
+        return showListDialog(context, title, yesBtnText, itemName.toArray(new String[0]), itemClickListener, canceledOnTouchOutSide);
     }
 
     /**
@@ -362,12 +367,12 @@ public class ZXDialogUtil {
      * @param view        填入的view
      * @param yesListener 确定按钮的点击事件
      */
-    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener) {
-        showCustomViewDialog(context, title, view, yesListener, null, false);
+    public static Dialog showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener) {
+        return showCustomViewDialog(context, title, view, yesListener, null, false);
     }
 
-    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
-        showCustomViewDialog(context, title, view, yesListener, null, canceledOnTouchOutSide);
+    public static Dialog showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
+        return showCustomViewDialog(context, title, view, yesListener, null, canceledOnTouchOutSide);
     }
 
     /**
@@ -378,11 +383,11 @@ public class ZXDialogUtil {
      * @param view        填入的view
      * @param yesListener 确定按钮的点击事件
      */
-    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener) {
-        showCustomViewDialog(context, title, view, yesListener, noListener, false);
+    public static Dialog showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener) {
+        return showCustomViewDialog(context, title, view, yesListener, noListener, false);
     }
 
-    public static void showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
+    public static Dialog showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);
         buider.setView(view, 20, 10, 20, 10);
@@ -395,6 +400,7 @@ public class ZXDialogUtil {
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
         dialogList.add(dialog);
+        return dialog;
     }
 
     /**
