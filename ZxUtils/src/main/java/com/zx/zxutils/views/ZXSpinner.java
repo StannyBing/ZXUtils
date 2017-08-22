@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
@@ -27,7 +28,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     private Drawable bgDown, bgUp;
     private int underLineColor = 0;
     private ArrayAdapter adapter;
-    private int itemView = android.R.layout.simple_spinner_dropdown_item;
+    private int itemView = R.layout.item_spinner_normal;
     private boolean mOpenInitiated = false;
 
     public enum Style {
@@ -57,7 +58,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     }
 
     private void init() {
-
+        setDropDownVerticalOffset(ZXSystemUtil.dp2px(40));
     }
 
     @Override
@@ -75,6 +76,12 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
         int lineHeight = ZXSystemUtil.dp2px(1);
         int startYLine = getHeight() - getPaddingBottom() - ZXSystemUtil.dp2px(8);
         canvas.drawRect(startX, startYLine, endX, startYLine + lineHeight, paint);
+        setDropDownWidth(getWidth());
+    }
+
+    @Override
+    public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener listener) {
+        super.setOnItemSelectedListener(listener);
     }
 
     /**
@@ -108,7 +115,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     public ZXSpinner setItemStyle(Style style) {
         switch (style) {
             case normal:
-                itemView = android.R.layout.simple_spinner_dropdown_item;
+                itemView = R.layout.item_spinner_normal;
                 break;
             case radio:
                 itemView = android.R.layout.simple_list_item_single_choice;

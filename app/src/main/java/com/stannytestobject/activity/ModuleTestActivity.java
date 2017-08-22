@@ -202,7 +202,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
         });
 
         //下拉框spinner
-        mSpinner.addData(new KeyValueEntity("0sdfgsdf", "0123"))
+        mSpinner.addData(new KeyValueEntity("测试呵呵", "0123"))
                 .addData(new KeyValueEntity("qdfasdf", "qwer"))
                 .addData(new KeyValueEntity("gdfas", "ghjk"))
 //                .setUnderineColor(ContextCompat.getColor(this, R.color.gray))

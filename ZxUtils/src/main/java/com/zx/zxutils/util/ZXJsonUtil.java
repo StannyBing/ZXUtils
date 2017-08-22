@@ -2,7 +2,6 @@ package com.zx.zxutils.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -157,12 +156,11 @@ public class ZXJsonUtil {
      * @param <T>
      * @return
      */
-    public static <T> List<T> toList(String jsonString) {
+    public static <T> List<T> toList(String jsonString, Class<T> classOfT) {
         List<T> datalist = new ArrayList<>();
         Gson gson = new Gson();
         try {
-            return datalist = gson.fromJson(jsonString, new TypeToken<List<T>>() {
-            }.getType());
+            return datalist = gson.fromJson(jsonString, (Type) classOfT);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
