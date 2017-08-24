@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     private boolean showSelectedTextColor = false;//是否显示选中item的字体颜色
     private boolean showSelectedLayoutColor = false;//是否显示选中layout的颜色
     private boolean showUnderLine = true;//是否显示underline
+    private boolean hasDefaultItem = false;
     private int underLineColor = 0;//下划线颜色
     private int dividerColor = 0;//分隔线颜色
     private int selectedTextColor = 0;//选中的字体颜色
@@ -85,7 +87,22 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
 
     @Override
     public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener listener) {
-        super.setOnItemSelectedListener(listener);
+        OnItemSelectedListener mListener = new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (hasDefaultItem) {
+                    listener.onItemSelected(adapterView, view, i - 1, l);
+                } else {
+                    listener.onItemSelected(adapterView, view, i, l);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                listener.onNothingSelected(adapterView);
+            }
+        };
+        super.setOnItemSelectedListener(mListener);
     }
 
     /**
@@ -232,6 +249,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      * @return
      */
     public ZXSpinner setDefaultItem(String defaultItem) {
+        hasDefaultItem = true;
         dataList.add(0, new KeyValueEntity(defaultItem, ""));
         return this;
     }

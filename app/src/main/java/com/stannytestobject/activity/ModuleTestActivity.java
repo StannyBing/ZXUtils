@@ -205,7 +205,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
         //下拉框spinner
         List<KeyValueEntity> datalist = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            datalist.add(new KeyValueEntity("测试" + i, "i"));
+            datalist.add(new KeyValueEntity("测试" + i, "测试" + i));
         }
         mSpinner.setData(datalist)
                 .showSeletedLayoutColor(true, R.color.skyblue)
