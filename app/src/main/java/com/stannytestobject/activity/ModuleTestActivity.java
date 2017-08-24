@@ -73,6 +73,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import static com.stannytestobject.R.id.rv_records;
 
@@ -202,13 +203,14 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
         });
 
         //下拉框spinner
-        mSpinner.addData(new KeyValueEntity("测试呵呵", "0123"))
-                .addData(new KeyValueEntity("qdfasdf", "qwer"))
-                .addData(new KeyValueEntity("gdfas", "ghjk"))
+        List<KeyValueEntity> datalist = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            datalist.add(new KeyValueEntity("测试" + i, "i"));
+        }
+        mSpinner.setData(datalist)
                 .showSeletedLayoutColor(true, R.color.skyblue)
                 .showSelectedTextColor(true, R.color.error_color)
                 .showDivider(true)
-                .showUnderineColor(true)
                 .setItemHeightDp(30)
                 .setItemTextSizeSp(8)
                 .setDefaultItem("请选择...")

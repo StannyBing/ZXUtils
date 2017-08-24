@@ -68,6 +68,9 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (showUnderLine) {
+            if (underLineColor == 0) {
+                underLineColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
+            }
             Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
             paint.setColor(underLineColor);
             int startX = 0;
@@ -372,43 +375,36 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
          */
         @Override
         public View getDropDownView(int position, View itemView, ViewGroup parent) {
-            MySpinnerHolder mHolder = null;
-            if (itemView == null) {
-                mHolder = new MySpinnerHolder();
-                itemView = LayoutInflater.from(mContext).inflate(R.layout.item_spinner_normal, null);
-                mHolder.tvItem = (TextView) itemView.findViewById(R.id.tv_spinner_item);
-                mHolder.dividerItem = itemView.findViewById(R.id.divider_spinner_item);
-                itemView.setTag(mHolder);
-            } else {
-                mHolder = (MySpinnerHolder) itemView.getTag();
-            }
-            mHolder.tvItem.setText(dataList.get(position).getKey());
+            itemView = LayoutInflater.from(mContext).inflate(R.layout.item_spinner_normal, null);
+            TextView tvItem = (TextView) itemView.findViewById(R.id.tv_spinner_item);
+            View dividerItem = itemView.findViewById(R.id.divider_spinner_item);
+            tvItem.setText(dataList.get(position).getKey());
             try {
                 if (showDivider) {
-                    mHolder.dividerItem.setVisibility(VISIBLE);
-                    mHolder.dividerItem.setBackgroundColor(dividerColor);
+                    dividerItem.setVisibility(VISIBLE);
+                    dividerItem.setBackgroundColor(dividerColor);
                 } else {
-                    mHolder.dividerItem.setVisibility(GONE);
+                    dividerItem.setVisibility(GONE);
                 }
                 if (showSelectedTextColor && position == getSelectedItemPosition()) {
-                    mHolder.tvItem.setTextColor(selectedTextColor);
+                    tvItem.setTextColor(selectedTextColor);
                 } else {
 //                mHolder.tvItem.setTextColor(ContextCompat.getColor(mContext, R.color.default_text_color));
                 }
                 if (showSelectedLayoutColor && position == getSelectedItemPosition()) {
-                    mHolder.tvItem.setTextColor(selectedTextColor);
+                    tvItem.setTextColor(selectedTextColor);
                     itemView.setBackgroundColor(selectedLyoutColor);
                 } else {
 //                mHolder.tvItem.setTextColor(ContextCompat.getColor(mContext, R.color.default_text_color));
 //                itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.whitesmoke));
                 }
                 if (itemHeightDp != 0) {
-                    LayoutParams params = mHolder.tvItem.getLayoutParams();
+                    LayoutParams params = tvItem.getLayoutParams();
                     params.height = ZXSystemUtil.dp2px(itemHeightDp);
-                    mHolder.tvItem.setLayoutParams(params);
+                    tvItem.setLayoutParams(params);
                 }
-                if (itemTextSizeSp != 0){
-                    mHolder.tvItem.setTextSize(itemTextSizeSp);
+                if (itemTextSizeSp != 0) {
+                    tvItem.setTextSize(itemTextSizeSp);
                 }
             } catch (Exception e) {
                 new Throwable("请检查传入颜色值是否正确，格式为R.color.**");
@@ -429,15 +425,10 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
             itemView = LayoutInflater.from(mContext).inflate(R.layout.item_spinner_normal, null);
             TextView textView = (TextView) itemView.findViewById(R.id.tv_spinner_item);
             textView.setText(dataList.get(i).getKey());
-            if (itemTextSizeSp != 0){
+            if (itemTextSizeSp != 0) {
                 textView.setTextSize(itemTextSizeSp);
             }
             return itemView;
-        }
-
-        private class MySpinnerHolder {
-            public TextView tvItem;
-            public View dividerItem;
         }
     }
 
