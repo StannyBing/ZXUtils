@@ -173,5 +173,6 @@
     <color name="gray_8f">#8f8f8f</color><!--灰色8f -->
     <color name="linecolor">#d66050</color><!--线红色-->
     <color name="polycolor">#80B0C4DE</color><!--面色-->
+    <color name="default_text_color">#777777</color>
 
 </resources>

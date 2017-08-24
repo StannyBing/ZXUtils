@@ -205,8 +205,13 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
         mSpinner.addData(new KeyValueEntity("测试呵呵", "0123"))
                 .addData(new KeyValueEntity("qdfasdf", "qwer"))
                 .addData(new KeyValueEntity("gdfas", "ghjk"))
-//                .setUnderineColor(ContextCompat.getColor(this, R.color.gray))
-                .setItemStyle(ZXSpinner.Style.normal)
+                .showSeletedLayoutColor(true, R.color.skyblue)
+                .showSelectedTextColor(true, R.color.error_color)
+                .showDivider(true)
+                .showUnderineColor(true)
+                .setItemHeightDp(30)
+                .setItemTextSizeSp(8)
+                .setDefaultItem("请选择...")
                 .build();
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -413,7 +418,7 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 bit = ZXBitmapUtil.getRoundBitmap(bit, 40);
                 ImageView ima = new ImageView(this);
                 ima.setImageBitmap(bit);
-                ZXDialogUtil.showCustomViewDialog(this, "测试", ima, null,null);
+                ZXDialogUtil.showCustomViewDialog(this, "测试", ima, null, null);
                 break;
             case R.id.btn_openSharedPrefrences://共享参数
                 ZXSharedPrefUtil sharedPrefUtil = new ZXSharedPrefUtil();

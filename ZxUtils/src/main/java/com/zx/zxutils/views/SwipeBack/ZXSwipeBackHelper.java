@@ -33,6 +33,7 @@ public class ZXSwipeBackHelper {
         }
         page.onCreate();
         onPostCreate(activity);
+        getCurrentPage(activity).setSwipeEdgePercent(0.2f);
         return getCurrentPage(activity);
     }
 

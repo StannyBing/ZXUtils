@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.widget.ArrayAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.zx.zxutils.R;
 import com.zx.zxutils.entity.KeyValueEntity;
@@ -25,19 +28,19 @@ import java.util.List;
 public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     private List<KeyValueEntity> dataList = new ArrayList<>();
     private Context mContext;
-    private Drawable bgDown, bgUp;
-    private int underLineColor = 0;
-    private ArrayAdapter adapter;
-    private int itemView = R.layout.item_spinner_normal;
-    private boolean mOpenInitiated = false;
-
-    public enum Style {
-        normal,//基本类型
-        radio,//类似于radiobutton类型
-        blank,//有分隔线
-        check,//类似于checkbox类型
-        full//选中颜色
-    }
+    private MySpinnerAdapter mAdapter;
+    private TypedArray defaultArray;
+    private boolean showDivider = false;//是否展示分隔线
+    private boolean showSelectedTextColor = false;//是否显示选中item的字体颜色
+    private boolean showSelectedLayoutColor = false;//是否显示选中layout的颜色
+    private boolean showUnderLine = true;//是否显示underline
+    private int underLineColor = 0;//下划线颜色
+    private int dividerColor = 0;//分隔线颜色
+    private int selectedTextColor = 0;//选中的字体颜色
+    private int selectedLyoutColor = 0;//选中的layout的颜色
+    private int defaultPosition = -1;//默认item
+    private int itemHeightDp = 0;//item高度
+    private int itemTextSizeSp = 0;//字体大小
 
     public ZXSpinner(Context context) {
         super(context);
@@ -58,25 +61,23 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     }
 
     private void init() {
-        setDropDownVerticalOffset(ZXSystemUtil.dp2px(40));
+        defaultArray = mContext.obtainStyledAttributes(new int[]{R.attr.colorAccent});
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        TypedArray defaultArray = mContext.obtainStyledAttributes(new int[]{R.attr.colorAccent});
-        if (underLineColor == 0) {
-            underLineColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
-//            underLineColor = ContextCompat.getColor(mContext, R.color.gray);
+        if (showUnderLine) {
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            paint.setColor(underLineColor);
+            int startX = 0;
+            int endX = getWidth();
+            int lineHeight = ZXSystemUtil.dp2px(1);
+            int startYLine = getHeight() - getPaddingBottom() - ZXSystemUtil.dp2px(8);
+            canvas.drawRect(startX, startYLine, endX, startYLine + lineHeight, paint);
         }
-        paint.setColor(underLineColor);
-        int startX = 0;
-        int endX = getWidth();
-        int lineHeight = ZXSystemUtil.dp2px(1);
-        int startYLine = getHeight() - getPaddingBottom() - ZXSystemUtil.dp2px(8);
-        canvas.drawRect(startX, startYLine, endX, startYLine + lineHeight, paint);
         setDropDownWidth(getWidth());
+        setDropDownVerticalOffset(getHeight());
     }
 
     @Override
@@ -107,60 +108,149 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
     }
 
     /**
-     * 设置spinner item的风格
+     * 是否展示下划线
      *
-     * @param style
+     * @param showDivider
      * @return
      */
-    public ZXSpinner setItemStyle(Style style) {
-        switch (style) {
-            case normal:
-                itemView = R.layout.item_spinner_normal;
-                break;
-            case radio:
-                itemView = android.R.layout.simple_list_item_single_choice;
-                break;
-            case check:
-                itemView = android.R.layout.simple_list_item_multiple_choice;
-                break;
-            case full:
-                itemView = android.R.layout.simple_list_item_activated_1;
-                break;
-            case blank:
-                itemView = android.R.layout.preference_category;
-                break;
-            default:
-                break;
-        }
+    public ZXSpinner showDivider(boolean showDivider) {
+        dividerColor = R.color.gray_cc;
+        showDivider(showDivider, dividerColor);
         return this;
     }
 
     /**
-     * 设置背景图片
+     * 是否展示下划线
      *
-     * @param bgDrawable
+     * @param showDivider
      * @return
      */
-    public ZXSpinner setBg(Drawable bgDrawable) {
-        this.bgDown = bgDrawable;
-        this.bgUp = bgDrawable;
+    public ZXSpinner showDivider(boolean showDivider, int dividerColor) {
+        this.showDivider = showDivider;
+        this.dividerColor = ContextCompat.getColor(mContext, dividerColor);
         return this;
     }
 
-    //设置关闭状态的图片
-    public ZXSpinner setBgDown(Drawable bgDown) {
-        this.bgDown = bgDown;
+    /**
+     * 设置下划线颜色
+     *
+     * @return
+     */
+    public ZXSpinner showUnderineColor(boolean showUnderLine) {
+        this.showUnderLine = showUnderLine;
+        underLineColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
         return this;
     }
 
-    //设置开启状态的图片
-    public ZXSpinner setBgUp(Drawable bgUp) {
-        this.bgUp = bgUp;
+    /**
+     * 设置下划线颜色
+     *
+     * @return
+     */
+    public ZXSpinner showUnderineColor(boolean showUnderLine, int color) {
+        this.showUnderLine = showUnderLine;
+        underLineColor = ContextCompat.getColor(mContext, color);
         return this;
     }
 
-    public ZXSpinner setUnderineColor(int color) {
-        underLineColor = color;
+    /**
+     * 是否显示选中字体颜色
+     *
+     * @param showSelectedTextColor
+     * @return
+     */
+    public ZXSpinner showSelectedTextColor(boolean showSelectedTextColor) {
+        this.showSelectedTextColor = showSelectedTextColor;
+        selectedTextColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
+        this.selectedLyoutColor = 0;
+        this.showSelectedLayoutColor = false;
+        return this;
+    }
+
+    /**
+     * 是否显示选中字体颜色
+     *
+     * @param showSelectedTextColor
+     * @param selectedTextColor
+     * @return
+     */
+    public ZXSpinner showSelectedTextColor(boolean showSelectedTextColor, int selectedTextColor) {
+        this.showSelectedTextColor = showSelectedTextColor;
+        this.selectedTextColor = ContextCompat.getColor(mContext, selectedTextColor);
+        this.selectedLyoutColor = 0;
+        this.showSelectedLayoutColor = false;
+        return this;
+    }
+
+    /**
+     * 是否显示选中item的layout颜色
+     *
+     * @param showSelectedLayoutColor
+     * @return
+     */
+    public ZXSpinner showSeletedLayoutColor(boolean showSelectedLayoutColor) {
+        this.showSelectedLayoutColor = showSelectedLayoutColor;
+        selectedLyoutColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
+        this.selectedTextColor = ContextCompat.getColor(mContext, R.color.white);
+        this.showSelectedTextColor = false;
+        return this;
+    }
+
+    /**
+     * 是否显示选中item的layout颜色
+     *
+     * @param showSelectedLayoutColor
+     * @param seletedLayoutColor
+     * @return
+     */
+    public ZXSpinner showSeletedLayoutColor(boolean showSelectedLayoutColor, int seletedLayoutColor) {
+        this.showSelectedLayoutColor = showSelectedLayoutColor;
+        this.selectedLyoutColor = ContextCompat.getColor(mContext, seletedLayoutColor);
+        this.selectedTextColor = ContextCompat.getColor(mContext, R.color.white);
+        this.showSelectedTextColor = false;
+        return this;
+    }
+
+    /**
+     * 默认选中位置
+     *
+     * @param position
+     * @return
+     */
+    public ZXSpinner setDefaultItem(int position) {
+        defaultPosition = position;
+        return this;
+    }
+
+    /**
+     * 添加默认选中
+     *
+     * @param defaultItem
+     * @return
+     */
+    public ZXSpinner setDefaultItem(String defaultItem) {
+        dataList.add(0, new KeyValueEntity(defaultItem, ""));
+        return this;
+    }
+
+    /**
+     * 设置item高度
+     *
+     * @return
+     */
+    public ZXSpinner setItemHeightDp(int heightDp) {
+        itemHeightDp = heightDp;
+        return this;
+    }
+
+    /**
+     * 设置item的字体大小
+     *
+     * @param textSizeSp
+     * @return
+     */
+    public ZXSpinner setItemTextSizeSp(int textSizeSp) {
+        itemTextSizeSp = textSizeSp;
         return this;
     }
 
@@ -170,7 +260,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      * @return
      */
     public ZXSpinner notifyDataSetChanged() {
-        adapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
         return this;
     }
 
@@ -179,8 +269,8 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      *
      * @return
      */
-    public ArrayAdapter getAdapter() {
-        return adapter;
+    public MySpinnerAdapter getAdapter() {
+        return mAdapter;
     }
 
     /**
@@ -196,35 +286,12 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      * 开始构造
      */
     public void build() {
-        if (bgDown != null) {
-            setBackground(bgDown);
+        mAdapter = new MySpinnerAdapter(dataList);
+        setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        if (defaultPosition >= 0 && defaultPosition < dataList.size()) {
+            setSelection(defaultPosition);
         }
-        List<String> spinnerKey = new ArrayList<>();
-        for (KeyValueEntity dataInfo : dataList) {
-            spinnerKey.add(dataInfo.getKey());
-        }
-        adapter = new ArrayAdapter(mContext, itemView, spinnerKey);
-        setAdapter(adapter);
-    }
-
-    @Override
-    public boolean performClick() {
-        mOpenInitiated = true;
-        if (bgUp != null) {
-            setBackground(bgUp);
-        }
-        return super.performClick();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        if (mOpenInitiated && hasWindowFocus) {
-            mOpenInitiated = false;
-            if (bgDown != null) {
-                setBackground(bgDown);
-            }
-        }
-        super.onWindowFocusChanged(hasWindowFocus);
     }
 
     /**
@@ -270,6 +337,108 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
 
     public KeyValueEntity getSelectedEntity(int position) {
         return dataList.get(position);
+    }
+
+    private class MySpinnerAdapter extends BaseAdapter {
+
+        private List<KeyValueEntity> dataList;
+
+        public MySpinnerAdapter(List<KeyValueEntity> dataList) {
+            this.dataList = dataList;
+        }
+
+        @Override
+        public int getCount() {
+            return dataList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return dataList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        /**
+         * item的view
+         *
+         * @param position
+         * @param itemView
+         * @param parent
+         * @return
+         */
+        @Override
+        public View getDropDownView(int position, View itemView, ViewGroup parent) {
+            MySpinnerHolder mHolder = null;
+            if (itemView == null) {
+                mHolder = new MySpinnerHolder();
+                itemView = LayoutInflater.from(mContext).inflate(R.layout.item_spinner_normal, null);
+                mHolder.tvItem = (TextView) itemView.findViewById(R.id.tv_spinner_item);
+                mHolder.dividerItem = itemView.findViewById(R.id.divider_spinner_item);
+                itemView.setTag(mHolder);
+            } else {
+                mHolder = (MySpinnerHolder) itemView.getTag();
+            }
+            mHolder.tvItem.setText(dataList.get(position).getKey());
+            try {
+                if (showDivider) {
+                    mHolder.dividerItem.setVisibility(VISIBLE);
+                    mHolder.dividerItem.setBackgroundColor(dividerColor);
+                } else {
+                    mHolder.dividerItem.setVisibility(GONE);
+                }
+                if (showSelectedTextColor && position == getSelectedItemPosition()) {
+                    mHolder.tvItem.setTextColor(selectedTextColor);
+                } else {
+//                mHolder.tvItem.setTextColor(ContextCompat.getColor(mContext, R.color.default_text_color));
+                }
+                if (showSelectedLayoutColor && position == getSelectedItemPosition()) {
+                    mHolder.tvItem.setTextColor(selectedTextColor);
+                    itemView.setBackgroundColor(selectedLyoutColor);
+                } else {
+//                mHolder.tvItem.setTextColor(ContextCompat.getColor(mContext, R.color.default_text_color));
+//                itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.whitesmoke));
+                }
+                if (itemHeightDp != 0) {
+                    LayoutParams params = mHolder.tvItem.getLayoutParams();
+                    params.height = ZXSystemUtil.dp2px(itemHeightDp);
+                    mHolder.tvItem.setLayoutParams(params);
+                }
+                if (itemTextSizeSp != 0){
+                    mHolder.tvItem.setTextSize(itemTextSizeSp);
+                }
+            } catch (Exception e) {
+                new Throwable("请检查传入颜色值是否正确，格式为R.color.**");
+            }
+            return itemView;
+        }
+
+        /**
+         * spinner的view
+         *
+         * @param i
+         * @param itemView
+         * @param viewGroup
+         * @return
+         */
+        @Override
+        public View getView(int i, View itemView, ViewGroup viewGroup) {
+            itemView = LayoutInflater.from(mContext).inflate(R.layout.item_spinner_normal, null);
+            TextView textView = (TextView) itemView.findViewById(R.id.tv_spinner_item);
+            textView.setText(dataList.get(i).getKey());
+            if (itemTextSizeSp != 0){
+                textView.setTextSize(itemTextSizeSp);
+            }
+            return itemView;
+        }
+
+        private class MySpinnerHolder {
+            public TextView tvItem;
+            public View dividerItem;
+        }
     }
 
 }
