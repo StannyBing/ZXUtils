@@ -38,7 +38,10 @@ import com.zx.zxutils.entity.KeyValueEntity;
 import com.zx.zxutils.forutil.ZXRecordListener;
 import com.zx.zxutils.forutil.ZXUnZipRarListener;
 import com.zx.zxutils.http.ZXBaseResult;
+import com.zx.zxutils.http.ZXDownload;
+import com.zx.zxutils.http.ZXHttpApi;
 import com.zx.zxutils.http.ZXHttpListener;
+import com.zx.zxutils.http.common.Callback;
 import com.zx.zxutils.other.ThreadPool.ZXRunnable;
 import com.zx.zxutils.other.ThreadPool.ZXThreadPool;
 import com.zx.zxutils.other.ZXBroadCastManager;
@@ -325,11 +328,34 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 loginApi1.loadData("login");
                 break;
             case R.id.btn_upload_start://上传开始
-                File file = new File(ZXSystemUtil.getSDCardPath() + "GAMarket.jar");
+                //1.通过apidata的方式
+//                File file = new File(ZXSystemUtil.getSDCardPath() + "GAMarket.jar");
 //                if (!file.exists()) {
 //                    return;
 //                }
-                uploadApi.loadData(file);
+//                uploadApi.loadData(file);
+                //2.通过单独调用的方式
+                ZXHttpApi.uploadFile("http://192.168.110.238:7070/GAMarketSupervise/eventfileUpload", "file", new File(ZXSystemUtil.getSDCardPath() + "ga.txt"), new ZXHttpListener() {
+                    @Override
+                    public void OnHttpStart(int apiType) {
+
+                    }
+
+                    @Override
+                    public void OnHttpError(int apiType, String errorMsg) {
+
+                    }
+
+                    @Override
+                    public void OnHttpSuccess(int apiType, ZXBaseResult baseResult) {
+
+                    }
+
+                    @Override
+                    public void OnHttpProgress(int apiType, int progress) {
+                        upBar.setProgress(progress);
+                    }
+                });
                 break;
             case R.id.btn_upload_cancel://上传取消
                 uploadApi.cancel();
@@ -341,7 +367,35 @@ public class ModuleTestActivity extends AppCompatActivity implements View.OnClic
                 downloadApi.pauseDownload();
                 break;
             case R.id.btn_down_start://下载开始
-                downloadApi.loadData(ZXSystemUtil.getSDCardPath() + "APIdata.jar", true);
+                //1.通过apidata的方式
+                //                downloadApi.loadData(ZXSystemUtil.getSDCardPath() + "APIdata.jar", true);
+                //2.通过单独调用的方式
+                ZXDownload download = new ZXDownload();
+                Callback.Cancelable cancelable = download.downLoad("http://192.168.110.238:7070/upload/GAMarketMobile/Android/GAMarketMobile.apk", ZXSystemUtil.getSDCardPath() + "APIdata.jar", true, new ZXHttpListener() {
+                    @Override
+                    public void OnHttpStart(int apiType) {
+
+                    }
+
+                    @Override
+                    public void OnHttpError(int apiType, String errorMsg) {
+
+                    }
+
+                    @Override
+                    public void OnHttpSuccess(int apiType, ZXBaseResult baseResult) {
+                        File file = baseResult.getFile();
+                        if (file.exists()) {
+                            ZXToastUtil.showToast("下载成功");
+                        }
+                    }
+
+                    @Override
+                    public void OnHttpProgress(int apiType, int progress) {
+                        downBar.setProgress(progress);
+                    }
+                });
+//                cancelable.cancel();
                 break;
             case R.id.btn_testStopService://停止服务
                 Intent serviceIntent1 = new Intent(this, MyService.class);

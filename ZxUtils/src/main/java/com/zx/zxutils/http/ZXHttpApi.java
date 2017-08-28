@@ -10,7 +10,6 @@ import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -95,16 +94,9 @@ public abstract class ZXHttpApi {
      * @param autoRename   是否根据文件名自动重命名
      * @param httpListener 下载监听
      */
-    public void downLoadFile(String downLoadUrl, String savePath, boolean autoRename, ZXHttpListener httpListener) {
-        mListener = httpListener;
-        apiParams = new ZXApiParams()
-                .setApiUrl(downLoadUrl)
-                .setApiMethod(HTTP_MOTHOD.DOWNLOAD)
-                //自定义保存路径，Environment.getExternalStorageDirectory()：SD卡的根目录
-                .setSavePath(savePath)
-                //自动为文件命名
-                .setAutoRename(autoRename);
-        start();
+    public static Callback.Cancelable downLoadFile(String downLoadUrl, String savePath, boolean autoRename, ZXHttpListener httpListener) {
+        ZXDownload download = new ZXDownload();
+        return download.downLoad(downLoadUrl, savePath, autoRename, httpListener);
     }
 
     /**
@@ -113,10 +105,9 @@ public abstract class ZXHttpApi {
      * @param uploadUrl 上传地址
      * @param file      文件
      */
-    public void uploadFile(String uploadUrl, String fileKey, File file, ZXHttpListener httpListener) {
-        Map<String, File> fileMap = new HashMap<>();
-        fileMap.put(fileKey, file);
-        uploadFile(uploadUrl, fileMap, httpListener);
+    public static Callback.Cancelable uploadFile(String uploadUrl, String fileKey, File file, ZXHttpListener httpListener) {
+        ZXUpload upload = new ZXUpload();
+        return upload.upload(uploadUrl, fileKey, file, httpListener);
     }
 
     /**
@@ -125,8 +116,9 @@ public abstract class ZXHttpApi {
      * @param uploadUrl 上传地址
      * @param fileMap   文件map
      */
-    public void uploadFile(String uploadUrl, Map<String, File> fileMap, ZXHttpListener httpListener) {
-        uploadFile(uploadUrl, null, fileMap, httpListener);
+    public static Callback.Cancelable uploadFile(String uploadUrl, Map<String, File> fileMap, ZXHttpListener httpListener) {
+        ZXUpload upload = new ZXUpload();
+        return upload.upload(uploadUrl, fileMap, httpListener);
     }
 
     /**
@@ -136,21 +128,9 @@ public abstract class ZXHttpApi {
      * @param dataMap   信息map
      * @param fileMap   文件map
      */
-    public void uploadFile(String uploadUrl, Map<String, String> dataMap, Map<String, File> fileMap, ZXHttpListener httpListener) {
-        mListener = httpListener;
-        apiParams = new ZXApiParams();
-        apiParams.setApiUrl(uploadUrl);
-        if (fileMap != null) {
-            for (Map.Entry<String, File> entry : fileMap.entrySet()) {
-                apiParams.addParam(entry.getKey(), entry.getValue());
-            }
-        }
-        if (dataMap != null) {
-            for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-                apiParams.addParam(entry.getKey(), entry.getValue());
-            }
-        }
-        start();
+    public static Callback.Cancelable uploadFile(String uploadUrl, Map<String, String> dataMap, Map<String, File> fileMap, ZXHttpListener httpListener) {
+        ZXUpload upload = new ZXUpload();
+        return upload.upload(uploadUrl, dataMap, fileMap, httpListener);
     }
 
     /**

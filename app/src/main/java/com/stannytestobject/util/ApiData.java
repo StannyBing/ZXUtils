@@ -49,6 +49,8 @@ public class ApiData extends ZXHttpApi {
                 params.setApiUrl("http://192.168.110.238:7070/GAMarketSupervise/eventfileUpload");
                 params.setApiMethod(HTTP_MOTHOD.UPLOAD);
                 params.addParam("image", infos[0]);
+//                params.addFileMap((Map<String, File>) infos[1]);
+//                params.addDataMap((Map<String, String>) infos[2]);
                 break;
             case 3:
                 params.setApiUrl("http://192.168.110.238:7070/upload/GAMarketMobile/Android/GAMarketMobile.apk");

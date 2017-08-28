@@ -7,6 +7,7 @@ import com.zx.zxutils.http.http.RequestParams;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Xiangb on 2017/5/25.
@@ -105,9 +106,37 @@ public class ZXApiParams {
                 params.addBodyParameter(key, "");
             } else if (value instanceof File) {
                 fileMap.put(key, (File) value);
-                params.addBodyParameter(key, (File) value);
+//                params.addBodyParameter(key, (File) value);
             } else {
                 params.addBodyParameter(key, value.toString());
+            }
+        }
+        return this;
+    }
+
+    /**
+     * 添加文件集合
+     *
+     * @param fileMap
+     * @return
+     */
+    public ZXApiParams addFileMap(Map<String, File> fileMap) {
+        if (fileMap != null) {
+            fileMap.putAll(fileMap);
+        }
+        return this;
+    }
+
+    /**
+     * 添加数据集合
+     *
+     * @param dataMap
+     * @return
+     */
+    public ZXApiParams addDataMap(Map<String, String> dataMap) {
+        if (params != null && dataMap != null) {
+            for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+                params.addBodyParameter(entry.getKey(), entry.getValue());
             }
         }
         return this;
