@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by yarolegovich on 24.03.2017.
  */
-public class ZXSlidingRootNavLayout extends FrameLayout implements SlidingRootNav {
+public class ZXSlidingRootNavLayout extends FrameLayout implements ZXSlidingRootNav {
 
     private static final String EXTRA_IS_OPENED = "extra_is_opened";
     private static final String EXTRA_SUPER = "extra_super";

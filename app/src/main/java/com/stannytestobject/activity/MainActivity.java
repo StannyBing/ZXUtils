@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.stannytestobject.activity.zxutilstest.ZXUtilTestActivity;
 import com.zx.zxutils.util.ZXPermissionUtil;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addActivity(ModuleTestActivity.class, "依赖库相关测试");
+        addActivity(ZXUtilTestActivity.class, "ZXUtils测试");
         addActivity(TestActivity.class, "个人代码测试");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, titleList);
         setListAdapter(adapter);

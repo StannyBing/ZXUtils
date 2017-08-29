@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.stannytestobject.activity.zxutilstest.ToastTestActivity">
+
+    <Button
+        android:id="@+id/btn_test_simpleToast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="简单Toast"/>
+
+    <Button
+        android:id="@+id/btn_test_imgToast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="图片Toast"/>
+
+    <Button
+        android:id="@+id/btn_test_SnackBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Snackbar"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coorContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

@@ -158,7 +158,7 @@ public class ZXSlidingRootNavBuilder {
         return this;
     }
 
-    public SlidingRootNav build() {
+    public ZXSlidingRootNav build() {
         ViewGroup contentView = getContentView();
 
         View oldRoot = contentView.getChildAt(0);

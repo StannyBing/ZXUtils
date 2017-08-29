@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/btn_openAnimTest"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/test"/>
+
+    <Button
+        android:id="@+id/btn_test_rotateAnim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="旋转"/>
+
+    <Button
+        android:id="@+id/btn_test_alpha1Anim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="渐变-显示"/>
+
+    <Button
+        android:id="@+id/btn_test_alpha2Anim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="旋转-隐藏"/>
+
+    <Button
+        android:id="@+id/btn_test_lessAnim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="缩小"/>
+
+    <Button
+        android:id="@+id/btn_test_amplAnim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="放大"/>
+</LinearLayout>

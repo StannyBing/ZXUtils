@@ -1,0 +1,34 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_test_logE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="error"/>
+
+    <Button
+        android:id="@+id/btn_test_logD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="debug"/>
+
+    <Button
+        android:id="@+id/btn_test_logI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="info"/>
+
+    <Button
+        android:id="@+id/btn_test_logW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="warn"/>
+
+</LinearLayout>

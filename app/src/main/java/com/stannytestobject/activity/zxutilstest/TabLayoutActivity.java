@@ -1,4 +1,4 @@
-package com.stannytestobject.activity;
+package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.stannytestobject">
 
-
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/> <!-- To retrieve the account name (email) as part of sign-in: -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/> <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -38,10 +37,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" /> -->
-
-        <service android:name=".other.MyService"/>
-
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/MainTheme">
@@ -51,25 +46,61 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ModuleTestActivity">
-        </activity>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPickerActivity"/>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPagerActivity"/>
-        <activity android:name=".activity.TabLayoutActivity">
+        <activity android:name=".activity.zxutilstest.TabLayoutActivity">
         </activity>
-        <activity android:name=".activity.ChartActivity">
+        <activity android:name=".activity.zxutilstest.ChartActivity">
         </activity>
-        <activity android:name=".activity.TableActivity">
+        <activity android:name=".activity.zxutilstest.TableActivity">
         </activity>
-        <activity android:name=".activity.FloatScrollActivity">
+        <activity android:name=".activity.zxutilstest.FloatScrollActivity">
         </activity>
-        <activity android:name=".activity.SlidingActivity">
+        <activity android:name=".activity.zxutilstest.SlidingActivity">
         </activity>
-        <activity android:name=".activity.RecylerDeleteActivity">
+        <activity android:name=".activity.zxutilstest.RecylerDeleteActivity">
         </activity>
         <activity android:name=".activity.TestActivity">
         </activity>
-        <activity android:name=".activity.SwipeRefreshRecylerActivity">
+        <activity android:name=".activity.zxutilstest.SwipeRefreshRecylerActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.ZXUtilTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.DialogTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.ToastTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.NotifyTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.DownTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.UploadTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.HttpTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.BroadCastTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.UnZipOrRarTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.PhotoPickerTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.SpinnerTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.RecordTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.SeekBarTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.ThreadPoolTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.BitmapTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.AnimationTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.LogTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.BubbleTestActivity">
+        </activity>
+        <activity android:name=".activity.zxutilstest.ImageLoaderTestActivity">
         </activity>
     </application>
 

@@ -1,0 +1,22 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.stannytestobject.activity.zxutilstest.DialogTestActivity">
+
+    <Button
+        android:id="@+id/btn_test_httpGet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get请求"/>
+
+    <Button
+        android:id="@+id/btn_test_httpPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="post请求"/>
+</LinearLayout>

@@ -1,0 +1,34 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.stannytestobject.activity.zxutilstest.DialogTestActivity">
+
+    <com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView
+        android:id="@+id/mprv_photo1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+    </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
+
+    <com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView
+        android:id="@+id/mprv_photo2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+    </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
+
+    <com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView
+        android:id="@+id/mprv_photo3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+    </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
+</LinearLayout>

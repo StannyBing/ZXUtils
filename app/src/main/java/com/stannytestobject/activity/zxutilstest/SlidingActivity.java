@@ -1,4 +1,4 @@
-package com.stannytestobject.activity;
+package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -13,7 +13,7 @@ import com.stannytestobject.R;
 import com.stannytestobject.adapter.DrawAdapter;
 import com.stannytestobject.model.DrawEntity;
 import com.zx.zxutils.other.ZXItemClickSupport;
-import com.zx.zxutils.views.SlidingLayout.SlidingRootNav;
+import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNav;
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNavBuilder;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 public class SlidingActivity extends AppCompatActivity {
 
     private DrawAdapter adapter;
-    private SlidingRootNav slidingNav;
+    private ZXSlidingRootNav slidingNav;
     private Toolbar toolbar;
     private TextView tvDetail;
     private List<DrawEntity> dataList = new ArrayList<>();
