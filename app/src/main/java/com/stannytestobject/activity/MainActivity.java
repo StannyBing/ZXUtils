@@ -52,7 +52,7 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(ZXUtilTestActivity.class, "ZXUtils测试");
-        addActivity(TestActivity.class, "个人代码测试");
+        addActivity(TestActivity.class, "个人代码");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, titleList);
         setListAdapter(adapter);
         if (!ZXPermissionUtil.checkPermissionsByArray(permissions)) {
