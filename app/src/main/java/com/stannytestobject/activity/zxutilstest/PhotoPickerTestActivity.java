@@ -2,9 +2,9 @@ package com.stannytestobject.activity.zxutilstest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.PhotoPicker.listener.OnDeleteListener;
 import com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView;
@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 
 import static com.stannytestobject.R.id.mprv_photo1;
 
-public class PhotoPickerTestActivity extends AppCompatActivity {
+public class PhotoPickerTestActivity extends BaseActivity {
 
     @BindView(mprv_photo1)
     ZXPhotoPickerView mprvPhoto1;

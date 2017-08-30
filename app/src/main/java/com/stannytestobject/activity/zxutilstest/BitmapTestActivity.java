@@ -4,18 +4,18 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXBitmapUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BitmapTestActivity extends AppCompatActivity {
+public class BitmapTestActivity extends BaseActivity {
 
     @BindView(R.id.iv_test_bitmap)
     ImageView ivTestBitmap;
@@ -53,7 +53,7 @@ public class BitmapTestActivity extends AppCompatActivity {
             case R.id.btn_test_roundBitmap:
                 drawable = ContextCompat.getDrawable(this, R.mipmap.test);
                 bit = ZXBitmapUtil.drawableToBitmap(drawable);
-                ivTestBitmap.setImageBitmap(ZXBitmapUtil.getRoundBitmap(bit, 5));
+                ivTestBitmap.setImageBitmap(ZXBitmapUtil.getRoundBitmap(bit, 50));
                 break;
             case R.id.btn_test_greyBitmap:
                 drawable = ContextCompat.getDrawable(this, R.mipmap.test);

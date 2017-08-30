@@ -1,10 +1,10 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.stannytestobject.util.ApiData;
 import com.zx.zxutils.http.ZXBaseResult;
 import com.zx.zxutils.http.ZXHttpListener;
@@ -14,7 +14,7 @@ import com.zx.zxutils.util.ZXToastUtil;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HttpTestActivity extends AppCompatActivity implements ZXHttpListener {
+public class HttpTestActivity extends BaseActivity implements ZXHttpListener {
 
     private ApiData loginApi1 = new ApiData(1);
     private ApiData loginApi2 = new ApiData(0);

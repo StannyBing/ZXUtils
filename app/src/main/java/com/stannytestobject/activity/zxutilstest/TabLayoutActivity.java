@@ -2,13 +2,13 @@ package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.stannytestobject.fragment.TabFragment;
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager;
 
-public class TabLayoutActivity extends AppCompatActivity {
+public class TabLayoutActivity extends BaseActivity {
 
     private ZXTabViewPager zxTabPager;
 

@@ -3,17 +3,17 @@ package com.stannytestobject.activity.zxutilstest;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ToastTestActivity extends AppCompatActivity {
+public class ToastTestActivity extends BaseActivity {
 
     @BindView(R.id.coorContent)
     CoordinatorLayout coorContent;

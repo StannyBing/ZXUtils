@@ -1,13 +1,13 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.stannytestobject.fragment.RecylerDeleteFragment;
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager;
 
-public class RecylerDeleteActivity extends AppCompatActivity {
+public class RecylerDeleteActivity extends BaseActivity {
 
     private ZXTabViewPager mytab;
 

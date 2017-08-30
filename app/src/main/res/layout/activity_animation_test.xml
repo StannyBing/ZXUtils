@@ -30,7 +30,7 @@
         android:id="@+id/btn_test_alpha2Anim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="旋转-隐藏"/>
+        android:text="渐变-隐藏"/>
 
     <Button
         android:id="@+id/btn_test_lessAnim"

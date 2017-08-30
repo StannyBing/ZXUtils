@@ -1,11 +1,11 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.stannytestobject.util.ApiData;
 import com.zx.zxutils.http.ZXBaseResult;
 import com.zx.zxutils.http.ZXDownload;
@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DownTestActivity extends AppCompatActivity implements ZXHttpListener {
+public class DownTestActivity extends BaseActivity implements ZXHttpListener {
 
     @BindView(R.id.pb_test_simpleDown)
     ProgressBar pbTestSimpleDown;

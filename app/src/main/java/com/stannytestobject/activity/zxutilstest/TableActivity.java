@@ -1,10 +1,10 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.TableView.ZXTableKeyValues;
 import com.zx.zxutils.views.TableView.ZXTableListener;
@@ -13,7 +13,7 @@ import com.zx.zxutils.views.TableView.ZXTableView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableActivity extends AppCompatActivity {
+public class TableActivity extends BaseActivity {
 
     private ZXTableView tableView;
 

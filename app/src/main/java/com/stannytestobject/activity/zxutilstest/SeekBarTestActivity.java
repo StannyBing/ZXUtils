@@ -1,16 +1,16 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.BubSeekBar.ZXSeekBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SeekBarTestActivity extends AppCompatActivity {
+public class SeekBarTestActivity extends BaseActivity {
 
     @BindView(R.id.sb_test_1)
     ZXSeekBar sbTest1;

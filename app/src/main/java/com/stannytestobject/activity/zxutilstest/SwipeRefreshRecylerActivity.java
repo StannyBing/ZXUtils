@@ -1,7 +1,6 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.SwipeRecylerView.ZXRecycleAdapter;
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener;
@@ -17,7 +17,7 @@ import com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwipeRefreshRecylerActivity extends AppCompatActivity {
+public class SwipeRefreshRecylerActivity extends BaseActivity {
 
     private ZXSwipeRecyler swipeRecyler;
     private List<String> datalist = new ArrayList<>();

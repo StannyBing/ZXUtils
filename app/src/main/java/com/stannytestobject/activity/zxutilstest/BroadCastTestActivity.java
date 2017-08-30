@@ -4,16 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.other.ZXBroadCastManager;
 import com.zx.zxutils.util.ZXToastUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BroadCastTestActivity extends AppCompatActivity {
+public class BroadCastTestActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

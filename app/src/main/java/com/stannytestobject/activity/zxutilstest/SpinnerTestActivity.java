@@ -1,11 +1,11 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.entity.KeyValueEntity;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.ZXSpinner;
@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpinnerTestActivity extends AppCompatActivity {
+public class SpinnerTestActivity extends BaseActivity {
 
     @BindView(R.id.sp_test_spinner)
     ZXSpinner spTestSpinner;

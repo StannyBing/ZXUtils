@@ -1,11 +1,11 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXImageLoaderUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
 
@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ImageLoaderTestActivity extends AppCompatActivity {
+public class ImageLoaderTestActivity extends BaseActivity {
 
     @BindView(R.id.iv_test_imageloader)
     ImageView ivTestImageloader;
@@ -34,10 +34,10 @@ public class ImageLoaderTestActivity extends AppCompatActivity {
                 ZXImageLoaderUtil.display(ivTestImageloader, "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2247692397,1189743173&fm=5");
                 break;
             case R.id.btn_test_bigImage:
-                ZXImageLoaderUtil.displayBigPhoto(ivTestImageloader, "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1159955992,2441657696&fm=200&gp=0.jpg");
+                ZXImageLoaderUtil.displayBigPhoto(ivTestImageloader, "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=533063898,2674893141&fm=117&gp=0.jpg");
                 break;
             case R.id.btn_test_smallImage:
-                ZXImageLoaderUtil.displaySmallPhoto(ivTestImageloader, "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=533063898,2674893141&fm=117&gp=0.jpg");
+                ZXImageLoaderUtil.displaySmallPhoto(ivTestImageloader, "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1159955992,2441657696&fm=200&gp=0.jpg");
                 break;
             case R.id.btn_test_roundImage:
                 ZXImageLoaderUtil.displayRound(ivTestImageloader, "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1777861864,3362426868&fm=117&gp=0.jpg");

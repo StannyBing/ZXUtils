@@ -1,10 +1,10 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.forutil.ZXUnZipRarListener;
 import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UnZipOrRarTestActivity extends AppCompatActivity {
+public class UnZipOrRarTestActivity extends BaseActivity {
 
     @BindView(R.id.pb_test_unzip)
     ProgressBar pbTestUnzip;

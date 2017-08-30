@@ -1,9 +1,9 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.views.MPChart.ChartKeyValue;
 import com.zx.zxutils.views.MPChart.ZXBarChart;
 import com.zx.zxutils.views.MPChart.ZXLineChart;
@@ -13,7 +13,7 @@ import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChartActivity extends AppCompatActivity {
+public class ChartActivity extends BaseActivity {
 
     private ZXLineChart linechart;
     private ZXPieChart pieChart;

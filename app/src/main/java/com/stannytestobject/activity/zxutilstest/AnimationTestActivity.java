@@ -1,18 +1,18 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.util.ZXAnimUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AnimationTestActivity extends AppCompatActivity {
+public class AnimationTestActivity extends BaseActivity {
 
     @BindView(R.id.btn_openAnimTest)
     ImageView btnOpenAnimTest;
@@ -31,7 +31,7 @@ public class AnimationTestActivity extends AppCompatActivity {
                 btnOpenAnimTest.startAnimation(ZXAnimUtil.getRotateAnimationByCenter(2000, null));
                 break;
             case R.id.btn_test_alpha1Anim:
-                btnOpenAnimTest.startAnimation(ZXAnimUtil.getAlphaAnimation(0, 100, 2000, null));
+                btnOpenAnimTest.startAnimation(ZXAnimUtil.getAlphaAnimation(0.0f, 1.0f, 2000, null));
                 break;
             case R.id.btn_test_alpha2Anim:
                 btnOpenAnimTest.startAnimation(ZXAnimUtil.getHiddenAlphaAnimation(2000, null));

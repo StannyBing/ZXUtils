@@ -2,14 +2,14 @@ package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.zx.zxutils.views.ZXFloatScrollView;
 
-public class FloatScrollActivity extends AppCompatActivity {
+public class FloatScrollActivity extends BaseActivity {
 
     private ZXFloatScrollView sv_float;
 

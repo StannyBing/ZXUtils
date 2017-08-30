@@ -1,7 +1,6 @@
 package com.stannytestobject.activity.zxutilstest;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.stannytestobject.R;
+import com.stannytestobject.activity.BaseActivity;
 import com.stannytestobject.model.MyEntity;
 import com.zx.zxutils.forutil.ZXRecordListener;
 import com.zx.zxutils.other.ZXItemClickSupport;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecordTestActivity extends AppCompatActivity {
+public class RecordTestActivity extends BaseActivity {
 
     @BindView(R.id.rv_test_record)
     RecyclerView rvTestRecord;
