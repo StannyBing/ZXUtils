@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stannytestobject.R;
-import com.stannytestobject.other.KeyValueEntity;
+import com.stannytestobject.model.KeyValueEntity;
 
 import java.util.List;
 

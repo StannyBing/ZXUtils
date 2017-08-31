@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stannytestobject.activity.zxutilstest.SwipeRefreshRecylerActivity">
+    tools:context="com.stannytestobject.ui.SwipeRefreshRecylerActivity">
 
     <com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler
         android:id="@+id/sr_layout"
