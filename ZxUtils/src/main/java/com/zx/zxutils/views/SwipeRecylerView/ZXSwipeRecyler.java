@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.zx.zxutils.R;
 import com.zx.zxutils.other.ZXItemClickSupport;
+import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
 
 
 /**
@@ -48,15 +49,15 @@ public class ZXSwipeRecyler extends LinearLayout {
         ZXItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ZXItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View view) {
-                if (zxsrListener != null && position < adapter.onItemList().size()) {
-                    zxsrListener.onItemClick(adapter.onItemList().get(position), position);
+                if (zxsrListener != null && position < adapter.getDataList().size()) {
+                    zxsrListener.onItemClick(adapter.getDataList().get(position), position);
                 }
             }
         }).setOnItemLongClickListener(new ZXItemClickSupport.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClicked(RecyclerView recyclerView, int position, View view) {
-                if (zxsrListener != null && position < adapter.onItemList().size()) {
-                    zxsrListener.onItemLongClick(adapter.onItemList().get(position), position);
+                if (zxsrListener != null && position < adapter.getDataList().size()) {
+                    zxsrListener.onItemLongClick(adapter.getDataList().get(position), position);
                 }
                 return true;
             }

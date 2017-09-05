@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.stannytestobject">
+          package="com.stanny.demo">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/> <!-- To retrieve the account name (email) as part of sign-in: -->
@@ -38,7 +38,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.stanny.demo.ui.MainActivity"
             android:theme="@style/MainTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -48,55 +48,55 @@
         </activity>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPickerActivity"/>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPagerActivity"/>
-        <activity android:name=".ui.TabLayoutActivity">
+        <activity android:name="com.stanny.demo.ui.TabLayoutActivity">
         </activity>
-        <activity android:name=".ui.ChartActivity">
+        <activity android:name="com.stanny.demo.ui.ChartActivity">
         </activity>
-        <activity android:name=".ui.TableActivity">
+        <activity android:name="com.stanny.demo.ui.TableActivity">
         </activity>
-        <activity android:name=".ui.FloatScrollActivity">
+        <activity android:name="com.stanny.demo.ui.FloatScrollActivity">
         </activity>
-        <activity android:name=".ui.SlidingActivity">
+        <activity android:name="com.stanny.demo.ui.SlidingActivity">
         </activity>
-        <activity android:name=".ui.RecylerDeleteActivity">
+        <activity android:name="com.stanny.demo.ui.RecylerDeleteActivity">
         </activity>
-        <activity android:name=".ui.SwipeRefreshRecylerActivity">
+        <activity android:name="com.stanny.demo.ui.SwipeRefreshRecylerActivity">
         </activity>
-        <activity android:name=".ui.DialogTestActivity">
+        <activity android:name="com.stanny.demo.ui.DialogTestActivity">
         </activity>
-        <activity android:name=".ui.ToastTestActivity">
+        <activity android:name="com.stanny.demo.ui.ToastTestActivity">
         </activity>
-        <activity android:name=".ui.NotifyTestActivity">
+        <activity android:name="com.stanny.demo.ui.NotifyTestActivity">
         </activity>
-        <activity android:name=".ui.DownTestActivity">
+        <activity android:name="com.stanny.demo.ui.DownTestActivity">
         </activity>
-        <activity android:name=".ui.UploadTestActivity">
+        <activity android:name="com.stanny.demo.ui.UploadTestActivity">
         </activity>
-        <activity android:name=".ui.HttpTestActivity">
+        <activity android:name="com.stanny.demo.ui.HttpTestActivity">
         </activity>
-        <activity android:name=".ui.BroadCastTestActivity">
+        <activity android:name="com.stanny.demo.ui.BroadCastTestActivity">
         </activity>
-        <activity android:name=".ui.UnZipOrRarTestActivity">
+        <activity android:name="com.stanny.demo.ui.UnZipOrRarTestActivity">
         </activity>
-        <activity android:name=".ui.PhotoPickerTestActivity">
+        <activity android:name="com.stanny.demo.ui.PhotoPickerTestActivity">
         </activity>
-        <activity android:name=".ui.SpinnerTestActivity">
+        <activity android:name="com.stanny.demo.ui.SpinnerTestActivity">
         </activity>
-        <activity android:name=".ui.RecordTestActivity">
+        <activity android:name="com.stanny.demo.ui.RecordTestActivity">
         </activity>
-        <activity android:name=".ui.SeekBarTestActivity">
+        <activity android:name="com.stanny.demo.ui.SeekBarTestActivity">
         </activity>
-        <activity android:name=".ui.ThreadPoolTestActivity">
+        <activity android:name="com.stanny.demo.ui.ThreadPoolTestActivity">
         </activity>
-        <activity android:name=".ui.BitmapTestActivity">
+        <activity android:name="com.stanny.demo.ui.BitmapTestActivity">
         </activity>
-        <activity android:name=".ui.AnimationTestActivity">
+        <activity android:name="com.stanny.demo.ui.AnimationTestActivity">
         </activity>
-        <activity android:name=".ui.LogTestActivity">
+        <activity android:name="com.stanny.demo.ui.LogTestActivity">
         </activity>
-        <activity android:name=".ui.BubbleTestActivity">
+        <activity android:name="com.stanny.demo.ui.BubbleTestActivity">
         </activity>
-        <activity android:name=".ui.ImageLoaderTestActivity">
+        <activity android:name="com.stanny.demo.ui.ImageLoaderTestActivity">
         </activity>
     </application>
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stannytestobject.ui.TableActivity">
+    tools:context=".demo.ui.TableActivity">
 
     <com.zx.zxutils.views.TableView.ZXTableView
         android:layout_width="match_parent"
