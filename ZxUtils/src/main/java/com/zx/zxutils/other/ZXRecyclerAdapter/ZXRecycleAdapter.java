@@ -1,6 +1,5 @@
 package com.zx.zxutils.other.ZXRecyclerAdapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +27,6 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
 
     public int pageSize = 10;//每页数量
     public List<?> dataList;
-    public Context context;
-
-    public ZXRecycleAdapter(Context context, List<?> dataList) {
-        this.context = context;
-        this.dataList = dataList;
-    }
 
     public List<?> getDataList() {
         return dataList;
@@ -47,6 +40,8 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
         this.hasLoadMore = hasLoadMore;
     }
 
+    public abstract List<?> onItemList();
+
     public abstract int onCreateViewLayoutID(int viewType);
 
     public abstract void onBindHolder(ZxRvHolder holder, Object itemEntity, int position);
@@ -57,7 +52,7 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycle_foot_view, parent, false);
             return new FooterViewHolder(view);
         } else {
-            View view = LayoutInflater.from(context).inflate(onCreateViewLayoutID(viewType), null);
+            View view = LayoutInflater.from(parent.getContext()).inflate(onCreateViewLayoutID(viewType), null);
             RvHolder holder = new RvHolder(view);
             return holder;
         }
@@ -73,6 +68,7 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
         if (holder instanceof FooterViewHolder) {
             footerViewHolder = (FooterViewHolder) holder;
         } else {
+            dataList = onItemList();
             onBindHolder(holder.getViewHolder(), dataList.get(position), position);
         }
     }
@@ -92,6 +88,7 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
 
     @Override
     public int getItemCount() {
+        dataList = onItemList();
         int count = 0;
         if (dataList != null) {
             if (hasLoadMore) {

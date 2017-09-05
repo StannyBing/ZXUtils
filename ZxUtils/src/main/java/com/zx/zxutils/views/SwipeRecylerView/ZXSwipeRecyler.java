@@ -43,7 +43,7 @@ public class ZXSwipeRecyler extends LinearLayout {
         this.context = context;
         //在构造函数中将xml中定义的布局解析出来
         LayoutInflater.from(context).inflate(R.layout.view_swipe_recyler, this, true);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_normal_layout); 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_normal_layout);
         recyclerView = (RecyclerView) findViewById(R.id.rv_normal_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         ZXItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ZXItemClickSupport.OnItemClickListener() {

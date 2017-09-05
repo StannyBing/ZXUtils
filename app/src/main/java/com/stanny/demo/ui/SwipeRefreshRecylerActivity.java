@@ -1,6 +1,5 @@
 package com.stanny.demo.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import com.stanny.demo.R;
@@ -24,7 +23,7 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe_refresh_recyler);
         swipeRecyler = (ZXSwipeRecyler) findViewById(R.id.sr_layout);
-        swipeRecyler.setAdapter(new TestAdapter(this, datalist))
+        swipeRecyler.setAdapter(new TestAdapter())
                 .showLoadInfo(true)
                 .setSRListener(new ZXSRListener<String>() {
                     @Override
@@ -63,8 +62,10 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
 
     public class TestAdapter extends ZXRecycleAdapter {
 
-        public TestAdapter(Context context, List<?> dataList) {
-            super(context, dataList);
+
+        @Override
+        public List<?> onItemList() {
+            return datalist;
         }
 
         @Override
