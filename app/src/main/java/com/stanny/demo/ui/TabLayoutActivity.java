@@ -18,13 +18,14 @@ public class TabLayoutActivity extends BaseActivity {
         zxTabPager = (ZXTabViewPager) findViewById(R.id.vp_tab);
         zxTabPager.setManager(getSupportFragmentManager())
                 .setTabLayoutGravity(ZXTabViewPager.TabGravity.GRAVITY_BOTTOM)
-                .addTab(TabFragment.newInstance(""), "1")
-                .addTab(TabFragment.newInstance(""), "2")
-                .addTab(TabFragment.newInstance(""), "3")
+                .addTab(TabFragment.newInstance(""), "1", R.mipmap.ic_empty_picture)
+                .addTab(TabFragment.newInstance(""), "2", R.mipmap.ic_empty_picture)
+                .addTab(TabFragment.newInstance(""), "3", R.mipmap.ic_empty_picture)
                 .setTitleColor(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.red))
                 .setIndicatorColor(ContextCompat.getColor(this, R.color.wheat))
                 .setIndicatorHeight(3)
-                .setSelectOn(2);
+                .setSelectOn(2)
+                .build();
 
     }
 }

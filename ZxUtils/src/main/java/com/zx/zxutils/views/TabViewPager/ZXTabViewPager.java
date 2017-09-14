@@ -1,13 +1,16 @@
 package com.zx.zxutils.views.TabViewPager;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zx.zxutils.R;
 
@@ -22,10 +25,11 @@ import static com.zx.zxutils.views.TabViewPager.ZXTabViewPager.TabGravity.GRAVIT
  * 功能：tablayout自定义view
  */
 public class ZXTabViewPager extends RelativeLayout {
-    public ZXPagerAdapter myPagerAdapter;
+    private ZXPagerAdapter myPagerAdapter;
     private TabLayout tabLayoutTop, tabLayoutBottom, tabLayout;
     private ViewPager viewPager;
-//    public static final int GRAVITY_TOP = 0;
+    private Context context;
+    //    public static final int GRAVITY_TOP = 0;
 //    public static final int GRAVITY_BOTTOM = 1;
     private List<Integer> iconList = new ArrayList<>();
 
@@ -34,7 +38,7 @@ public class ZXTabViewPager extends RelativeLayout {
     }
 
     public ZXTabViewPager(Context context) {
-        super(context, null);
+        this(context, null);
     }
 
     public ZXTabViewPager(Context context, AttributeSet attrs) {
@@ -46,6 +50,7 @@ public class ZXTabViewPager extends RelativeLayout {
         viewPager = (ViewPager) findViewById(R.id._vp_zx_pager);
         iconList.clear();
         tabLayout = tabLayoutTop;
+        this.context = context;
     }
 
     /**
@@ -69,11 +74,56 @@ public class ZXTabViewPager extends RelativeLayout {
      * @return
      */
     public ZXTabViewPager addTab(Fragment fragment, String title) {
-        myPagerAdapter.addFragment(fragment, title);
-        viewPager.setOffscreenPageLimit(3);
+        myPagerAdapter.addFragment(fragment, title, null);
+        return this;
+    }
+
+    /**
+     * 添加tab 带图片,也可以传入selecter文件
+     *
+     * @param fragment
+     * @param title
+     * @return
+     */
+    public ZXTabViewPager addTab(Fragment fragment, String title, int itemBg) {
+        Drawable item_Bg = ContextCompat.getDrawable(context, itemBg);
+        myPagerAdapter.addFragment(fragment, title, item_Bg);
+        return this;
+    }
+
+    /**
+     * 完成构建
+     */
+    public void build() {
+        viewPager.setOffscreenPageLimit(myPagerAdapter.fragmentList.size());
         viewPager.setAdapter(myPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        return this;
+        if (myPagerAdapter.normalBgList.get(0) != null) {
+            for (int i = 0; i < myPagerAdapter.getCount(); i++) {
+                TabLayout.Tab tab = tabLayout.getTabAt(i);
+                tab.setCustomView(R.layout.item_tablayout);
+                tab.getCustomView().findViewById(R.id.iv_item_tab).setBackground(myPagerAdapter.normalBgList.get(i));
+                ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setText(myPagerAdapter.getPageTitle(i));
+            }
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    tab.getCustomView().findViewById(R.id.iv_item_tab).setSelected(true);
+                    tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(true);
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    tab.getCustomView().findViewById(R.id.iv_item_tab).setSelected(false);
+                    tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(false);
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        }
     }
 
     /**

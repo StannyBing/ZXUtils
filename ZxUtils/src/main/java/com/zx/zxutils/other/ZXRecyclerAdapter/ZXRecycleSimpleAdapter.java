@@ -16,60 +16,40 @@ import java.util.List;
  * Created by Xiangb on 2016/9/21.
  * 功能：封装的Recycler适配器。用于待FooterView的情况
  */
-public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
+public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private LoadMoreListener mLoadMoreListener;
     public FooterViewHolder footerViewHolder;
     //全局变量
     private static final int ITEM_TYPE_NORMAL = 1;
     private static final int ITEM_TYPE_FOOTER = 2;
 
-    public boolean hasLoadMore = false;
+    public boolean hasLoadMore = true;
 
     public int pageSize = 10;//每页数量
-    private List<?> dataList;
 
-    public List<?> getDataList() {
-        return dataList;
-    }
+    public abstract RecyclerView.ViewHolder onItemHolder(ViewGroup parent, int viewType);
 
-    public boolean isHasLoadMore() {
-        return hasLoadMore;
-    }
+    public abstract void onBindHolder(RecyclerView.ViewHolder holder, int position);
 
-    public void setHasLoadMore(boolean hasLoadMore) {
-        this.hasLoadMore = hasLoadMore;
-    }
-
-    public abstract List<?> onItemList();
-
-    public abstract int onCreateViewLayoutID(int viewType);
-
-    public abstract void onBindHolder(ZxRvHolder holder, Object itemEntity, int position);
+    public abstract List onItemList();
 
     @Override
-    public RvHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE_FOOTER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycle_foot_view, parent, false);
             return new FooterViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(onCreateViewLayoutID(viewType), null);
-            RvHolder holder = new RvHolder(view);
+            RecyclerView.ViewHolder holder = onItemHolder(parent, viewType);
             return holder;
         }
     }
 
     @Override
-    public void onViewRecycled(RvHolder holder) {
-        super.onViewRecycled(holder);
-    }
-
-    @Override
-    public void onBindViewHolder(RvHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterViewHolder) {
             footerViewHolder = (FooterViewHolder) holder;
         } else {
-            dataList = onItemList();
-            onBindHolder(holder.getViewHolder(), dataList.get(position), position);
+            onBindHolder(holder, position);
         }
     }
 
@@ -88,19 +68,18 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
 
     @Override
     public int getItemCount() {
-        dataList = onItemList();
         int count = 0;
-        if (dataList != null) {
+        if (onItemList() != null) {
             if (hasLoadMore) {
-                count = dataList.size() + 1;
+                count = onItemList().size() + 1;
             } else {
-                count = dataList.size();
+                count = onItemList().size();
             }
         }
         return count;
     }
 
-    public class FooterViewHolder extends RvHolder {
+    public class FooterViewHolder extends RecyclerView.ViewHolder {
         private TextView loadText;
         private ProgressBar loadProgress;
 

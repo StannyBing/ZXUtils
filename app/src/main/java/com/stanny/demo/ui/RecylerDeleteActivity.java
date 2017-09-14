@@ -20,6 +20,7 @@ public class RecylerDeleteActivity extends BaseActivity {
                 .setTabLayoutGravity(ZXTabViewPager.TabGravity.GRAVITY_TOP)
                 .addTab(RecylerDeleteFragment.newInstance(""), "测试1")
                 .addTab(RecylerDeleteFragment.newInstance(""), "测试2")
-                .addTab(RecylerDeleteFragment.newInstance(""), "测试3");
+                .addTab(RecylerDeleteFragment.newInstance(""), "测试3")
+                .build();
     }
 }

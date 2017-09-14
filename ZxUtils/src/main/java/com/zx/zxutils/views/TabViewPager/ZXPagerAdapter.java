@@ -1,5 +1,6 @@
 package com.zx.zxutils.views.TabViewPager;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +15,7 @@ import java.util.List;
 public class ZXPagerAdapter extends FragmentPagerAdapter {
     public List<Fragment> fragmentList = new ArrayList<>();
     public List<String> fragmentTitleList = new ArrayList<>();
+    public List<Drawable> normalBgList = new ArrayList<>();
 
     public ZXPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -21,9 +23,10 @@ public class ZXPagerAdapter extends FragmentPagerAdapter {
         fragmentTitleList.clear();
     }
 
-    public void addFragment(Fragment fragment, String title) {
+    public void addFragment(Fragment fragment, String title, Drawable normalBg) {
         fragmentList.add(fragment);
         fragmentTitleList.add(title);
+        normalBgList.add(normalBg);
     }
 
     @Override
