@@ -109,16 +109,16 @@ public class ZXBubbleView extends PopupWindow {
 
             switch (gravity) {
                 case Gravity.BOTTOM:
-                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthTopOrBottom(location[0] - 30), location[1] + parent.getHeight());
+                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthTopOrBottom(location[0] - 30), compareWithScrenHeight(location[1] + parent.getHeight()));
                     break;
                 case Gravity.TOP:
-                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthTopOrBottom(location[0] - 30), location[1] - getMeasureHeight());
+                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthTopOrBottom(location[0] - 30), compareWithScrenHeight(location[1] - getMeasureHeight()));
                     break;
                 case Gravity.RIGHT:
-                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthLeftOrRight(location[0] + parent.getWidth(), 1), location[1] - (parent.getHeight() / 2));
+                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthLeftOrRight(location[0] + parent.getWidth(), 1), compareWithScrenHeight(location[1] - (parent.getHeight() / 2)));
                     break;
                 case Gravity.LEFT:
-                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthLeftOrRight(location[0] - getMeasuredWidth(), 0), location[1] - (parent.getHeight() / 2));
+                    showAtLocation(parent, Gravity.NO_GRAVITY, compareWithScreenWidthLeftOrRight(location[0] - getMeasuredWidth(), 0), compareWithScrenHeight(location[1] - (parent.getHeight() / 2)));
                     break;
                 default:
                     break;
@@ -126,6 +126,10 @@ public class ZXBubbleView extends PopupWindow {
         } else {
             this.dismiss();
         }
+    }
+
+    private int compareWithScrenHeight(int locationy) {
+        return locationy < 60 ? 60 : locationy;
     }
 
     /**
@@ -138,7 +142,7 @@ public class ZXBubbleView extends PopupWindow {
         if (locationx + getMeasuredWidth() > ZXScreenUtil.getScreenWidth()) {//超出屏幕外了（右边）
             return ZXScreenUtil.getScreenWidth() - getMeasuredWidth();//此时刚好到屏幕右侧
         } else {
-            return locationx;
+            return locationx < -20 ? -20 : locationx;
         }
     }
 
