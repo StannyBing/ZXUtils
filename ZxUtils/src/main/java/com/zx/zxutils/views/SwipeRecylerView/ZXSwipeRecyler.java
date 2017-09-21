@@ -143,8 +143,8 @@ public class ZXSwipeRecyler extends LinearLayout {
             public void LoadMore() {
                 if (zxsrListener != null) {
                     if (pageNum * 10 < totalNum) {
-                        if (adapter != null && adapter.footerViewHolder != null) {
-                            adapter.footerViewHolder.doLoading();
+                        if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
+                            simpleAdapter.footerViewHolder.doLoading();
                         }
                         pageNum++;
                         zxsrListener.onLoadMore();
