@@ -27,6 +27,12 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
 
     public int pageSize = 10;//每页数量
 
+    private List<?> dataList;
+
+    public List<?> getDataList() {
+        return dataList;
+    }
+
     public abstract RecyclerView.ViewHolder onItemHolder(ViewGroup parent, int viewType);
 
     public abstract void onBindHolder(RecyclerView.ViewHolder holder, int position);
@@ -49,6 +55,7 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
         if (holder instanceof FooterViewHolder) {
             footerViewHolder = (FooterViewHolder) holder;
         } else {
+            dataList = onItemList();
             onBindHolder(holder, position);
         }
     }

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import com.zx.zxutils.R;
 import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
+import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleSimpleAdapter;
 
 
 /**
@@ -27,6 +28,7 @@ public class ZXSwipeRecyler extends LinearLayout {
     private RecyclerView recyclerView;
     private ZXSRListener zxsrListener;
     private ZXRecycleAdapter adapter;
+    private ZXRecycleSimpleAdapter simpleAdapter;
     private int pageNum = 1, totalNum = 0, pageSize = 10;
 
     public ZXSwipeRecyler(Context context) {
@@ -49,15 +51,27 @@ public class ZXSwipeRecyler extends LinearLayout {
         ZXItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ZXItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View view) {
-                if (zxsrListener != null && position < adapter.getDataList().size()) {
-                    zxsrListener.onItemClick(adapter.getDataList().get(position), position);
+                if (adapter != null) {
+                    if (zxsrListener != null && position < adapter.getDataList().size()) {
+                        zxsrListener.onItemClick(adapter.getDataList().get(position), position);
+                    }
+                } else if (simpleAdapter != null) {
+                    if (zxsrListener != null && position < simpleAdapter.getDataList().size()) {
+                        zxsrListener.onItemClick(simpleAdapter.getDataList().get(position), position);
+                    }
                 }
             }
         }).setOnItemLongClickListener(new ZXItemClickSupport.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClicked(RecyclerView recyclerView, int position, View view) {
-                if (zxsrListener != null && position < adapter.getDataList().size()) {
-                    zxsrListener.onItemLongClick(adapter.getDataList().get(position), position);
+                if (adapter != null) {
+                    if (zxsrListener != null && position < adapter.getDataList().size()) {
+                        zxsrListener.onItemLongClick(adapter.getDataList().get(position), position);
+                    }
+                } else if (simpleAdapter != null) {
+                    if (zxsrListener != null && position < simpleAdapter.getDataList().size()) {
+                        zxsrListener.onItemLongClick(simpleAdapter.getDataList().get(position), position);
+                    }
                 }
                 return true;
             }
@@ -116,12 +130,42 @@ public class ZXSwipeRecyler extends LinearLayout {
     }
 
     /**
+     * 设置适配器
+     *
+     * @param adapter
+     * @return
+     */
+    public ZXSwipeRecyler setSimpleAdapter(final ZXRecycleSimpleAdapter adapter) {
+        this.simpleAdapter = adapter;
+        recyclerView.setAdapter(adapter);
+        adapter.setOnLoadMoreListener(new LoadMoreListener() {
+            @Override
+            public void LoadMore() {
+                if (zxsrListener != null) {
+                    if (pageNum * 10 < totalNum) {
+                        if (adapter != null && adapter.footerViewHolder != null) {
+                            adapter.footerViewHolder.doLoading();
+                        }
+                        pageNum++;
+                        zxsrListener.onLoadMore();
+                    }
+                }
+            }
+        });
+        return this;
+    }
+
+    /**
      * 获取适配器
      *
      * @return
      */
     public ZXRecycleAdapter getAdapter() {
         return adapter;
+    }
+
+    public ZXRecycleSimpleAdapter getSimpleAdapter() {
+        return simpleAdapter;
     }
 
     /**
@@ -152,6 +196,8 @@ public class ZXSwipeRecyler extends LinearLayout {
         this.pageSize = pageSize;
         if (adapter != null) {
             adapter.pageSize = pageSize;
+        } else if (simpleAdapter != null) {
+            simpleAdapter.pageSize = pageSize;
         }
         return this;
     }
@@ -176,6 +222,8 @@ public class ZXSwipeRecyler extends LinearLayout {
     public ZXSwipeRecyler showLoadInfo(boolean hasLoadInfo) {
         if (adapter != null) {
             adapter.hasLoadMore = hasLoadInfo;
+        } else if (simpleAdapter != null) {
+            simpleAdapter.hasLoadMore = hasLoadInfo;
         }
         return this;
     }
@@ -186,6 +234,8 @@ public class ZXSwipeRecyler extends LinearLayout {
     public void notifyDataSetChanged() {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
+        } else if (simpleAdapter != null) {
+            simpleAdapter.notifyDataSetChanged();
         }
     }
 
@@ -205,6 +255,8 @@ public class ZXSwipeRecyler extends LinearLayout {
         this.totalNum = totalNum;
         if (adapter != null && adapter.footerViewHolder != null) {
             adapter.footerViewHolder.setStatus(pageNum, totalNum);
+        } else if (simpleAdapter != null) {
+            simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
         }
     }
 
