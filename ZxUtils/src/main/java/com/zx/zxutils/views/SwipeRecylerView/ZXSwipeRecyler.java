@@ -116,7 +116,7 @@ public class ZXSwipeRecyler extends LinearLayout {
             @Override
             public void LoadMore() {
                 if (zxsrListener != null) {
-                    if (pageNum * 10 < totalNum) {
+                    if (pageNum * pageSize < totalNum) {
                         if (adapter != null && adapter.footerViewHolder != null) {
                             adapter.footerViewHolder.doLoading();
                         }
@@ -142,7 +142,7 @@ public class ZXSwipeRecyler extends LinearLayout {
             @Override
             public void LoadMore() {
                 if (zxsrListener != null) {
-                    if (pageNum * 10 < totalNum) {
+                    if (pageNum * pageSize < totalNum) {
                         if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
                             simpleAdapter.footerViewHolder.doLoading();
                         }
@@ -255,7 +255,7 @@ public class ZXSwipeRecyler extends LinearLayout {
         this.totalNum = totalNum;
         if (adapter != null && adapter.footerViewHolder != null) {
             adapter.footerViewHolder.setStatus(pageNum, totalNum);
-        } else if (simpleAdapter != null) {
+        } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
             simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
         }
     }
