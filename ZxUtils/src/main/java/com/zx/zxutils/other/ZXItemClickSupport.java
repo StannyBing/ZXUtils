@@ -1,18 +1,16 @@
 package com.zx.zxutils.other;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 
 import com.zx.zxutils.R;
 
 import static android.support.v7.widget.RecyclerView.OnChildAttachStateChangeListener;
-import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 /**
- *
  * Create By Xiangb On 2017/6/1
  * 功能：recylerview的点击事件
- *
  */
 public class ZXItemClickSupport {
     private final RecyclerView recyclerView;

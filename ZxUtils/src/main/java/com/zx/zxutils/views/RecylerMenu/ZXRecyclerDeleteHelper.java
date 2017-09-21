@@ -547,7 +547,9 @@ public class ZXRecyclerDeleteHelper implements RecyclerView.OnItemTouchListener,
                         fgView = touchedView.findViewById(fgViewID);
                         bgView = touchedView.findViewById(bgViewID);
 //                        bgView.getLayoutParams().height = fgView.getHeight();
-                        bgView.setMinimumHeight(fgView.getHeight());
+                        if (fgView != null) {
+                            bgView.setMinimumHeight(fgView.getHeight());
+                        }
 
                         /*
                         * bgVisible is true when the options menu is opened

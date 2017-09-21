@@ -3,9 +3,11 @@ package com.stanny.demo.ui;
 import android.os.Bundle;
 
 import com.stanny.demo.R;
+import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZxRvHolder;
 import com.zx.zxutils.util.ZXToastUtil;
+import com.zx.zxutils.views.RecylerMenu.ZXRecyclerDeleteHelper;
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener;
 import com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler;
 
@@ -17,12 +19,36 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
     private ZXSwipeRecyler swipeRecyler;
     private List<String> datalist = new ArrayList<>();
     private int totalNum = 100;
+    ZXRecyclerDeleteHelper deleteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe_refresh_recyler);
         swipeRecyler = (ZXSwipeRecyler) findViewById(R.id.sr_layout);
+        deleteHelper = new ZXRecyclerDeleteHelper(this, swipeRecyler.getRecyclerView())
+                .setClickable(new ZXRecyclerDeleteHelper.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(int position) {
+                        ZXToastUtil.showToast("点击了栏目");
+                    }
+                })
+                .setSwipeOptionViews(R.id.tv_delete, R.id.tv_cancle)
+                .setSwipeable(R.id.ll_content, R.id.ll_menu, new ZXRecyclerDeleteHelper.OnSwipeOptionsClickListener() {
+                    @Override
+                    public void onSwipeOptionClicked(int viewID, int position) {
+                        switch (viewID) {
+                            case R.id.tv_delete:
+                                ZXToastUtil.showToast("删除第" + position + "个");
+                                break;
+                            case R.id.tv_cancle:
+                                ZXToastUtil.showToast("取消第" + position + "个");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
         swipeRecyler.setAdapter(new TestAdapter())
                 .showLoadInfo(true)
                 .setSRListener(new ZXSRListener<String>() {
@@ -49,6 +75,7 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
                         swipeRecyler.setLoadInfo(totalNum);
                     }
                 });
+        ZXItemClickSupport.removeFrom(swipeRecyler.getRecyclerView());
         addList();
     }
 
