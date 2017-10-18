@@ -260,6 +260,19 @@ public class ZXSwipeRecyler extends LinearLayout {
         }
     }
 
+    /**
+     * 设置加载信息
+     *
+     * @param infoMsg
+     */
+    public void setLoadInfo(String infoMsg) {
+        if (adapter != null && adapter.footerViewHolder != null) {
+            adapter.footerViewHolder.setStatus(infoMsg);
+        } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
+            simpleAdapter.footerViewHolder.setStatus(infoMsg);
+        }
+    }
+
     public int getPageNum() {
         return pageNum;
     }

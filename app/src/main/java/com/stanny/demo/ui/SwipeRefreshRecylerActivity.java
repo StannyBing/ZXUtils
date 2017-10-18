@@ -66,13 +66,13 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
                     public void onRefresh() {
                         swipeRecyler.stopRefresh();
                         addList();
-                        swipeRecyler.setLoadInfo(totalNum);
+                        swipeRecyler.setLoadInfo("阿西吧");
                     }
 
                     @Override
                     public void onLoadMore() {
                         addList();
-                        swipeRecyler.setLoadInfo(totalNum);
+                        swipeRecyler.setLoadInfo("啊了个阿西吧");
                     }
                 });
         ZXItemClickSupport.removeFrom(swipeRecyler.getRecyclerView());

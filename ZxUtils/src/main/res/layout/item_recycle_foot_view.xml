@@ -10,6 +10,7 @@
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:gravity="center"/>
 
     <TextView
@@ -18,6 +19,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="正在加载更多...."
+        android:visibility="gone"
         android:textColor="@color/cadetblue"
         android:textSize="14sp"/>
 

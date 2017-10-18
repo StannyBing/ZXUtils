@@ -109,7 +109,14 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
             loadText.setText("正在加载中。。");
         }
 
+        public void setStatus(String infoMsg) {
+            loadText.setVisibility(View.VISIBLE);
+            loadProgress.setVisibility(View.GONE);
+            loadText.setText(infoMsg);
+        }
+
         public void setStatus(int mPageNum, int mTotalNum) {
+            loadText.setVisibility(View.VISIBLE);
             if (mTotalNum == 0) {
                 loadProgress.setVisibility(View.GONE);
                 loadText.setText("没有数据");
