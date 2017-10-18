@@ -31,6 +31,7 @@ public class ZXSwipeRecyler extends LinearLayout {
     private ZXRecycleSimpleAdapter simpleAdapter;
     private int pageNum = 1, totalNum = 0, pageSize = 10;
 
+
     public ZXSwipeRecyler(Context context) {
         super(context);
         init(context);
@@ -266,6 +267,7 @@ public class ZXSwipeRecyler extends LinearLayout {
      * @param infoMsg
      */
     public void setLoadInfo(String infoMsg) {
+        totalNum = pageSize * pageNum + 1;
         if (adapter != null && adapter.footerViewHolder != null) {
             adapter.footerViewHolder.setStatus(infoMsg);
         } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
