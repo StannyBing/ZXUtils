@@ -53,7 +53,7 @@ public class ZXSharedPrefUtil {
             } else if (value instanceof Long) {
                 putLong(key, (Long) value);
             } else {
-                putObject(key, (Serializable) value);
+                putString(key, value.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
