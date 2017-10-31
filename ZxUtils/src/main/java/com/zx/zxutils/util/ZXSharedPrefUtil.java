@@ -2,11 +2,20 @@ package com.zx.zxutils.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+import android.util.Base64;
 
 import com.zx.zxutils.ZXApp;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Xiangb on 2017/3/30.
@@ -34,16 +43,20 @@ public class ZXSharedPrefUtil {
      * @param value
      */
     public void putValue(String key, Object value) {
-        if (value instanceof Integer) {
-            putInt(key, (Integer) value);
-        } else if (value instanceof Boolean) {
-            putBool(key, (Boolean) value);
-        } else if (value instanceof Float) {
-            putFloat(key, (Float) value);
-        } else if (value instanceof Long) {
-            putLong(key, (Long) value);
-        } else {
-            putString(key, value + "");
+        try {
+            if (value instanceof Integer) {
+                putInt(key, (Integer) value);
+            } else if (value instanceof Boolean) {
+                putBool(key, (Boolean) value);
+            } else if (value instanceof Float) {
+                putFloat(key, (Float) value);
+            } else if (value instanceof Long) {
+                putLong(key, (Long) value);
+            } else {
+                putObject(key, (Serializable) value);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -170,6 +183,136 @@ public class ZXSharedPrefUtil {
 
     public long getLong(String key, long defaultVal) {
         return preferences.getLong(key, defaultVal);
+    }
+
+    /**
+     * 存储对象
+     *
+     * @param key
+     * @param obj
+     * @param <T>
+     */
+    public <T extends Serializable> void putObject(String key, T obj) {
+        put(key, obj);
+    }
+
+    /**
+     * 取出对象
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    public <T extends Serializable> T getObject(String key) {
+        try {
+            return (T) get(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 储存list集合
+     *
+     * @param key
+     * @param list
+     */
+    public void putList(String key, List<? extends Serializable> list) {
+        put(key, list);
+    }
+
+    /**
+     * 取出集合
+     *
+     * @param key
+     * @param <E>
+     * @return
+     */
+    public <E extends Serializable> List<E> getList(String key) {
+        try {
+            return (List<E>) get(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 存储map
+     *
+     * @param key
+     * @param map
+     * @param <K>
+     * @param <V>
+     */
+    public <K extends Serializable, V extends Serializable> void putMap(String key, Map<K, V> map) {
+        put(key, map);
+    }
+
+    /**
+     * 取出map
+     *
+     * @param key
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public <K extends Serializable, V extends Serializable> Map<K, V> getMap(String key) {
+        try {
+            return (Map<K, V>) get(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 存储对象
+     */
+    private void put(String key, Object obj) {
+        try {
+            if (obj == null) {//判断对象是否为空
+                return;
+            }
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = null;
+            oos = new ObjectOutputStream(baos);
+            oos.writeObject(obj);
+            // 将对象放到OutputStream中
+            // 将对象转换成byte数组，并将其进行base64编码
+            String objectStr = new String(Base64.encode(baos.toByteArray(), Base64.DEFAULT));
+            baos.close();
+            oos.close();
+
+            putString(key, objectStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 取出对象
+     */
+    private Object get(String key) {
+        try {
+            String wordBase64 = getString(key);
+            // 将base64格式字符串还原成byte数组
+            if (TextUtils.isEmpty(wordBase64)) { //不可少，否则在下面会报java.io.StreamCorruptedException
+                return null;
+            }
+            byte[] objBytes = Base64.decode(wordBase64.getBytes(), Base64.DEFAULT);
+            ByteArrayInputStream bais = new ByteArrayInputStream(objBytes);
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            // 将byte数组转换成product对象
+            Object obj = ois.readObject();
+            bais.close();
+            ois.close();
+            return obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
