@@ -11,8 +11,7 @@
         android:id="@+id/mprv_photo1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:visibility="gone">
+        android:layout_marginTop="30dp">
 
     </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
 
@@ -28,15 +27,8 @@
         android:id="@+id/mprv_photo3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:visibility="gone">
+        android:layout_marginTop="30dp">
 
     </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
-
-    <CheckBox
-        android:id="@+id/cb_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="使用新版"/>
 
 </LinearLayout>

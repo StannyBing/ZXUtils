@@ -15,7 +15,6 @@ public class ZXApp {
 
     private static boolean isDebug = false;
     private static Context zxContext;
-    public static boolean test = true;
 
     /**
      * 初始化
