@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".demo.ui.DialogTestActivity">
+    android:orientation="vertical">
 
     <com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView
         android:id="@+id/mprv_photo1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:visibility="gone">
 
     </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
 
@@ -28,7 +28,15 @@
         android:id="@+id/mprv_photo3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:visibility="gone">
 
     </com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView>
+
+    <CheckBox
+        android:id="@+id/cb_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用新版"/>
+
 </LinearLayout>

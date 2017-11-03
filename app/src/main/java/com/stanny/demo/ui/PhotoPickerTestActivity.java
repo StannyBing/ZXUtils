@@ -2,8 +2,11 @@ package com.stanny.demo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.stanny.demo.R;
+import com.zx.zxutils.ZXApp;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.PhotoPicker.listener.OnDeleteListener;
 import com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView;
@@ -23,6 +26,8 @@ public class PhotoPickerTestActivity extends BaseActivity {
     ZXPhotoPickerView mprvPhoto2;
     @BindView(R.id.mprv_photo3)
     ZXPhotoPickerView mprvPhoto3;
+    @BindView(R.id.cb_new)
+    CheckBox cb_new;
 
     private ArrayList<String> photoList1 = new ArrayList<>();
     private ArrayList<String> photoList2 = new ArrayList<>();
@@ -41,9 +46,9 @@ public class PhotoPickerTestActivity extends BaseActivity {
         photoList1.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3390905199,613944351&fm=117&gp=0.jpg");
         photoList1.add("http://img.blog.csdn.net/20170804175543366?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvU3Rhbm55X0Jpbmc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center");
 
-        photoList2.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1735278598,1624226652&fm=117&gp=0.jpg");
-        photoList2.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=468291096,4071036468&fm=117&gp=0.jpg");
-        photoList2.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3390905199,613944351&fm=117&gp=0.jpg");
+//        photoList2.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1735278598,1624226652&fm=117&gp=0.jpg");
+//        photoList2.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=468291096,4071036468&fm=117&gp=0.jpg");
+//        photoList2.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3390905199,613944351&fm=117&gp=0.jpg");
 
         photoList3.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=468291096,4071036468&fm=117&gp=0.jpg");
         photoList3.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3390905199,613944351&fm=117&gp=0.jpg");
@@ -60,13 +65,23 @@ public class PhotoPickerTestActivity extends BaseActivity {
                 mprvPhoto3.photoAdapter.refresh(photoList3, false);
             }
         });
+        cb_new.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    ZXApp.test = false;
+                } else {
+                    ZXApp.test = true;
+                }
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        mprvPhoto1.onActivityResult(requestCode, resultCode, data);
-//        mprvPhoto2.onActivityResult(requestCode, resultCode, data);
+        mprvPhoto2.onActivityResult(requestCode, resultCode, data);
 //        mprvPhoto3.onActivityResult(requestCode, resultCode, data);
     }
 }
