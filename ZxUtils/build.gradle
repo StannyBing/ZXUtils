@@ -23,6 +23,12 @@ repositories {
     mavenCentral()  // GPUImage for Android
 }
 
+configurations {
+
+    all*.exclude group: 'commons-logging', module: 'commons-logging'
+
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -33,9 +39,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.android.support:cardview-v7:25.3.1'
-    //    compile 'org.xutils:xutils:3.3.36'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'net.lingala.zip4j:zip4j:1.3.2'
     compile 'com.github.axet:java-unrar:1.7.0-3'
-//    compile 'commons-logging:commons-logging:1.1.1'
+    compile 'commons-logging:commons-logging:1.1.1'
 }

@@ -38,7 +38,6 @@ public class SlidingActivity extends AppCompatActivity {
 
         slidingNav = new ZXSlidingRootNavBuilder(this)
                 .withToolbarMenuToggle(toolbar)
-                .withMenuOpened(true)
                 .withSavedState(savedInstanceState)
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .withMenuOpened(false)
