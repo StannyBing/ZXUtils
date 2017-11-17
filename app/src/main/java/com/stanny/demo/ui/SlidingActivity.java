@@ -13,6 +13,7 @@ import com.stanny.demo.R;
 import com.stanny.demo.adapter.DrawAdapter;
 import com.stanny.demo.model.DrawEntity;
 import com.zx.zxutils.other.ZXItemClickSupport;
+import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNav;
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNavBuilder;
 
@@ -42,6 +43,13 @@ public class SlidingActivity extends AppCompatActivity {
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .withMenuOpened(false)
                 .build();
+
+        tvDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZXToastUtil.showToast(tvDetail.getText().toString());
+            }
+        });
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.list);
         adapter = new DrawAdapter(this, dataList);

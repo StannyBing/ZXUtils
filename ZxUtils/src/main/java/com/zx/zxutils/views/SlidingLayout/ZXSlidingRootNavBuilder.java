@@ -168,7 +168,6 @@ public class ZXSlidingRootNavBuilder {
 
         View menu = getMenuViewFor(newRoot);
 
-        initToolbarMenuVisibilityToggle(newRoot, menu);
 
         HiddenMenuClickConsumer clickConsumer = new HiddenMenuClickConsumer(activity);
         clickConsumer.setMenuHost(newRoot);
@@ -176,6 +175,23 @@ public class ZXSlidingRootNavBuilder {
         newRoot.addView(menu);
         newRoot.addView(clickConsumer);
         newRoot.addView(oldRoot);
+
+        View spaceView = new View(activity);
+        spaceView.setTag("spaceView");
+        spaceView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+
+        spaceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!newRoot.isMenuHidden()) {
+                    newRoot.closeMenu();
+                }
+            }
+        });
+        ((ViewGroup) oldRoot).addView(spaceView);
+        spaceView.setVisibility(View.GONE);
 
         oldRoot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,6 +212,7 @@ public class ZXSlidingRootNavBuilder {
 
         newRoot.setMenuLocked(isMenuLocked);
 
+        initToolbarMenuVisibilityToggle(newRoot, menu, spaceView);
         return newRoot;
     }
 
@@ -245,7 +262,7 @@ public class ZXSlidingRootNavBuilder {
         }
     }
 
-    protected void initToolbarMenuVisibilityToggle(final ZXSlidingRootNavLayout sideNav, View drawer) {
+    protected void initToolbarMenuVisibilityToggle(final ZXSlidingRootNavLayout sideNav, View drawer, View spaceView) {
         if (toolbar != null) {
             ActionBarToggleAdapter dlAdapter = new ActionBarToggleAdapter(activity);
             dlAdapter.setAdaptee(sideNav);
@@ -253,7 +270,7 @@ public class ZXSlidingRootNavBuilder {
                     R.string.srn_drawer_open,
                     R.string.srn_drawer_close);
             toggle.syncState();
-            DrawerListenerAdapter listenerAdapter = new DrawerListenerAdapter(toggle, drawer);
+            DrawerListenerAdapter listenerAdapter = new DrawerListenerAdapter(toggle, drawer, spaceView);
             sideNav.addDragListener(listenerAdapter);
             sideNav.addDragStateListener(listenerAdapter);
         }

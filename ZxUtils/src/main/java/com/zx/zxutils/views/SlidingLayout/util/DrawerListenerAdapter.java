@@ -15,10 +15,12 @@ public class DrawerListenerAdapter implements DragListener, DragStateListener {
 
     private DrawerLayout.DrawerListener adaptee;
     private View drawer;
+    private View spaceView;
 
-    public DrawerListenerAdapter(DrawerLayout.DrawerListener adaptee, View drawer) {
+    public DrawerListenerAdapter(DrawerLayout.DrawerListener adaptee, View drawer, View spaceView) {
         this.adaptee = adaptee;
         this.drawer = drawer;
+        this.spaceView = spaceView;
     }
 
     @Override
@@ -35,8 +37,10 @@ public class DrawerListenerAdapter implements DragListener, DragStateListener {
     public void onDragEnd(boolean isMenuOpened) {
         if (isMenuOpened) {
             adaptee.onDrawerOpened(drawer);
+            spaceView.setVisibility(View.VISIBLE);
         } else {
             adaptee.onDrawerClosed(drawer);
+            spaceView.setVisibility(View.GONE);
         }
         adaptee.onDrawerStateChanged(DrawerLayout.STATE_IDLE);
     }
