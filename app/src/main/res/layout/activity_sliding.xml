@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,6 +22,13 @@
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
+        <com.zx.zxutils.views.TabViewPager.ZXTabViewPager
+            android:id="@+id/vp_sliding_test"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        </com.zx.zxutils.views.TabViewPager.ZXTabViewPager>
 
         <TextView
             android:id="@+id/tv_detail"

@@ -25,23 +25,23 @@ public class DrawerListenerAdapter implements DragListener, DragStateListener {
 
     @Override
     public void onDrag(float progress) {
-        adaptee.onDrawerSlide(drawer, progress);
+        if (adaptee != null) adaptee.onDrawerSlide(drawer, progress);
     }
 
     @Override
     public void onDragStart() {
-        adaptee.onDrawerStateChanged(DrawerLayout.STATE_DRAGGING);
+        if (adaptee != null) adaptee.onDrawerStateChanged(DrawerLayout.STATE_DRAGGING);
     }
 
     @Override
     public void onDragEnd(boolean isMenuOpened) {
         if (isMenuOpened) {
-            adaptee.onDrawerOpened(drawer);
+            if (adaptee != null) adaptee.onDrawerOpened(drawer);
             spaceView.setVisibility(View.VISIBLE);
         } else {
-            adaptee.onDrawerClosed(drawer);
+            if (adaptee != null) adaptee.onDrawerClosed(drawer);
             spaceView.setVisibility(View.GONE);
         }
-        adaptee.onDrawerStateChanged(DrawerLayout.STATE_IDLE);
+        if (adaptee != null) adaptee.onDrawerStateChanged(DrawerLayout.STATE_IDLE);
     }
 }

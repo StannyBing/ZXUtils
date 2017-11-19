@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.stanny.demo.R;
 import com.stanny.demo.adapter.DrawAdapter;
 import com.stanny.demo.model.DrawEntity;
+import com.stanny.demo.ui.fragment.TabFragment;
 import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNav;
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNavBuilder;
+import com.zx.zxutils.views.TabViewPager.ZXTabViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class SlidingActivity extends AppCompatActivity {
     private ZXSlidingRootNav slidingNav;
     private Toolbar toolbar;
     private TextView tvDetail;
+    private ZXTabViewPager vpTest;
     private List<DrawEntity> dataList = new ArrayList<>();
     private int[] iconArray = new int[]{R.drawable.ic_account_outline_grey600_24dp, R.drawable.ic_cart_outline_grey600_24dp, R.drawable.ic_email_outline_grey600_24dp, R.drawable.ic_home_outline_grey600_24dp, R.drawable.ic_logout_grey600_24dp};
     private String[] titleArray = new String[]{"Dashboard", "My Account", "Message", "Cart", "Log Out"};
@@ -36,6 +39,17 @@ public class SlidingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sliding);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvDetail = (TextView) findViewById(R.id.tv_detail);
+        vpTest = (ZXTabViewPager) findViewById(R.id.vp_sliding_test);
+        vpTest.setManager(getSupportFragmentManager())
+                .setTabLayoutGravity(ZXTabViewPager.TabGravity.GRAVITY_BOTTOM)
+                .addTab(TabFragment.newInstance(""), "1", R.mipmap.ic_empty_picture)
+                .addTab(TabFragment.newInstance(""), "2", R.mipmap.ic_empty_picture)
+                .addTab(TabFragment.newInstance(""), "3", R.mipmap.ic_empty_picture)
+                .setTitleColor(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.red))
+                .setIndicatorColor(ContextCompat.getColor(this, R.color.wheat))
+                .setIndicatorHeight(3)
+                .setSelectOn(2)
+                .build();
 
         slidingNav = new ZXSlidingRootNavBuilder(this)
                 .withToolbarMenuToggle(toolbar)

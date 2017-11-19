@@ -33,7 +33,7 @@ import java.util.List;
 
 public class ZXSlidingRootNavBuilder {
 
-    private static final float DEFAULT_END_SCALE = 0.65f;
+    private static final float DEFAULT_END_SCALE = 0.60f;
     private static final int DEFAULT_END_ELEVATION_DP = 8;
     private static final int DEFAULT_DRAG_DIST_DP = 180;
 
@@ -272,6 +272,9 @@ public class ZXSlidingRootNavBuilder {
             toggle.syncState();
             DrawerListenerAdapter listenerAdapter = new DrawerListenerAdapter(toggle, drawer, spaceView);
             sideNav.addDragListener(listenerAdapter);
+            sideNav.addDragStateListener(listenerAdapter);
+        } else {
+            DrawerListenerAdapter listenerAdapter = new DrawerListenerAdapter(null, drawer, spaceView);
             sideNav.addDragStateListener(listenerAdapter);
         }
     }
