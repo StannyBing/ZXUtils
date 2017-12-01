@@ -95,7 +95,7 @@ public class ZXUnZipRarUtil {
                         sendHandle(3, "文件不存在");
                         return;
                     }
-                    zipFile.setFileNameCharset("GBK");
+                    zipFile.setFileNameCharset("UTF-8");
                     if (!zipFile.isValidZipFile()) {
                         sendHandle(3, "文件不合法");
                         return;
@@ -139,9 +139,9 @@ public class ZXUnZipRarUtil {
             @Override
             public void run() {
                 try {
-                    if (listener != null) listener.onStart();
+                    sendHandle(0, "");
                     if (!ZXFileUtil.isFileExists(rarFilePath)) {
-                        if (listener != null) listener.onError("文件不存在");
+                        sendHandle(3, "文件不存在");
                         return;
                     }
                     Archive rarFile = new Archive(new NativeStorage(new File(rarFilePath)));
@@ -168,19 +168,21 @@ public class ZXUnZipRarUtil {
                             FileOutputStream fileOut = new FileOutputStream(file);
                             rarFile.extractFile(fileHeader, fileOut);
                             fileOut.close();
-                            if (listener != null) {
-                                int progress = (int) ((i + 1) * 1.0 * 100 / total);
-                                if (progress == progressNow) {//此时与上次相同，就不反复监听了
-                                    continue;
-                                }
-                                progressNow = progress;
-                                listener.onPregress(progress);
+
+                            int progress = (int) ((i + 1) * 1.0 * 100 / total);
+                            if (progress == progressNow) {//此时与上次相同，就不反复监听了
+                                continue;
                             }
+                            progressNow = progress;
+                            sendHandle(1, progress + "");
+//                            listener.onPregress(progress);
                         }
                     }
-                    if (listener != null) listener.onComplete(outputPath);
+                    sendHandle(2, outputPath);
+//                    if (listener != null) listener.onComplete(outputPath);
                 } catch (Exception e) {
-                    if (listener != null) listener.onError("解压失败，请重试");
+                    sendHandle(3, "解压失败，请重试");
+//                    if (listener != null) listener.onError("解压失败，请重试");
                     e.printStackTrace();
                 }
             }
