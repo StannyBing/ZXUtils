@@ -36,9 +36,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:name="com.stanny.demo.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/MainTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -48,55 +47,57 @@
         </activity>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPickerActivity"/>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPagerActivity"/>
-        <activity android:name="com.stanny.demo.ui.TabLayoutActivity">
+        <activity android:name=".ui.TabLayoutActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.ChartActivity">
+        <activity android:name=".ui.ChartActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.TableActivity">
+        <activity android:name=".ui.TableActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.FloatScrollActivity">
+        <activity android:name=".ui.FloatScrollActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.SlidingActivity">
+        <activity android:name=".ui.SlidingActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.RecylerDeleteActivity">
+        <activity android:name=".ui.RecylerDeleteActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.SwipeRefreshRecylerActivity">
+        <activity android:name=".ui.SwipeRefreshRecylerActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.DialogTestActivity">
+        <activity android:name=".ui.DialogTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.ToastTestActivity">
+        <activity android:name=".ui.ToastTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.NotifyTestActivity">
+        <activity android:name=".ui.NotifyTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.DownTestActivity">
+        <activity android:name=".ui.DownTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.UploadTestActivity">
+        <activity android:name=".ui.UploadTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.HttpTestActivity">
+        <activity android:name=".ui.HttpTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.BroadCastTestActivity">
+        <activity android:name=".ui.BroadCastTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.UnZipOrRarTestActivity">
+        <activity android:name=".ui.UnZipOrRarTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.PhotoPickerTestActivity">
+        <activity android:name=".ui.PhotoPickerTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.SpinnerTestActivity">
+        <activity android:name=".ui.SpinnerTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.RecordTestActivity">
+        <activity android:name=".ui.RecordTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.SeekBarTestActivity">
+        <activity android:name=".ui.SeekBarTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.ThreadPoolTestActivity">
+        <activity android:name=".ui.ThreadPoolTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.BitmapTestActivity">
+        <activity android:name=".ui.BitmapTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.AnimationTestActivity">
+        <activity android:name=".ui.AnimationTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.LogTestActivity">
+        <activity android:name=".ui.LogTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.BubbleTestActivity">
+        <activity android:name=".ui.BubbleTestActivity">
         </activity>
-        <activity android:name="com.stanny.demo.ui.ImageLoaderTestActivity">
+        <activity android:name=".ui.ImageLoaderTestActivity">
+        </activity>
+        <activity android:name=".ui.ExpandViewActivity">
         </activity>
     </application>
 

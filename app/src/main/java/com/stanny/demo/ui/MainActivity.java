@@ -40,6 +40,7 @@ public class MainActivity extends ListActivity {
         ZXSwipeBackHelper.onCreate(this)
                 .setSwipeBackEnable(true)
                 .setSwipeRelateEnable(true);
+        addActivity(ExpandViewActivity.class, "ZXExpandView-多级菜单");
         addActivity(DialogTestActivity.class, "ZXDialogUtil-弹框");
         addActivity(ToastTestActivity.class, "ZXToastUtil-吐司");
         addActivity(NotifyTestActivity.class, "ZXNotifyUtil-提示");

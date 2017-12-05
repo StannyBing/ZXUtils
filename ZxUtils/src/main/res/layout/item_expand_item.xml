@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view_index"
+            android:layout_width="0dp"
+            android:layout_height="35dp"/>
+
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/arrow_open"/>
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="0dp"
+            android:paddingLeft="40dp"
+            android:layout_height="35dp"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:text="123123123123"/>
+
+        <ImageView
+            android:id="@+id/iv_select"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/select"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"/>
+
+</LinearLayout>
