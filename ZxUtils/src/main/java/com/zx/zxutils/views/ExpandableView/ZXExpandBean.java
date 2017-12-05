@@ -14,10 +14,20 @@ public class ZXExpandBean {
     private boolean showChild = true;
     private boolean selected = false;
     private String id;
+    private String itemText;
     private Object customData;
 
-    public ZXExpandBean(Object customData) {
-        this.customData = customData;
+    public ZXExpandBean(Object customData, String itemText) {
+        setCustomData(customData);
+        setItemText(itemText);
+    }
+
+    public String getItemText() {
+        return itemText;
+    }
+
+    public void setItemText(String itemText) {
+        this.itemText = itemText;
     }
 
     public Object getCustomData() {

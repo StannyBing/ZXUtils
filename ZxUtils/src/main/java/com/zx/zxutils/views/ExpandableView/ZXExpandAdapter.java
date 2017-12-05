@@ -43,13 +43,13 @@ public class ZXExpandAdapter extends ZXRecycleSimpleAdapter {
     public void onBindHolder(RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         ZXExpandBean expandBean = showList.get(position);
-        myHolder.tvInfo.setText("当前层级：" + expandBean.getIndex() + "");
+        myHolder.tvInfo.setText(expandBean.getItemText());
         ViewGroup.LayoutParams params = myHolder.viewIndex.getLayoutParams();
         params.width = ZXSystemUtil.dp2px(30 * expandBean.getIndex());
         myHolder.viewIndex.setLayoutParams(params);
-        if (expandBean.getChildList()==null){
+        if (expandBean.getChildList() == null) {
             myHolder.ivArrow.setVisibility(View.INVISIBLE);
-        }else if (expandBean.isShowChild()) {
+        } else if (expandBean.isShowChild()) {
             myHolder.ivArrow.setVisibility(View.VISIBLE);
             myHolder.ivArrow.setBackground(ContextCompat.getDrawable(context, R.mipmap.arrow_open));
         } else {
