@@ -5,6 +5,7 @@
               android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/down"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:orientation="horizontal">
@@ -25,14 +26,14 @@
         <TextView
             android:id="@+id/tv_info"
             android:layout_width="0dp"
-            android:paddingLeft="15dp"
             android:layout_height="35dp"
-            android:singleLine="true"
             android:layout_weight="1"
-            android:textSize="12sp"
             android:ellipsize="end"
             android:gravity="left|center_vertical"
-            android:text="123123123123"/>
+            android:paddingLeft="15dp"
+            android:singleLine="true"
+            android:text="123123123123"
+            android:textSize="12sp"/>
 
         <ImageView
             android:id="@+id/iv_select"

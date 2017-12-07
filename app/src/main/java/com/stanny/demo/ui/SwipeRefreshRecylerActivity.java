@@ -25,30 +25,30 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe_refresh_recyler);
-        swipeRecyler = (ZXSwipeRecyler) findViewById(R.id.sr_layout);
-        deleteHelper = new ZXRecyclerDeleteHelper(this, swipeRecyler.getRecyclerView())
-                .setClickable(new ZXRecyclerDeleteHelper.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(int position) {
-                        ZXToastUtil.showToast("点击了栏目");
-                    }
-                })
-                .setSwipeOptionViews(R.id.tv_delete, R.id.tv_cancle)
-                .setSwipeable(R.id.ll_content, R.id.ll_menu, new ZXRecyclerDeleteHelper.OnSwipeOptionsClickListener() {
-                    @Override
-                    public void onSwipeOptionClicked(int viewID, int position) {
-                        switch (viewID) {
-                            case R.id.tv_delete:
-                                ZXToastUtil.showToast("删除第" + position + "个");
-                                break;
-                            case R.id.tv_cancle:
-                                ZXToastUtil.showToast("取消第" + position + "个");
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                });
+        swipeRecyler = findViewById(R.id.sr_layout);
+//        deleteHelper = new ZXRecyclerDeleteHelper(this, swipeRecyler.getRecyclerView())
+//                .setClickable(new ZXRecyclerDeleteHelper.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClicked(int position) {
+//                        ZXToastUtil.showToast("点击了栏目");
+//                    }
+//                })
+//                .setSwipeOptionViews(R.id.tv_delete, R.id.tv_cancle)
+//                .setSwipeable(R.id.ll_content, R.id.ll_menu, new ZXRecyclerDeleteHelper.OnSwipeOptionsClickListener() {
+//                    @Override
+//                    public void onSwipeOptionClicked(int viewID, int position) {
+//                        switch (viewID) {
+//                            case R.id.tv_delete:
+//                                ZXToastUtil.showToast("删除第" + position + "个");
+//                                break;
+//                            case R.id.tv_cancle:
+//                                ZXToastUtil.showToast("取消第" + position + "个");
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                    }
+//                });
         swipeRecyler.setAdapter(new TestAdapter())
                 .showLoadInfo(true)
                 .setSRListener(new ZXSRListener<String>() {
@@ -64,17 +64,18 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
 
                     @Override
                     public void onRefresh() {
-                        swipeRecyler.stopRefresh();
+//                        swipeRecyler.stopRefresh();
                         addList();
-                        swipeRecyler.setLoadInfo("阿西吧");
+//                        swipeRecyler.setLoadInfo("阿西吧");
                     }
 
                     @Override
                     public void onLoadMore() {
                         addList();
-                        swipeRecyler.setLoadInfo("啊了个阿西吧");
+//                        swipeRecyler.setLoadInfo("啊了个阿西吧");
                     }
                 });
+        swipeRecyler.notifyDataSetChanged();
         ZXItemClickSupport.removeFrom(swipeRecyler.getRecyclerView());
         addList();
     }
@@ -84,7 +85,9 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
         for (int i = 0; i < 10; i++) {
             datalist.add(Math.random() * 10 + "");
         }
+        swipeRecyler.stopRefresh();
         swipeRecyler.notifyDataSetChanged();
+        swipeRecyler.setLoadInfo(50);
     }
 
     public class TestAdapter extends ZXRecycleAdapter {

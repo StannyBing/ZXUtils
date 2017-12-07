@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zx.zxutils.R;
 import com.zx.zxutils.views.SwipeRecylerView.LoadMoreListener;
+import com.zx.zxutils.views.SwipeRecylerView.NotifyListener;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
     private LoadMoreListener mLoadMoreListener;
     public FooterViewHolder footerViewHolder;
+    private NotifyListener notifyListener;
     //全局变量
     private static final int ITEM_TYPE_NORMAL = 1;
     private static final int ITEM_TYPE_FOOTER = 2;
@@ -67,6 +69,9 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
     public void onBindViewHolder(RvHolder holder, int position) {
         if (holder instanceof FooterViewHolder) {
             footerViewHolder = (FooterViewHolder) holder;
+            if (notifyListener != null) {
+                notifyListener.onNotifyEnd();
+            }
         } else {
             dataList = onItemList();
             onBindHolder(holder.getViewHolder(), dataList.get(position), position);
@@ -98,6 +103,10 @@ public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
             }
         }
         return count;
+    }
+
+    public void setNotifyListener(NotifyListener notifyListener) {
+        this.notifyListener = notifyListener;
     }
 
     public class FooterViewHolder extends RvHolder {

@@ -4,8 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 
-import com.zx.zxutils.R;
-
 import static android.support.v7.widget.RecyclerView.OnChildAttachStateChangeListener;
 
 /**
@@ -53,12 +51,12 @@ public class ZXItemClickSupport {
 
     private ZXItemClickSupport(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
-        this.recyclerView.setTag(R.id.item_click_support, this);
+        this.recyclerView.setTag(recyclerView.getId());
         this.recyclerView.addOnChildAttachStateChangeListener(attachListener);
     }
 
     public static ZXItemClickSupport addTo(RecyclerView view) {
-        ZXItemClickSupport support = (ZXItemClickSupport) view.getTag(R.id.item_click_support);
+        ZXItemClickSupport support = (ZXItemClickSupport) view.getTag(view.getId());
         if (support == null) {
             support = new ZXItemClickSupport(view);
         }
@@ -66,7 +64,7 @@ public class ZXItemClickSupport {
     }
 
     public static ZXItemClickSupport removeFrom(RecyclerView view) {
-        ZXItemClickSupport support = (ZXItemClickSupport) view.getTag(R.id.item_click_support);
+        ZXItemClickSupport support = (ZXItemClickSupport) view.getTag(view.getId());
         if (support != null) {
             support.detach(view);
         }
@@ -85,7 +83,7 @@ public class ZXItemClickSupport {
 
     private void detach(RecyclerView view) {
         view.removeOnChildAttachStateChangeListener(attachListener);
-        view.setTag(R.id.item_click_support, null);
+        view.setTag(view.getId());
     }
 
     public interface OnItemClickListener {

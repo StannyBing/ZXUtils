@@ -127,6 +127,16 @@ public class ZXSwipeRecyler extends LinearLayout {
                 }
             }
         });
+        adapter.setNotifyListener(new NotifyListener() {
+            @Override
+            public void onNotifyEnd() {
+                if (adapter != null && adapter.footerViewHolder != null) {
+                    adapter.footerViewHolder.setStatus(pageNum, totalNum);
+                } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
+                    simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
+                }
+            }
+        });
         return this;
     }
 
@@ -150,6 +160,16 @@ public class ZXSwipeRecyler extends LinearLayout {
                         pageNum++;
                         zxsrListener.onLoadMore();
                     }
+                }
+            }
+        });
+        adapter.setNotifyListener(new NotifyListener() {
+            @Override
+            public void onNotifyEnd() {
+                if (adapter != null && adapter.footerViewHolder != null) {
+                    adapter.footerViewHolder.setStatus(pageNum, totalNum);
+                } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
+                    simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
                 }
             }
         });
@@ -254,11 +274,6 @@ public class ZXSwipeRecyler extends LinearLayout {
      */
     public void setLoadInfo(int totalNum) {
         this.totalNum = totalNum;
-        if (adapter != null && adapter.footerViewHolder != null) {
-            adapter.footerViewHolder.setStatus(pageNum, totalNum);
-        } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
-            simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
-        }
     }
 
     /**

@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zx.zxutils.R;
-import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleSimpleAdapter;
 import com.zx.zxutils.util.ZXSystemUtil;
 
 import java.util.List;
@@ -20,27 +20,27 @@ import java.util.List;
  * 功能：
  */
 
-public class ZXExpandAdapter extends ZXRecycleSimpleAdapter {
+public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ZXExpandBean> showList;
     private Context context;
     private boolean isMultiSelected = true;
+    public MyHolder mLastViewTag = null;
 
     public ZXExpandAdapter(Context context, List<ZXExpandBean> showList, boolean isMultiSelected) {
-        hasLoadMore = false;
         this.context = context;
         this.showList = showList;
         this.isMultiSelected = isMultiSelected;
     }
 
     @Override
-    public RecyclerView.ViewHolder onItemHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_expand_item, parent, false);
         return new MyHolder(view);
     }
 
     @Override
-    public void onBindHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         ZXExpandBean expandBean = showList.get(position);
         myHolder.tvInfo.setText(expandBean.getItemText());
@@ -70,8 +70,8 @@ public class ZXExpandAdapter extends ZXRecycleSimpleAdapter {
     }
 
     @Override
-    public List onItemList() {
-        return showList;
+    public int getItemCount() {
+        return showList.size();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
@@ -79,6 +79,7 @@ public class ZXExpandAdapter extends ZXRecycleSimpleAdapter {
         private TextView tvInfo;
         private View viewIndex;
         private ImageView ivArrow, ivSelect;
+        private LinearLayout down;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -86,6 +87,7 @@ public class ZXExpandAdapter extends ZXRecycleSimpleAdapter {
             viewIndex = itemView.findViewById(R.id.view_index);
             ivArrow = itemView.findViewById(R.id.iv_arrow);
             ivSelect = itemView.findViewById(R.id.iv_select);
+            down=itemView.findViewById(R.id.down);
         }
     }
 
