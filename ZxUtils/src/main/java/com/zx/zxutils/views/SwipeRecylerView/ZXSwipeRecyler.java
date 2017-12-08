@@ -285,7 +285,7 @@ public class ZXSwipeRecyler extends LinearLayout {
      */
     public void clearStatus() {
         totalNum = 0;
-        pageNum = 0;
+        pageNum = 1;
         stopRefresh();
     }
 
