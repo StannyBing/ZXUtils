@@ -249,6 +249,10 @@ public class ZXSwipeRecyler extends LinearLayout {
         return this;
     }
 
+    public void setPagetNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
     /**
      * 数据更新
      */
@@ -277,11 +281,20 @@ public class ZXSwipeRecyler extends LinearLayout {
     }
 
     /**
+     * 清除状态信息
+     */
+    public void clearStatus() {
+        totalNum = 0;
+        pageNum = 0;
+        stopRefresh();
+    }
+
+    /**
      * 设置加载信息
      *
      * @param infoMsg
      */
-    public void setLoadInfo(String infoMsg) {
+    private void setLoadInfo(String infoMsg) {
         totalNum = pageSize * pageNum + 1;
         if (adapter != null && adapter.footerViewHolder != null) {
             adapter.footerViewHolder.setStatus(infoMsg);
