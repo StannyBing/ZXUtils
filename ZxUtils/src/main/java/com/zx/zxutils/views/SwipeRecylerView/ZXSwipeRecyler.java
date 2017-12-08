@@ -281,7 +281,7 @@ public class ZXSwipeRecyler extends LinearLayout {
     }
 
     /**
-     * 清除状态信息
+     * 清除状态信息 
      */
     public void clearStatus() {
         totalNum = 0;
