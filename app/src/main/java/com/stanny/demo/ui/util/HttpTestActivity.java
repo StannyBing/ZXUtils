@@ -1,9 +1,10 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.util;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.stanny.demo.util.ApiData;
 import com.zx.zxutils.http.ZXBaseResult;
 import com.zx.zxutils.http.ZXHttpListener;

@@ -1,8 +1,9 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.views.MPChart.ChartKeyValue;
 import com.zx.zxutils.views.MPChart.ZXBarChart;
 import com.zx.zxutils.views.MPChart.ZXLineChart;

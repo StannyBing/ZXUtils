@@ -9,6 +9,33 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.stanny.demo.ui.qmui.QmuiActivity;
+import com.stanny.demo.ui.util.AnimationTestActivity;
+import com.stanny.demo.ui.util.BitmapTestActivity;
+import com.stanny.demo.ui.util.BroadCastTestActivity;
+import com.stanny.demo.ui.util.DialogTestActivity;
+import com.stanny.demo.ui.util.DownTestActivity;
+import com.stanny.demo.ui.util.HttpTestActivity;
+import com.stanny.demo.ui.util.ImageLoaderTestActivity;
+import com.stanny.demo.ui.util.LogTestActivity;
+import com.stanny.demo.ui.util.NotifyTestActivity;
+import com.stanny.demo.ui.util.ThreadPoolTestActivity;
+import com.stanny.demo.ui.util.ToastTestActivity;
+import com.stanny.demo.ui.util.UnZipOrRarTestActivity;
+import com.stanny.demo.ui.util.UploadTestActivity;
+import com.stanny.demo.ui.widget.BubbleTestActivity;
+import com.stanny.demo.ui.widget.ChartActivity;
+import com.stanny.demo.ui.widget.ExpandViewActivity;
+import com.stanny.demo.ui.widget.FloatScrollActivity;
+import com.stanny.demo.ui.widget.PhotoPickerTestActivity;
+import com.stanny.demo.ui.widget.RecordTestActivity;
+import com.stanny.demo.ui.widget.RecylerDeleteActivity;
+import com.stanny.demo.ui.widget.SeekBarTestActivity;
+import com.stanny.demo.ui.widget.SlidingActivity;
+import com.stanny.demo.ui.widget.SpinnerTestActivity;
+import com.stanny.demo.ui.widget.SwipeRefreshRecylerActivity;
+import com.stanny.demo.ui.widget.TabLayoutActivity;
+import com.stanny.demo.ui.widget.TableActivity;
 import com.zx.zxutils.util.ZXPermissionUtil;
 import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
 
@@ -40,6 +67,7 @@ public class MainActivity extends ListActivity {
         ZXSwipeBackHelper.onCreate(this)
                 .setSwipeBackEnable(true)
                 .setSwipeRelateEnable(true);
+        addActivity(QmuiActivity.class, "新增腾讯Qmui UI库");
         addActivity(ExpandViewActivity.class, "ZXExpandView-多级菜单");
         addActivity(DialogTestActivity.class, "ZXDialogUtil-弹框");
         addActivity(ToastTestActivity.class, "ZXToastUtil-吐司");

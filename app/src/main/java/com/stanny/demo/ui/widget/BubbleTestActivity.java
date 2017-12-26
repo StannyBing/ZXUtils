@@ -1,4 +1,4 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.views.BubbleView.ZXBubbleView;
 
 import butterknife.ButterKnife;

@@ -1,9 +1,9 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 
 import com.stanny.demo.R;
-import com.stanny.demo.ui.fragment.RecylerDeleteFragment;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager;
 
 public class RecylerDeleteActivity extends BaseActivity {

@@ -1,4 +1,4 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.util;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.util.ZXDialogUtil;
 
 import butterknife.ButterKnife;

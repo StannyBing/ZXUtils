@@ -1,9 +1,10 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.PhotoPicker.listener.OnDeleteListener;
 import com.zx.zxutils.views.PhotoPicker.widget.ZXPhotoPickerView;
@@ -65,9 +66,9 @@ public class PhotoPickerTestActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //这个地方因为有三个activityresult，会出现添加错误的问题，正式使用时只有一个
-//        mprvPhoto1.onActivityResult(requestCode, resultCode, data);
+        //已增加id，可以兼容多个控件同时出现
+        mprvPhoto1.onActivityResult(requestCode, resultCode, data);
         mprvPhoto2.onActivityResult(requestCode, resultCode, data);
-//        mprvPhoto3.onActivityResult(requestCode, resultCode, data);
+        mprvPhoto3.onActivityResult(requestCode, resultCode, data);
     }
 }

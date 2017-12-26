@@ -1,4 +1,4 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.other.ZXBroadCastManager;
 import com.zx.zxutils.util.ZXToastUtil;
 

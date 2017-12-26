@@ -31,6 +31,7 @@ public class PhotoPickerActivity extends AppCompatActivity {
  // private boolean menuIsInflated = false;
 
   private boolean showGif = false;
+  private String viewId;
   private int columnNumber = PhotoPicker.DEFAULT_COLUMN_NUMBER;
   private ArrayList<String> originalPhotos = null;
 
@@ -40,6 +41,7 @@ public class PhotoPickerActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    viewId = getIntent().getStringExtra("id");
     boolean showCamera      = getIntent().getBooleanExtra(PhotoPicker.EXTRA_SHOW_CAMERA, true);
     boolean showGif         = getIntent().getBooleanExtra(PhotoPicker.EXTRA_SHOW_GIF, false);
     boolean previewEnabled  = getIntent().getBooleanExtra(PhotoPicker.EXTRA_PREVIEW_ENABLED, true);
@@ -97,6 +99,7 @@ public class PhotoPickerActivity extends AppCompatActivity {
         if (photos != null && photos.size() > 0){
           Intent intent = new Intent();
           intent.putStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS, photos);
+          intent.putExtra("id", viewId);
           setResult(RESULT_OK, intent);
           finish();
         }else {

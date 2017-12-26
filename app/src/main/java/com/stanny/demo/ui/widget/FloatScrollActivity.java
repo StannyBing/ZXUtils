@@ -1,4 +1,4 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.views.ZXFloatScrollView;
 
 public class FloatScrollActivity extends BaseActivity {

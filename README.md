@@ -1,4 +1,8 @@
 # ZXUtils
+![](https://github.com/StannyBing/ZXUtils/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+ZXUtils现在已添加了腾讯的QMUI库，全面跨入2.0.0版本。<br>
+从这个版本起，ZXUtils会逐渐加入更多，更全，更好的工具以及UI控件<br>
+<br>
 A commonly used tool library for Android<br>
 本库包含常用android开发所需的所有工具类+网络请求+常用view<br>
 所有的工具等都是以ZX..开头，如ZXDialogUtil、ZXFileUtil、ZXSystemUtil<br>
@@ -75,7 +79,7 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:1.6.7'
+    compile 'com.github.StannyBing:ZXUtils:2.0.0'
     ```
     
     注意需要在项目的build里面添加以下代码<br>

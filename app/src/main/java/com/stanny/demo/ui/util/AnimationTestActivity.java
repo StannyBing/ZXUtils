@@ -1,10 +1,11 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.util;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.util.ZXAnimUtil;
 
 import butterknife.BindView;

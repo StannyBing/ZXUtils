@@ -1,4 +1,4 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.util;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.util.ZXBitmapUtil;
 
 import butterknife.BindView;

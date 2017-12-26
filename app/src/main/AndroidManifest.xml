@@ -47,57 +47,59 @@
         </activity>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPickerActivity"/>
         <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPagerActivity"/>
-        <activity android:name=".ui.TabLayoutActivity">
+        <activity android:name=".ui.widget.TabLayoutActivity">
         </activity>
-        <activity android:name=".ui.ChartActivity">
+        <activity android:name=".ui.widget.ChartActivity">
         </activity>
-        <activity android:name=".ui.TableActivity">
+        <activity android:name=".ui.widget.TableActivity">
         </activity>
-        <activity android:name=".ui.FloatScrollActivity">
+        <activity android:name=".ui.widget.FloatScrollActivity">
         </activity>
-        <activity android:name=".ui.SlidingActivity">
+        <activity android:name=".ui.widget.SlidingActivity">
         </activity>
-        <activity android:name=".ui.RecylerDeleteActivity">
+        <activity android:name=".ui.widget.RecylerDeleteActivity">
         </activity>
-        <activity android:name=".ui.SwipeRefreshRecylerActivity">
+        <activity android:name=".ui.widget.SwipeRefreshRecylerActivity">
         </activity>
-        <activity android:name=".ui.DialogTestActivity">
+        <activity android:name=".ui.util.DialogTestActivity">
         </activity>
-        <activity android:name=".ui.ToastTestActivity">
+        <activity android:name=".ui.util.ToastTestActivity">
         </activity>
-        <activity android:name=".ui.NotifyTestActivity">
+        <activity android:name=".ui.util.NotifyTestActivity">
         </activity>
-        <activity android:name=".ui.DownTestActivity">
+        <activity android:name=".ui.util.DownTestActivity">
         </activity>
-        <activity android:name=".ui.UploadTestActivity">
+        <activity android:name=".ui.util.UploadTestActivity">
         </activity>
-        <activity android:name=".ui.HttpTestActivity">
+        <activity android:name=".ui.util.HttpTestActivity">
         </activity>
-        <activity android:name=".ui.BroadCastTestActivity">
+        <activity android:name=".ui.util.BroadCastTestActivity">
         </activity>
-        <activity android:name=".ui.UnZipOrRarTestActivity">
+        <activity android:name=".ui.util.UnZipOrRarTestActivity">
         </activity>
-        <activity android:name=".ui.PhotoPickerTestActivity">
+        <activity android:name=".ui.widget.PhotoPickerTestActivity">
         </activity>
-        <activity android:name=".ui.SpinnerTestActivity">
+        <activity android:name=".ui.widget.SpinnerTestActivity">
         </activity>
-        <activity android:name=".ui.RecordTestActivity">
+        <activity android:name=".ui.widget.RecordTestActivity">
         </activity>
-        <activity android:name=".ui.SeekBarTestActivity">
+        <activity android:name=".ui.widget.SeekBarTestActivity">
         </activity>
-        <activity android:name=".ui.ThreadPoolTestActivity">
+        <activity android:name=".ui.util.ThreadPoolTestActivity">
         </activity>
-        <activity android:name=".ui.BitmapTestActivity">
+        <activity android:name=".ui.util.BitmapTestActivity">
         </activity>
-        <activity android:name=".ui.AnimationTestActivity">
+        <activity android:name=".ui.util.AnimationTestActivity">
         </activity>
-        <activity android:name=".ui.LogTestActivity">
+        <activity android:name=".ui.util.LogTestActivity">
         </activity>
-        <activity android:name=".ui.BubbleTestActivity">
+        <activity android:name=".ui.widget.BubbleTestActivity">
         </activity>
-        <activity android:name=".ui.ImageLoaderTestActivity">
+        <activity android:name=".ui.util.ImageLoaderTestActivity">
         </activity>
-        <activity android:name=".ui.ExpandViewActivity">
+        <activity android:name=".ui.widget.ExpandViewActivity">
+        </activity>
+        <activity android:name=".ui.qmui.QmuiActivity">
         </activity>
     </application>
 

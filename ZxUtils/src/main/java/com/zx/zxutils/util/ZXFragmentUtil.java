@@ -3,10 +3,12 @@ package com.zx.zxutils.util;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +40,9 @@ public final class ZXFragmentUtil {
     private static final int TYPE_HIDE_FRAGMENT = 0x01 << 5;
     private static final int TYPE_SHOW_FRAGMENT = 0x01 << 6;
     private static final int TYPE_HIDE_SHOW_FRAGMENT = 0x01 << 7;
+
+    private static int mTransition = FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
+    private static int inAnimRes, outAnimRes;
 
     private static final String ARGS_ID = "args_id";
     private static final String ARGS_IS_HIDE = "args_is_hide";
@@ -488,6 +493,15 @@ public final class ZXFragmentUtil {
         Bundle bundle = fragment.getArguments();
         if (bundle == null || bundle.getInt(ARGS_ID) == 0) return null;
         return new Args(bundle.getInt(ARGS_ID), bundle.getBoolean(ARGS_IS_HIDE), bundle.getBoolean(ARGS_IS_ADD_STACK));
+    }
+
+    public static void setTransition(@Nullable int transition) {
+        mTransition = transition;
+    }
+
+    public static void setAnimate(Fragment fragment, @AnimRes int inAnimRes, @AnimRes int outAnimRes) {
+        FragmentTransaction ft = fragment.getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(inAnimRes, outAnimRes);
     }
 
     /**

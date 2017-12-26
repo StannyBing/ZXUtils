@@ -1,4 +1,4 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

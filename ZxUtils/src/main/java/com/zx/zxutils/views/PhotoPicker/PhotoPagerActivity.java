@@ -35,6 +35,7 @@ public class PhotoPagerActivity extends AppCompatActivity {
     //private ActionBar actionBar;
     private boolean showDelete;
     private Titlebar titlebar;
+    private String viewId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class PhotoPagerActivity extends AppCompatActivity {
 
         setContentView(R.layout.__picker_activity_photo_pager);
 
+
+        viewId = getIntent().getStringExtra("id");
         int currentItem = getIntent().getIntExtra(ZXPhotoPreview.EXTRA_CURRENT_ITEM, 0);
         List<String> paths = getIntent().getStringArrayListExtra(ZXPhotoPreview.EXTRA_PHOTOS);
         showDelete = getIntent().getBooleanExtra(ZXPhotoPreview.EXTRA_SHOW_DELETE, true);
@@ -149,6 +152,7 @@ public class PhotoPagerActivity extends AppCompatActivity {
 
         Intent intent = new Intent();
         intent.putExtra(PhotoPicker.KEY_SELECTED_PHOTOS, pagerFragment.getPaths());
+        intent.putExtra("id", viewId);
         setResult(RESULT_OK, intent);
         finish();
 

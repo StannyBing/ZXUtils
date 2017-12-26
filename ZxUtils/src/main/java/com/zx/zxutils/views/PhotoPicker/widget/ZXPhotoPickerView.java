@@ -20,6 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -28,6 +29,7 @@ import java.util.List;
 public class ZXPhotoPickerView extends FrameLayout {
 
     private int maxNum = 9;
+    private String viewId = "";
 
     @IntDef({ACTION_SELECT, ACTION_ONLY_SHOW, ACTION_DELETE})
 
@@ -65,6 +67,11 @@ public class ZXPhotoPickerView extends FrameLayout {
         initView(context, attrs);
         initData(context, attrs);
         initEvent(context, attrs);
+        viewId = UUID.randomUUID().toString();
+    }
+
+    public String getViewId(){
+        return viewId;
     }
 
     private void initEvent(Context context, AttributeSet attrs) {
@@ -126,7 +133,7 @@ public class ZXPhotoPickerView extends FrameLayout {
 //            selectedPhotos.addAll(photos);
 //        }
 //        if (action == ZXPhotoPickerView.ACTION_DELETE) {
-        photoAdapter = new PhotoAdapter(context, selectedPhotos, deleteListener, onPhotoItemClickListener);
+        photoAdapter = new PhotoAdapter(context, selectedPhotos, deleteListener, onPhotoItemClickListener, viewId);
         photoAdapter.maxNum = maxNum;
 // } else {
 //            photoAdapter = new PhotoAdapter(context, selectedPhotos);
@@ -154,6 +161,9 @@ public class ZXPhotoPickerView extends FrameLayout {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data==null||!viewId.equals(data.getStringExtra("id"))) {
+            return;
+        }
         if (action == ACTION_SELECT) {
             PhotoPickUtils.onActivityResult(requestCode, resultCode, data, new PhotoPickUtils.PickHandler() {
                 @Override

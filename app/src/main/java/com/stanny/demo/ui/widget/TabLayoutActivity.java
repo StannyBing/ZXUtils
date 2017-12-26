@@ -1,10 +1,10 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import com.stanny.demo.R;
-import com.stanny.demo.ui.fragment.TabFragment;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager;
 
 public class TabLayoutActivity extends BaseActivity {

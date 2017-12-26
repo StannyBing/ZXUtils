@@ -1,9 +1,10 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.TableView.ZXTableKeyValues;
 import com.zx.zxutils.views.TableView.ZXTableListener;

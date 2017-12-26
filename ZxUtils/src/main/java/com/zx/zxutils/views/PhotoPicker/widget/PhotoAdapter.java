@@ -34,6 +34,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     private Context mContext;
     public int maxNum = 9;
+    private String viewId;
 
     public void setAction(@ZXPhotoPickerView.MultiPicAction int action) {
         this.action = action;
@@ -41,7 +42,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     private int action;
 
-    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths, OnDeleteListener deleteListener, OnPhotoItemClickListener onPhotoItemClickListener) {
+    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths, OnDeleteListener deleteListener, OnPhotoItemClickListener onPhotoItemClickListener, String viewId) {
         this.photoPaths = photoPaths;
         this.mContext = mContext;
         this.deleteListener = deleteListener;
@@ -52,6 +53,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         }
         inflater = LayoutInflater.from(mContext);
         padding = dip2Px(8);
+        this.viewId = viewId;
     }
 
     public void add(ArrayList<String> photoPaths) {
@@ -255,12 +257,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 if (photoPaths != null && photoPaths.size() >= maxNum) {
                     ZXToastUtil.showToast("图片数已到达上限");
                 } else {
-                    PhotoPickUtils.startPick((Activity) mContext, false, 9, photoPaths);
+                    PhotoPickUtils.startPick((Activity) mContext, false, 9, photoPaths, viewId);
                 }
             } else {
                 ZXPhotoPreview.builder()
                         .setPhotos(photoPaths)
                         .setAction(action)
+                        .setViewId(viewId)
                         .setCurrentItem(position)
                         .start((Activity) mContext);
             }

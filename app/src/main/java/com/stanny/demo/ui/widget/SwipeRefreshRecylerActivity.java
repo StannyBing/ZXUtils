@@ -1,8 +1,9 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZxRvHolder;

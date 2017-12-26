@@ -1,4 +1,4 @@
-package com.stanny.demo.ui;
+package com.stanny.demo.ui.util;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.stanny.demo.R;
+import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.util.ZXNotifyUtil;
 
 import butterknife.ButterKnife;
