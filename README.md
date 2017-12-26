@@ -1,5 +1,5 @@
 # ZXUtils
-![](https://github.com/StannyBing/ZXUtils/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+![](https://github.com/StannyBing/ZXUtils/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)<br>
 ZXUtils现在已添加了腾讯的QMUI库，全面跨入2.0.0版本。<br>
 从这个版本起，ZXUtils会逐渐加入更多，更全，更好的工具以及UI控件<br>
 <br>
