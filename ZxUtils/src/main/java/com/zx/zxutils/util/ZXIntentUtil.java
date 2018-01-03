@@ -46,12 +46,14 @@ public class ZXIntentUtil {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ZXFileUtil.getFileExtension(file));
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(ZXApp.getContext(), ZXAppUtil.getPackageName() + ".fileProvider", file);
-            intent.setDataAndType(contentUri, type);
+            return intent.setDataAndType(contentUri, type);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return intent.setDataAndType(Uri.fromFile(file), type);
         }
-        intent.setDataAndType(Uri.fromFile(file), type);
-        return intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     /**
