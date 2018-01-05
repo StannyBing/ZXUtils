@@ -1,6 +1,8 @@
 # ZXUtils
 ![](https://github.com/StannyBing/ZXUtils/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)<br>
 ZXUtils现在已添加了腾讯的QMUI库，全面跨入2.0.0版本。<br>
+为更好的使用工具库，移植过的QMUI所有view仍然采用ZX开头的模式。<br>
+在此标明来源-本工具库移植了部分QMUI的view。-----2018-01-05<br>
 从这个版本起，ZXUtils会逐渐加入更多，更全，更好的工具以及UI控件<br>
 <br>
 A commonly used tool library for Android<br>
@@ -41,6 +43,7 @@ A commonly used tool library for Android<br>
 　　ZXUnZipRarUtil 解压工具<br>
 　　ZXWindowUtil 窗口工具类<br>
 　　ZXRecordUtil 录音及播放类<br>
+    ZXDeviceUtil 录音及播放类<br>
 <br>
 ### 2.网络请求框架：<br>
 　　网络请求进行了深度封装，使用时新建一个网络请求类继承ZXHttpApi，实现<br>
@@ -79,7 +82,7 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.0.2'
+    compile 'com.github.StannyBing:ZXUtils:2.0.3'
     ```
     
     注意需要在项目的build里面添加以下代码<br>

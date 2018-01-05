@@ -18,6 +18,7 @@ public class HttpTestActivity extends BaseActivity implements ZXHttpListener {
 
     private ApiData loginApi1 = new ApiData(1);
     private ApiData loginApi2 = new ApiData(0);
+    private ApiData testApi = new ApiData(4);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,8 @@ public class HttpTestActivity extends BaseActivity implements ZXHttpListener {
                 loginApi1.loadData("login");
                 break;
             case R.id.btn_test_httpPost:
-                loginApi2.loadData("login");
+//                loginApi2.loadData("login");
+                testApi.loadData();
                 break;
         }
     }

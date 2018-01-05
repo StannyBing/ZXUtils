@@ -58,6 +58,15 @@ public class ApiData extends ZXHttpApi {
                 params.setSavePath(infos[0]);
                 params.setAutoRename(infos[1]);
                 break;
+            case 4:
+                params.setApiUrl("http://zhsq.digitalcq.com/tlghdw/api_v1.do");
+                params.setApiMethod(HTTP_MOTHOD.POST);
+                params.addParam("method", "allVisitlog");
+                params.addParam("visitdata", "[{\"FileID\":\"userLogin\",\"FileName\":\"%E7%99%BB%E5%BD%95\",\"readTimes\":3,\"soft_version\":\"1.0.0\",\"sys_version\":\"7.0\"}]");
+                params.addParam("e", "bdc4645043f6846a0cefffd8791cecf2");
+                params.addParam("code", "ba0ad332d01f59b69c939b62cafe057e");
+                params.addParam("os", "android_phone");
+                break;
             default:
                 break;
         }
