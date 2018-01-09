@@ -1,8 +1,7 @@
-package com.zx.zxutils.views;
+package com.zx.zxutils.qmui;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.zx.zxutils.ZXApp;
 import com.zx.zxutils.util.ZXDeviceUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
 
@@ -302,11 +302,11 @@ public class ZXStatusBarCompat {
      * API19之前透明状态栏：获取设置透明状态栏的system ui visibility的值，这是部分有提供接口的rom使用的
      * http://stackoverflow.com/questions/21865621/transparent-status-bar-before-4-4-kitkat
      */
-    public static Integer getStatusBarAPITransparentValue(Context context) {
+    public static Integer getStatusBarAPITransparentValue() {
         if (sTransparentValue != null) {
             return sTransparentValue;
         }
-        String[] systemSharedLibraryNames = context.getPackageManager()
+        String[] systemSharedLibraryNames = ZXApp.getContext().getPackageManager()
                 .getSystemSharedLibraryNames();
         String fieldName = null;
         for (String lib : systemSharedLibraryNames) {
@@ -342,14 +342,14 @@ public class ZXStatusBarCompat {
     /**
      * 获取状态栏的高度。
      */
-    public static int getStatusbarHeight(Context context) {
+    public static int getStatusbarHeight() {
         if (sStatusbarHeight == -1) {
-            initStatusBarHeight(context);
+            initStatusBarHeight();
         }
         return sStatusbarHeight;
     }
 
-    private static void initStatusBarHeight(Context context) {
+    private static void initStatusBarHeight() {
         Class<?> clazz;
         Object obj = null;
         Field field = null;
@@ -372,7 +372,7 @@ public class ZXStatusBarCompat {
         if (field != null && obj != null) {
             try {
                 int id = Integer.parseInt(field.get(obj).toString());
-                sStatusbarHeight = context.getResources().getDimensionPixelSize(id);
+                sStatusbarHeight = ZXApp.getContext().getResources().getDimensionPixelSize(id);
             } catch (Throwable t) {
                 t.printStackTrace();
             }

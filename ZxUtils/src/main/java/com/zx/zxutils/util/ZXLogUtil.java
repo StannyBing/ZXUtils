@@ -141,15 +141,18 @@ public class ZXLogUtil {
             StackTraceElement[] trace = new Throwable().fillInStackTrace()
                     .getStackTrace();
             String caller = "";
+            String fileName = "";
+            int lineNumber = 0;
             for (int i = 2; i < trace.length; i++) {
                 Class<?> clazz = trace[i].getClass();
                 if (!clazz.equals(ZXLogUtil.class)) {
+                    fileName = trace[i].getFileName();
                     caller = trace[i].getMethodName();
+                    lineNumber = trace[i].getLineNumber();
                     break;
                 }
             }
-            return String.format(Locale.US, "[%d] %s: %s", Thread.currentThread()
-                    .getId(), caller, msg);
+            return String.format(Locale.US, "("+fileName + ":" + lineNumber + ")_%s : %s", caller, msg);
         } catch (Exception e) {
             e.printStackTrace();
             return msg;
