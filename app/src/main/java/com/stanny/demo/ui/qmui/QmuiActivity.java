@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.stanny.demo.R;
+import com.zx.zxutils.qmui.ZXStatusBarCompat;
 
 
 /**
@@ -20,6 +21,7 @@ public class QmuiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qmui);
+        ZXStatusBarCompat.translucent(this);
         rvQmui = findViewById(R.id.rv_qmui);
         rvQmui.setLayoutManager(new GridLayoutManager(this, 3));
     }

@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.zx.zxutils.ZXApp;
@@ -55,7 +54,9 @@ public class ZXDeviceUtil {
             ZXLogUtil.loge(e.getMessage());
         } finally {
             try {
-                fileInputStream.close();
+                if (fileInputStream != null) {
+                    fileInputStream.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -225,7 +226,6 @@ public class ZXDeviceUtil {
         return false;
     }
 
-    @Nullable
     private static String getLowerCaseName(Properties p, Method get, String key) {
         String name = p.getProperty(key);
         if (name == null) {
