@@ -36,6 +36,12 @@ public class ZXSharedPrefUtil {
         editor = preferences.edit();
     }
 
+    public ZXSharedPrefUtil(String name) {
+        this.mContext = ZXApp.getContext();
+        preferences = mContext.getSharedPreferences(name, Context.MODE_PRIVATE);
+        editor = preferences.edit();
+    }
+
     /**
      * 插入任意类型
      *

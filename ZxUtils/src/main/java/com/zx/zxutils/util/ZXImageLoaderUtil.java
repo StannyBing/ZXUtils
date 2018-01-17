@@ -32,7 +32,6 @@ public class ZXImageLoaderUtil {
             bitmap = Glide.with(ZXApp.getContext())
                     .load(url)
                     .asBitmap() //必须
-                    .centerCrop()
                     .into(width, height)
                     .get();
         } catch (InterruptedException e) {
@@ -84,7 +83,6 @@ public class ZXImageLoaderUtil {
         }
         Glide.with(ZXApp.getContext()).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
                 .error(errorImage)
                 .crossFade().into(imageView);
@@ -100,7 +98,6 @@ public class ZXImageLoaderUtil {
         }
         Glide.with(ZXApp.getContext()).load(uri)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
                 .error(errorImage)
                 .crossFade().into(imageView);
@@ -116,7 +113,6 @@ public class ZXImageLoaderUtil {
         }
         Glide.with(ZXApp.getContext()).load(file)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
                 .error(errorImage)
                 .crossFade().into(imageView);
@@ -164,10 +160,31 @@ public class ZXImageLoaderUtil {
         }
         Glide.with(ZXApp.getContext()).load(resourceId)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
                 .error(errorImage)
                 .crossFade().into(imageView);
+    }
+
+    public static void displaySquare(ImageView imageView, String url) {
+        if (imageView == null) {
+            throw new IllegalArgumentException("argument error");
+        }
+        Glide.with(ZXApp.getContext()).load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .crossFade()
+                .into(imageView);
+    }
+
+    public static void displaySquare(ImageView imageView, int resourceId) {
+        if (imageView == null) {
+            throw new IllegalArgumentException("argument error");
+        }
+        Glide.with(ZXApp.getContext()).load(resourceId)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .crossFade()
+                .into(imageView);
     }
 
     public static void displayRound(ImageView imageView, String url) {
@@ -181,7 +198,7 @@ public class ZXImageLoaderUtil {
         Glide.with(ZXApp.getContext()).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(errorImage)
-                .centerCrop().transform(new GlideRoundTransformUtil(ZXApp.getContext())).into(imageView);
+                .transform(new GlideRoundTransformUtil(ZXApp.getContext())).into(imageView);
     }
 
     private static class GlideRoundTransformUtil extends BitmapTransformation {
