@@ -10,13 +10,13 @@ A commonly used tool library for Android<br>
 所有的工具等都是以ZX..开头，如ZXDialogUtil、ZXFileUtil、ZXSystemUtil<br>
 所有涉及到view的比如自定义view及dialog等都是基于Material Design进行设计，并都提供了自定义的功能，方便设计<br>
 <br>
-部分截图如下：<br>
-![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_1)<br>
-![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_2)<br>
-![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_3)<br>
-![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_4)<br>
-![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_5)<br>
-![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_6)<br>
+部分截图如下(该截图为2018-1-23所截，后期可能会产生部分变化)：<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_1.jpg)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_2.jpg)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_3.jpg)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_4.jpg)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_5.jpg)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_6.jpg)<br>
 ### 1.工具库包含以下：<br>
 　　ZXAnimUtil 动画方法工具类<br>
 　　ZXAppUtil App相关工具类<br>
