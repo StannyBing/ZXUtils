@@ -1,19 +1,20 @@
 package com.stanny.demo.ui.util;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
+import com.stanny.demo.view.BtnBarView;
 import com.zx.zxutils.util.ZXAnimUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AnimationTestActivity extends BaseActivity {
 
+    @BindView(R.id.btnbar_view)
+    BtnBarView btnBarView;
     @BindView(R.id.btn_openAnimTest)
     ImageView btnOpenAnimTest;
 
@@ -22,25 +23,34 @@ public class AnimationTestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation_test);
         ButterKnife.bind(this);
+        btnBarView.addBtn("旋转")
+                .addBtn("渐变-显示")
+                .addBtn("渐变-隐藏")
+                .addBtn("缩小")
+                .addBtn("放大")
+                .setItemClickListener(this)
+                .build();
     }
 
-    @OnClick({R.id.btn_test_rotateAnim, R.id.btn_test_alpha1Anim, R.id.btn_test_alpha2Anim, R.id.btn_test_lessAnim, R.id.btn_test_amplAnim})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_test_rotateAnim:
+    @Override
+    public void onItemClick(int position) {
+        switch (position) {
+            case 0://旋转
                 btnOpenAnimTest.startAnimation(ZXAnimUtil.getRotateAnimationByCenter(2000, null));
                 break;
-            case R.id.btn_test_alpha1Anim:
+            case 1://渐变-显示
                 btnOpenAnimTest.startAnimation(ZXAnimUtil.getAlphaAnimation(0.0f, 1.0f, 2000, null));
                 break;
-            case R.id.btn_test_alpha2Anim:
+            case 2://渐变-隐藏
                 btnOpenAnimTest.startAnimation(ZXAnimUtil.getHiddenAlphaAnimation(2000, null));
                 break;
-            case R.id.btn_test_lessAnim:
+            case 3://缩小
                 btnOpenAnimTest.startAnimation(ZXAnimUtil.getLessenScaleAnimation(2000, null));
                 break;
-            case R.id.btn_test_amplAnim:
+            case 4://放大
                 btnOpenAnimTest.startAnimation(ZXAnimUtil.getAmplificationAnimation(2000, null));
+                break;
+            default:
                 break;
         }
     }

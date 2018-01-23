@@ -42,7 +42,7 @@ public class ZXNetworkUtil {
      * 打开网络设置界面
      * <p>3.0以下打开设置界面</p>
      */
-    public static void openWirelessSettings(Context context) {
+    public static void openNetWordSettings(Context context) {
         if (android.os.Build.VERSION.SDK_INT > 10) {
             context.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         } else {
@@ -76,10 +76,10 @@ public class ZXNetworkUtil {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public static boolean getDataEnabled() {
+    public static boolean isMobileDataEnable() {
         try {
             TelephonyManager tm = (TelephonyManager) ZXApp.getContext().getSystemService(Context.TELEPHONY_SERVICE);
-            Method getMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("getDataEnabled");
+            Method getMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("isMobileDataEnable");
             if (null != getMobileDataEnabledMethod) {
                 return (boolean) getMobileDataEnabledMethod.invoke(tm);
             }
@@ -124,7 +124,7 @@ public class ZXNetworkUtil {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public static boolean getWifiEnabled() {
+    public static boolean isWifiEnabled() {
         @SuppressLint("WifiManagerLeak")
         WifiManager wifiManager = (WifiManager) ZXApp.getContext().getSystemService(Context.WIFI_SERVICE);
         return wifiManager.isWifiEnabled();
@@ -171,7 +171,7 @@ public class ZXNetworkUtil {
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isWifiAvailable() {
-        return getWifiEnabled();
+        return isWifiEnabled();
     }
 
     /**

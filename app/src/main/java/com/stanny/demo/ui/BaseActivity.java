@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.stanny.demo.view.BtnBarView;
 import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
 
 /**
@@ -11,7 +12,7 @@ import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
  * 功能：
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements BtnBarView.OnItemClickListener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,4 +22,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -67,14 +68,43 @@ public class ZXFormatCheckUtil {
      */
     public static boolean isIdCardNum(String idNum) {
         //定义判别用户身份证号的正则表达式（要么是15位或18位，最后一位可以为字母）
-        Pattern idNumPattern = Pattern.compile("(\\d{14}[0-9a-zA-Z])|(\\d{17}[0-9a-zA-Z])");
+        Pattern idNumPattern = Pattern.compile("(\\d{17}[0-9a-zA-Z])");
         //通过Pattern获得Matcher
         Matcher idNumMatcher = idNumPattern.matcher(idNum);
-        if (!idNumMatcher.matches()) {
+        if (!idNumMatcher.matches()) {//长度及格式校验
+            return false;
+        }
+        String cityStr = idNum.substring(0, 2);
+        if (!Arrays.asList(cityCode).contains(cityStr)) {//城市代码校验
+            return false;
+        }
+        try {//校验码校验
+            int powerTotal = 0;
+            for (int i = 0; i < idNum.length() - 1; i++) {
+                powerTotal += Integer.parseInt(idNum.substring(i, i + 1)) * power[i];
+            }
+            if (!checkCode[powerTotal % 11].equals(idNum.substring(idNum.length() - 1, idNum.length()))) {
+                    return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;
     }
+
+    private static String checkCode[] = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
+
+    /**
+     * 每位加权因子
+     */
+    private static int power[] = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5,
+            8, 4, 2};
+
+    private static String cityCode[] = {"11", "12", "13", "14", "15", "21",
+            "22", "23", "31", "32", "33", "34", "35", "36", "37", "41", "42",
+            "43", "44", "45", "46", "50", "51", "52", "53", "54", "61", "62",
+            "63", "64", "65", "71", "81", "82", "91"};
 
     /**
      * 判定输入汉字

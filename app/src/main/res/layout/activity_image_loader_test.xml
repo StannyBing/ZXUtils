@@ -12,39 +12,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"/>
 
-    <Button
-        android:id="@+id/btn_test_simpleImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="一般"/>
+    <include
+        layout="@layout/activity_normal"/>
 
-    <Button
-        android:id="@+id/btn_test_bigImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="大图"/>
-
-    <Button
-        android:id="@+id/btn_test_smallImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="小图"/>
-
-    <Button
-        android:id="@+id/btn_test_roundImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="圆图"/>
-
-    <Button
-        android:id="@+id/btn_test_localImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="资源"/>
-
-    <Button
-        android:id="@+id/btn_test_fileImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="文件"/>
 </LinearLayout>

@@ -99,7 +99,19 @@
         </activity>
         <activity android:name=".ui.widget.ExpandViewActivity">
         </activity>
-        <activity android:name=".ui.qmui.QmuiActivity">
+        <activity android:name=".ui.widget.BottomSheetActivity">
+        </activity>
+        <activity android:name=".ui.util.FormatCheckTestActivity">
+        </activity>
+        <activity android:name=".ui.util.NetWorkTestActivity">
+        </activity>
+        <activity
+            android:name=".ui.util.ScreenTestActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+        <activity android:name=".ui.util.SharedPrefTestActivity">
+        </activity>
+        <activity android:name=".ui.util.TimeTestActivity">
         </activity>
     </application>
 

@@ -4,46 +4,58 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
+import com.stanny.demo.view.BtnBarView;
 import com.zx.zxutils.util.ZXNotifyUtil;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class NotifyTestActivity extends BaseActivity {
+
+    @BindView(R.id.btnbar_view)
+    BtnBarView btnBarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notify_test);
+        setContentView(R.layout.activity_normal);
         ButterKnife.bind(this);
+
+        btnBarView
+                .addBtn("基本notify")
+                .addBtn("多条notify")
+                .addBtn("大图notify")
+                .addBtn("进度notify")
+                .addBtn("自定义Notify")
+                .setItemClickListener(this)
+                .build();
     }
 
-    @OnClick({R.id.btn_test_simpleNotify, R.id.btn_test_mulNotify, R.id.btn_test_imageNotify, R.id.btn_test_progressNotify, R.id.btn_test_selfNotify})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_test_simpleNotify:
+    @Override
+    public void onItemClick(int position) {
+        switch (position) {
+            case 0://基本notify
                 Intent intents = new Intent(this, NotifyTestActivity.class);
                 ZXNotifyUtil.showSingleLineNotify(intents, R.mipmap.ic_launcher, "标题", "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
                 break;
-            case R.id.btn_test_mulNotify:
+            case 1://多条notify
                 Intent intent = new Intent(this, NotifyTestActivity.class);
                 ZXNotifyUtil.showMulLineNotify(intent, R.mipmap.ic_launcher, "标题", "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
                 break;
-            case R.id.btn_test_imageNotify:
+            case 2://大图notify
                 Intent intentbi = new Intent(this, NotifyTestActivity.class);
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
                 ZXNotifyUtil.showBigImgNotify(intentbi, R.mipmap.ic_launcher, "标题", "内容内容内容内容内容内容内容内容内容内容", bitmap);
                 break;
-            case R.id.btn_test_progressNotify:
+            case 3://进度notify
                 Intent intentp = new Intent(this, NotifyTestActivity.class);
                 ZXNotifyUtil.showProgressNotify(intentp, R.mipmap.ic_launcher, "标题", "内容内容内容内容内容内容内容内容内容内容", 60);
                 break;
-            case R.id.btn_test_selfNotify:
+            case 4://自定义Notify
                 Intent intentc = new Intent(this, NotifyTestActivity.class);
                 RemoteViews remoteViews = new RemoteViews(getPackageName(),
                         R.layout.layout_custom);

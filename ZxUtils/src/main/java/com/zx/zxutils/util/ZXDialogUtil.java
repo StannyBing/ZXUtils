@@ -1,5 +1,6 @@
 package com.zx.zxutils.util;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -387,6 +388,7 @@ public class ZXDialogUtil {
         return showCustomViewDialog(context, title, view, yesListener, noListener, false);
     }
 
+    @SuppressLint("RestrictedApi")
     public static Dialog showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
         buider.setTitle(title);

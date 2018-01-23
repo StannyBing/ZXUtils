@@ -104,7 +104,7 @@ public class ZXTimeUtil {
             } else if (day == 2) {// 前天
                 sb.append(" 前天 ");
             } else {
-                sb.append(" " + DateToWeek(milliseconds) + " ");
+                sb.append(" " + dateToWeek(milliseconds) + " ");
             }
         } else {// 一周之前
             if (isShowWeek) {
@@ -187,7 +187,7 @@ public class ZXTimeUtil {
             } else if (day == 2) {// 前天
                 sb.append("前天 " + time);
             } else {
-                sb.append(DateToWeek(milliseconds) + time);
+                sb.append(dateToWeek(milliseconds) + time);
             }
         } else {// 一周之前
             sb.append(day % 7 + "周前");
@@ -203,7 +203,7 @@ public class ZXTimeUtil {
      * @param milliseconds data
      * @return 日期变量转成对应的星期字符串
      */
-    public static String DateToWeek(long milliseconds) {
+    public static String dateToWeek(long milliseconds) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliseconds);

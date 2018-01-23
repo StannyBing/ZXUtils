@@ -1,30 +1,38 @@
 package com.stanny.demo.ui.util;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
+import com.stanny.demo.view.BtnBarView;
 import com.zx.zxutils.other.ThreadPool.ZXRunnable;
 import com.zx.zxutils.other.ThreadPool.ZXThreadPool;
 import com.zx.zxutils.util.ZXLogUtil;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ThreadPoolTestActivity extends BaseActivity {
+
+    @BindView(R.id.btnbar_view)
+    BtnBarView btnBarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thread_pool_test);
+        setContentView(R.layout.activity_normal);
         ButterKnife.bind(this);
+
+        btnBarView.addBtn("开启线程")
+                .addBtn("暂停线程")
+                .setItemClickListener(this)
+                .build();
     }
 
-    @OnClick({R.id.btn_test_openThread, R.id.btn_test_pauseThread})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_test_openThread:
+    @Override
+    public void onItemClick(int position) {
+        switch (position) {
+            case 0://开启线程
                 for (int i = 0; i < 20; i++) {
                     final int finalI = i;
                     ZXThreadPool.execute(new ZXRunnable() {
@@ -41,7 +49,7 @@ public class ThreadPoolTestActivity extends BaseActivity {
                     });
                 }
                 break;
-            case R.id.btn_test_pauseThread:
+            case 1://暂停线程
                 if (ZXThreadPool.isPaused()) {
                     ZXThreadPool.resume();
                 } else {

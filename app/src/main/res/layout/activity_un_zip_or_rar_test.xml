@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".demo.ui.DialogTestActivity">
+    android:orientation="vertical">
 
     <Button
+        android:background="@drawable/shape_item_btn"
+        android:textColor="@color/white"
         android:id="@+id/btn_test_unzip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
         android:text="开始解压"/>
 
     <ProgressBar

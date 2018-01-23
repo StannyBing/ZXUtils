@@ -6,31 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".demo.ui.ToastTestActivity">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_test_simpleToast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="简单Toast"/>
-
-    <Button
-        android:id="@+id/btn_test_imgToast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="图片Toast"/>
-
-    <Button
-        android:id="@+id/btn_test_SnackBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Snackbar"/>
-
-    <View
+    <include
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        layout="@layout/activity_normal"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coorContent"

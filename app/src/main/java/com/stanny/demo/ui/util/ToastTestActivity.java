@@ -7,13 +7,17 @@ import android.view.View;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
+import com.stanny.demo.view.BtnBarView;
 import com.zx.zxutils.util.ZXToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ToastTestActivity extends BaseActivity {
+
+
+    @BindView(R.id.btnbar_view)
+    BtnBarView btnBarView;
 
     @BindView(R.id.coorContent)
     CoordinatorLayout coorContent;
@@ -23,18 +27,25 @@ public class ToastTestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toast_test);
         ButterKnife.bind(this);
+
+        btnBarView
+                .addBtn("简单Toast")
+                .addBtn("图片Toast")
+                .addBtn("Snackbar")
+                .setItemClickListener(this)
+                .build();
     }
 
-    @OnClick({R.id.btn_test_simpleToast, R.id.btn_test_imgToast, R.id.btn_test_SnackBar})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_test_simpleToast:
+    @Override
+    public void onItemClick(int position) {
+        switch (position) {
+            case 0://简单Toast
                 ZXToastUtil.showToast("123456");
                 break;
-            case R.id.btn_test_imgToast:
+            case 1://图片Toast
                 ZXToastUtil.showImgToast("图片toast", ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
                 break;
-            case R.id.btn_test_SnackBar:
+            case 2://Snackbar
                 ZXToastUtil.showSnackBar(coorContent, "snackbar", "do", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

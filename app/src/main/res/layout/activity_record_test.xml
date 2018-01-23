@@ -8,6 +8,8 @@
     android:orientation="vertical">
 
     <Button
+        android:background="@drawable/shape_item_btn"
+        android:textColor="@color/white"
         android:id="@+id/btn_test_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

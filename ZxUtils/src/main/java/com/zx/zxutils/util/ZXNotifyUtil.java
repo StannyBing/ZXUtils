@@ -3,13 +3,14 @@ package com.zx.zxutils.util;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.zx.zxutils.ZXApp;
@@ -145,13 +146,23 @@ public class ZXNotifyUtil {
 
     /**
      * 初始化manager
-     *
      */
     private static void initManager() {
         // 获取系统服务来初始化对象
         notificationManager = (NotificationManager) ZXApp.getContext()
                 .getSystemService(Activity.NOTIFICATION_SERVICE);
-        cBuilder = new NotificationCompat.Builder(ZXApp.getContext());
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationChannel mChannel = new NotificationChannel("my_channel", "my_channel", NotificationManager.IMPORTANCE_HIGH);
+            //  mChannel.setDescription(description);
+//              mChannel.enableLights(true);
+//              mChannel.setLightColor(Color.RED);
+//              mChannel.enableVibration(true);
+//              mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            notificationManager.createNotificationChannel(mChannel);
+            cBuilder = new NotificationCompat.Builder(ZXApp.getContext(), "my_channel");
+        } else {
+            cBuilder = new NotificationCompat.Builder(ZXApp.getContext());
+        }
     }
 
     /**
@@ -216,7 +227,11 @@ public class ZXNotifyUtil {
 
     // 设置builder的信息，在用大文本时会用到这个
     private static void setBuilder(Intent intent, int icon, String title, boolean sound, boolean vibrate, boolean lights) {
-        nBuilder = new Notification.Builder(ZXApp.getContext());
+        if (Build.VERSION.SDK_INT >= 26) {
+            nBuilder = new Notification.Builder(ZXApp.getContext(), "my_channel");
+        } else {
+            nBuilder = new Notification.Builder(ZXApp.getContext());
+        }
         // 如果当前Activity启动在前台，则不开启新的Activity。
 //        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        PendingIntent pIntent = PendingIntent.getActivity(mContext,

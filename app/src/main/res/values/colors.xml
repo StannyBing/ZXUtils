@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#179f99</color>
+    <color name="colorPrimaryDark">#179f99</color>
+    <color name="colorAccent">#fbce00</color>
     <color name="color_white">#FFFFFF</color>
     <!-- 上传图片添加的颜色 -->
     <color name="none_color">#00000000</color>
@@ -10,5 +10,6 @@
     <color name="albumback">#E1E0DE</color>
     <color name="style_red">#ff4c41</color>
     <color name="style_divider_color">#C9C7CD</color>
+    <color name="zxcolor">#179f99</color>
 
 </resources>

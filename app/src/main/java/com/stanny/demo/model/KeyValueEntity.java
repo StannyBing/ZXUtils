@@ -1,10 +1,12 @@
 package com.stanny.demo.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Xiangb on 2017/4/6.
  * 功能：
  */
-public class KeyValueEntity {
+public class KeyValueEntity implements Serializable {
     public String key;
     public String value;
 

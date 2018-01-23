@@ -8,12 +8,16 @@
     <Button
         android:id="@+id/btn_text_bubble1"
         android:layout_width="100dp"
+        android:background="@drawable/shape_item_btn"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="ZXUtils"/>
 
     <Button
+        android:background="@drawable/shape_item_btn"
+        android:textColor="@color/white"
         android:id="@+id/btn_text_bubble2"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -22,6 +26,8 @@
         android:text="ZXUtils"/>
 
     <Button
+        android:background="@drawable/shape_item_btn"
+        android:textColor="@color/white"
         android:id="@+id/btn_text_bubble3"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -30,6 +36,8 @@
         android:text="ZXUtils"/>
 
     <Button
+        android:background="@drawable/shape_item_btn"
+        android:textColor="@color/white"
         android:id="@+id/btn_text_bubble4"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -38,6 +46,8 @@
         android:text="ZXUtils"/>
 
     <Button
+        android:background="@drawable/shape_item_btn"
+        android:textColor="@color/white"
         android:id="@+id/btn_text_bubble5"
         android:layout_width="100dp"
         android:layout_height="wrap_content"

@@ -12,45 +12,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"/>
 
-    <Button
-        android:id="@+id/btn_test_circleBitmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="圆形"/>
+    <include
+        layout="@layout/activity_normal"/>
 
-    <Button
-        android:id="@+id/btn_test_markBitmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="水印"/>
-
-    <Button
-        android:id="@+id/btn_test_blackBitmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="黑白"/>
-
-    <Button
-        android:id="@+id/btn_test_roundBitmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="圆角"/>
-
-    <Button
-        android:id="@+id/btn_test_greyBitmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="灰度"/>
-
-    <Button
-        android:id="@+id/btn_test_conbineBitmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="合并"/>
-
-    <Button
-        android:id="@+id/btn_test_rotateBitmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="旋转"/>
 </LinearLayout>

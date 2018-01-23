@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".demo.ui.UploadTestActivity">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/lightsteelblue"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="单独上传"/>
 
@@ -32,29 +31,38 @@
             android:id="@+id/btn_test_simpleStart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="start"/>
+            android:background="@drawable/shape_item_btn"
+            android:text="start"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/btn_test_simplePause"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="pause"/>
+            android:background="@drawable/shape_item_btn"
+            android:text="pause"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/btn_test_simpleCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="cancel"/>
+            android:background="@drawable/shape_item_btn"
+            android:text="cancel"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="50dp"
-        android:background="@color/lightsteelblue"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="通过ApiData上传"/>
 
@@ -74,22 +82,31 @@
             android:id="@+id/btn_test_apiStart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="start"/>
+            android:background="@drawable/shape_item_btn"
+            android:text="start"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/btn_test_apiPause"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="pause"/>
+            android:background="@drawable/shape_item_btn"
+            android:text="pause"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/btn_test_apiCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="cancel"/>
+            android:background="@drawable/shape_item_btn"
+            android:text="cancel"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <TextView

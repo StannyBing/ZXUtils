@@ -14,33 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@mipmap/test"/>
 
-    <Button
-        android:id="@+id/btn_test_rotateAnim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="旋转"/>
+    <include
+        layout="@layout/activity_normal"/>
 
-    <Button
-        android:id="@+id/btn_test_alpha1Anim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="渐变-显示"/>
-
-    <Button
-        android:id="@+id/btn_test_alpha2Anim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="渐变-隐藏"/>
-
-    <Button
-        android:id="@+id/btn_test_lessAnim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="缩小"/>
-
-    <Button
-        android:id="@+id/btn_test_amplAnim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="放大"/>
 </LinearLayout>

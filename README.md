@@ -1,15 +1,22 @@
 # ZXUtils
 ![](https://github.com/StannyBing/ZXUtils/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)<br>
-ZXUtils现在已添加了腾讯的QMUI库，全面跨入2.0.0版本。<br>
-为更好的使用工具库，移植过的QMUI所有view仍然采用ZX开头的模式。<br>
-在此标明来源-本工具库移植了部分QMUI的view。-----2018-01-05<br>
+ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨入2.0.0版本。<br>
+为更好的使用工具库，仍然采用ZX开头的模式。<br>
 从这个版本起，ZXUtils会逐渐加入更多，更全，更好的工具以及UI控件<br>
+但同时可能会对原有的部分ui进行删除等操作，望体谅<br>
 <br>
 A commonly used tool library for Android<br>
 本库包含常用android开发所需的所有工具类+网络请求+常用view<br>
 所有的工具等都是以ZX..开头，如ZXDialogUtil、ZXFileUtil、ZXSystemUtil<br>
 所有涉及到view的比如自定义view及dialog等都是基于Material Design进行设计，并都提供了自定义的功能，方便设计<br>
 <br>
+部分截图如下：<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_1)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_2)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_3)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_4)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_5)<br>
+![](https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_6)<br>
 ### 1.工具库包含以下：<br>
 　　ZXAnimUtil 动画方法工具类<br>
 　　ZXAppUtil App相关工具类<br>
@@ -43,7 +50,7 @@ A commonly used tool library for Android<br>
 　　ZXUnZipRarUtil 解压工具<br>
 　　ZXWindowUtil 窗口工具类<br>
 　　ZXRecordUtil 录音及播放类<br>
-    ZXDeviceUtil 录音及播放类<br>
+　　ZXDeviceUtil 录音及播放类<br>
 <br>
 ### 2.网络请求框架：<br>
 　　网络请求进行了深度封装，使用时新建一个网络请求类继承ZXHttpApi，实现<br>
@@ -82,7 +89,7 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.0.4'
+    compile 'com.github.StannyBing:ZXUtils:2.0.6'
     ```
     
     注意需要在项目的build里面添加以下代码<br>
