@@ -77,7 +77,6 @@ A commonly used tool library for Android<br>
 　　ZXSwipeRecycler SwipeRefreshLayout+RecyclerView的组合view<br>
 　　ZXTableView 表格view<br>
 　　ZXTabViewPager TabLayout+ViewPager的组合view<br><br>
-　　ZXFloatScrollView 带悬浮布局的View<br>
 　　ZXNoScrollGridView 不会滚动的GridView<br>
 　　ZXNoScrollListView 不会滚动的ListView<br>
 　　ZXPhotoView 可放大缩小的图片控件<br>
@@ -89,7 +88,7 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.0.6'
+    compile 'com.github.StannyBing:ZXUtils:2.0.7'
     ```
     
     注意需要在项目的build里面添加以下代码<br>

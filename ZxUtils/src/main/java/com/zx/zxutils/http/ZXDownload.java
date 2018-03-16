@@ -29,7 +29,7 @@ public class ZXDownload {
 
         cancelable = x.http().post(apiParams._requestParams(), new Callback.ProgressCallback<File>() {
             @Override
-            public void onSuccess(File result) {
+            public void onSuccess(int requestCode, File result) {
                 ZXBaseResult baseResult = new ZXBaseResult();
                 baseResult.setFile(result);
                 baseResult.setSuccess(true);

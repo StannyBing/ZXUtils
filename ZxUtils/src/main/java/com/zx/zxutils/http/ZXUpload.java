@@ -52,7 +52,7 @@ public class ZXUpload {
         }
         cancelable = x.http().post(apiParams._requestParams(), new Callback.ProgressCallback<String>() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(int requestCode, String result) {
                 ZXBaseResult baseResult = new ZXBaseResult();
                 baseResult.setSuccess(true);
                 baseResult.setEntry(result);

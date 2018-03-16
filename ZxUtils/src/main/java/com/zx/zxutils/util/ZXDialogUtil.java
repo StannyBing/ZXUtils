@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,7 +155,7 @@ public class ZXDialogUtil {
      */
     public static Dialog showInfoDialog(Context context, String title, String message, @Nullable DialogInterface.OnClickListener listener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
+        if (!TextUtils.isEmpty(title)) buider.setTitle(title);
         buider.setMessage(message);
         buider.setPositiveButton("确定", listener);
         Dialog dialog = buider.show();
@@ -180,7 +181,7 @@ public class ZXDialogUtil {
 
     public static Dialog showYesNoDialog(Context context, String title, String message, String yesBtnText, String noBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
+        if (!TextUtils.isEmpty(title)) buider.setTitle(title);
         buider.setMessage(message);
         buider.setPositiveButton(yesBtnText, yesListener);
         buider.setNegativeButton(noBtnText, noListener);
@@ -222,7 +223,7 @@ public class ZXDialogUtil {
 
     public static Dialog showWithOtherBtnDialog(Context context, String title, String message, String otherBtnText, @Nullable DialogInterface.OnClickListener yesListener, @Nullable DialogInterface.OnClickListener otherBtnListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
+        if (!TextUtils.isEmpty(title)) buider.setTitle(title);
         buider.setMessage(message);
         buider.setPositiveButton("确定", yesListener);
         buider.setNegativeButton("取消", null);
@@ -249,7 +250,7 @@ public class ZXDialogUtil {
 
     public static Dialog showCheckListDialog(Context context, String title, String[] itemName, boolean[] itemCheckStatus, @Nullable DialogInterface.OnMultiChoiceClickListener choiceClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
+        if (!TextUtils.isEmpty(title)) buider.setTitle(title);
         buider.setMultiChoiceItems(itemName, itemCheckStatus, choiceClickListener);
         buider.setPositiveButton("确定", yesListener);
         buider.setNegativeButton("取消", null);
@@ -274,7 +275,7 @@ public class ZXDialogUtil {
 
     public static Dialog showListDialog(final Context context, String title, String yesBtnText, final String[] itemName, @Nullable final DialogInterface.OnClickListener itemClickListener, @Nullable DialogInterface.OnClickListener yesListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
+        if (!TextUtils.isEmpty(title)) buider.setTitle(title);
         buider.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
@@ -391,7 +392,7 @@ public class ZXDialogUtil {
     @SuppressLint("RestrictedApi")
     public static Dialog showCustomViewDialog(Context context, String title, View view, @Nullable DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener, boolean canceledOnTouchOutSide) {
         AlertDialog.Builder buider = new AlertDialog.Builder(context);
-        buider.setTitle(title);
+        if (!TextUtils.isEmpty(title)) buider.setTitle(title);
         buider.setView(view, 20, 10, 20, 10);
         if (yesListener != null) {
             buider.setPositiveButton("确定", yesListener);

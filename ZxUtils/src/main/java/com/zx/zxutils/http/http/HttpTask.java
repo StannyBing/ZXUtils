@@ -21,6 +21,7 @@ import com.zx.zxutils.http.x;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -380,12 +381,18 @@ public class HttpTask<ResultType> extends AbsTask<ResultType> implements Progres
     }
 
     @Override
-    protected void onSuccess(ResultType result) {
+    protected void onSuccess(ResultType result) throws IOException {
         if (hasException) return;
         if (tracker != null) {
             tracker.onSuccess(request, result);
         }
-        callback.onSuccess(result);
+        int responseCode = 0;
+        try {
+            responseCode = request.getResponseCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        callback.onSuccess(responseCode, result);
     }
 
     @Override

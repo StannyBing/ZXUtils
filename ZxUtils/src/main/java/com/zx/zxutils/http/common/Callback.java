@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 public interface Callback {
 
     public interface CommonCallback<ResultType> extends Callback {
-        void onSuccess(ResultType result);
+        void onSuccess(int responseCode, ResultType result);
 
         void onError(Throwable ex, boolean isOnCallback);
 

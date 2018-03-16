@@ -3,6 +3,7 @@ package com.zx.zxutils.http.common.task;
 
 import com.zx.zxutils.http.common.Callback;
 
+import java.io.IOException;
 import java.util.concurrent.Executor;
 
 
@@ -31,7 +32,7 @@ public abstract class AbsTask<ResultType> implements Callback.Cancelable {
 
     protected abstract ResultType doBackground() throws Throwable;
 
-    protected abstract void onSuccess(ResultType result);
+    protected abstract void onSuccess(ResultType result) throws IOException;
 
     protected abstract void onError(Throwable ex, boolean isCallbackError);
 

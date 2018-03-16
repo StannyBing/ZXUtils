@@ -2,6 +2,7 @@ package com.zx.zxutils.util;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,11 +25,23 @@ public class ZXToastUtil {
      * @param message 内容
      */
     public static void showToast(String message) {
+        boolean isMain = true;
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            isMain = false;
+        }
+        if (!isMain) {
+            Looper.prepare();
+        }
+
         if (toast != null) {
             toast.cancel();
         }
         toast = Toast.makeText(ZXApp.getContext(), message, Toast.LENGTH_SHORT);
         toast.show();
+
+        if (!isMain) {
+            Looper.loop();
+        }
     }
 
     /**
@@ -38,6 +51,14 @@ public class ZXToastUtil {
      * @param imgDrawable 图片
      */
     public static void showImgToast(String message, Drawable imgDrawable) {
+        boolean isMain = true;
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            isMain = false;
+        }
+        if (!isMain) {
+            Looper.prepare();
+        }
+
         if (toast != null) {
             toast.cancel();
         }
@@ -47,6 +68,10 @@ public class ZXToastUtil {
         imageView.setImageDrawable(imgDrawable);
         linearLayout.addView(imageView);
         toast.show();
+
+        if (!isMain) {
+            Looper.loop();
+        }
     }
 
     /**
@@ -56,6 +81,14 @@ public class ZXToastUtil {
      * @param bitmap  图片
      */
     public static void showImgToast(String message, Bitmap bitmap) {
+        boolean isMain = true;
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            isMain = false;
+        }
+        if (!isMain) {
+            Looper.prepare();
+        }
+
         if (toast != null) {
             toast.cancel();
         }
@@ -65,6 +98,10 @@ public class ZXToastUtil {
         imageView.setImageBitmap(bitmap);
         linearLayout.addView(imageView);
         toast.show();
+
+        if (!isMain) {
+            Looper.loop();
+        }
     }
 
     /**

@@ -87,7 +87,7 @@ public final class HttpManagerImpl implements HttpManager {
         }
 
         @Override
-        public void onSuccess(T result) {
+        public void onSuccess(int requestCode, T result) {
 
         }
 

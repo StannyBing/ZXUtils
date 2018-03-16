@@ -58,7 +58,7 @@ public class DialogTestActivity extends BaseActivity {
                 }
                 break;
             case 2://打开信息loaddialog
-                ZXDialogUtil.showInfoDialog(this, "提示", "确定么", null);
+                ZXDialogUtil.showInfoDialog(this, "", "确定么", null);
                 break;
             case 3://打开确定loaddialog
                 ZXDialogUtil.showYesNoDialog(this, "提示", "确定么", null);

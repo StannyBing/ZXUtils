@@ -141,7 +141,7 @@ public abstract class ZXHttpApi {
         cancelable = x.http().get(apiParams._requestParams(), new Callback.CommonCallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(int requestCode, String result) {
                 getResult(result);
             }
 
@@ -170,7 +170,7 @@ public abstract class ZXHttpApi {
         cancelable = x.http().post(apiParams._requestParams(), new Callback.CommonCallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(int requestCode, String result) {
                 getResult(result);
             }
 
@@ -302,7 +302,7 @@ public abstract class ZXHttpApi {
         }
         cancelable = x.http().post(apiParams._requestParams(), new Callback.ProgressCallback<String>() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(int requestCode, String result) {
                 getResult(result);
                 cancelable.cancel();
                 isLoad = false;
@@ -348,8 +348,9 @@ public abstract class ZXHttpApi {
     private void startDownload() {
         loadStart();
         cancelable = x.http().post(apiParams._requestParams(), new Callback.ProgressCallback<File>() {
+
             @Override
-            public void onSuccess(File result) {
+            public void onSuccess(int requestCode, File result) {
                 ZXBaseResult baseResult = getResult("");
                 baseResult.setFile(result);
                 isLoad = false;

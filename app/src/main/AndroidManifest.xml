@@ -113,6 +113,8 @@
         </activity>
         <activity android:name=".ui.util.TimeTestActivity">
         </activity>
+        <activity android:name=".ui.zxstyle.XButtonActivity">
+        </activity>
     </application>
 
 </manifest>
