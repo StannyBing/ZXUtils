@@ -59,38 +59,6 @@ public class ZXExpandRecyclerHelper {
                                     }
                                 }
 
-//                                //将上一个展开的view 收缩
-//                                if (adapter.mLastViewTag != null) {
-//                                    View previousView = view.findViewWithTag(adapter.mLastViewTag );
-//                                    if (previousView != null) {
-//                                        View childrenView = previousView.findViewById(R.id.down);
-//                                        if (childrenView != null
-//                                                && (childrenView.getVisibility() != View.GONE)) {
-//                                            childrenView.startAnimation(new ViewExpandAnimation(
-//                                                    childrenView));
-//                                        }
-//                                    }
-//                                }
-//                                //记录当前item的Tag
-//                                adapter.mLastViewTag = (ZXExpandAdapter.MyHolder) view.getTag();
-//                                //展开当前点击的item
-//                                View childrenLayout = view.findViewById(R.id.down);
-//                                ViewExpandAnimation expandAnimation = new ViewExpandAnimation(childrenLayout);
-//                                expandAnimation.setAnimationListener(new Animation.AnimationListener() {
-//                                    @Override
-//                                    public void onAnimationStart(Animation animation) {
-//                                    }
-//                                    @Override
-//                                    public void onAnimationEnd(Animation animation) {
-////                                        //item展开结束后，将当前item平滑滚动到顶部
-//                                        recyclerView.smoothScrollToPosition(0);
-//                                    }
-//                                    @Override
-//                                    public void onAnimationRepeat(Animation animation) {}
-//                                });
-//
-//                                childrenLayout.startAnimation(expandAnimation);
-
                                 showList.clear();
                                 refresh(dataList);
 
@@ -191,6 +159,12 @@ public class ZXExpandRecyclerHelper {
         adapter = new ZXExpandAdapter(context, showList, isMultiSelected);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    public void notifyDataSetChanged() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
 }

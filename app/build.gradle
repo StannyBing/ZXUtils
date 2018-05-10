@@ -2,13 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     useLibrary 'org.apache.http.legacy'
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
-
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId "com.stanny.demo"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 2
         versionName "1.5.11"
         multiDexEnabled true
@@ -18,10 +17,8 @@ android {
             }
         }
     }
-
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
-
     packagingOptions {
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/LICENSE'
@@ -44,7 +41,8 @@ dependencies {
     //        transitive = true
     //    }
     //    compile 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-5'
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    //noinspection GradleCompatible
+    compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.jakewharton:butterknife-compiler:8.5.1'
