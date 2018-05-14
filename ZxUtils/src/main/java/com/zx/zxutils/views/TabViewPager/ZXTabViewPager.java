@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.views.ZXNoScrllViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,9 @@ import static com.zx.zxutils.views.TabViewPager.ZXTabViewPager.TabGravity.GRAVIT
 public class ZXTabViewPager extends RelativeLayout {
     private ZXPagerAdapter myPagerAdapter;
     private TabLayout tabLayoutTop, tabLayoutBottom, tabLayout;
-    private ViewPager viewPager;
+    private ZXNoScrllViewPager viewPager;
     private Context context;
+    private int normalTextColor, selectTextColor;
     //    public static final int GRAVITY_TOP = 0;
 //    public static final int GRAVITY_BOTTOM = 1;
     private List<Integer> iconList = new ArrayList<>();
@@ -45,9 +47,9 @@ public class ZXTabViewPager extends RelativeLayout {
         super(context, attrs, 0);
         //在构造函数中将xml中定义的布局解析出来
         LayoutInflater.from(context).inflate(R.layout.view_tab_viewpager_layout, this, true);
-        tabLayoutTop = (TabLayout) findViewById(R.id._tb_zx_layoutTop);
-        tabLayoutBottom = (TabLayout) findViewById(R.id._tb_zx_layoutBottom);
-        viewPager = (ViewPager) findViewById(R.id._vp_zx_pager);
+        tabLayoutTop = findViewById(R.id._tb_zx_layoutTop);
+        tabLayoutBottom = findViewById(R.id._tb_zx_layoutBottom);
+        viewPager = findViewById(R.id._vp_zx_pager);
         iconList.clear();
         tabLayout = tabLayoutTop;
         this.context = context;
@@ -91,6 +93,18 @@ public class ZXTabViewPager extends RelativeLayout {
         return this;
     }
 
+
+    /**
+     * 设置viewpager是否可以滑动
+     *
+     * @param canScroll
+     * @return
+     */
+    public ZXTabViewPager setViewpagerCanScroll(boolean canScroll) {
+        viewPager.setScanScroll(canScroll);
+        return this;
+    }
+
     /**
      * 完成构建
      */
@@ -104,18 +118,34 @@ public class ZXTabViewPager extends RelativeLayout {
                 tab.setCustomView(R.layout.item_tablayout);
                 tab.getCustomView().findViewById(R.id.iv_item_tab).setBackground(myPagerAdapter.normalBgList.get(i));
                 ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setText(myPagerAdapter.getPageTitle(i));
+
+                if (i == 0) {
+                    if (selectTextColor != 0) {
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(selectTextColor);
+                    }
+                } else {
+                    if (normalTextColor != 0) {
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(normalTextColor);
+                    }
+                }
             }
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     tab.getCustomView().findViewById(R.id.iv_item_tab).setSelected(true);
                     tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(true);
+                    if (selectTextColor != 0) {
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(selectTextColor);
+                    }
                 }
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
                     tab.getCustomView().findViewById(R.id.iv_item_tab).setSelected(false);
                     tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(false);
+                    if (normalTextColor != 0) {
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(normalTextColor);
+                    }
                 }
 
                 @Override
@@ -173,6 +203,8 @@ public class ZXTabViewPager extends RelativeLayout {
      * @return
      */
     public ZXTabViewPager setTitleColor(int normalColor, int selectedColor) {
+        normalTextColor = normalColor;
+        selectTextColor = selectedColor;
         tabLayout.setTabTextColors(normalColor, selectedColor);
         return this;
     }

@@ -18,14 +18,16 @@ public class TabLayoutActivity extends BaseActivity {
         zxTabPager = (ZXTabViewPager) findViewById(R.id.vp_tab);
         zxTabPager.setManager(getSupportFragmentManager())
                 .setTabLayoutGravity(ZXTabViewPager.TabGravity.GRAVITY_BOTTOM)
-                .addTab(TabFragment.newInstance(""), "测试", R.mipmap.ic_empty_picture)
-                .addTab(TabFragment.newInstance(""), "测试", R.mipmap.ic_empty_picture)
-                .addTab(TabFragment.newInstance(""), "测试", R.mipmap.ic_empty_picture)
+                .addTab(TabFragment.newInstance(""), "测试1", R.drawable.selector_tab_test)
+                .addTab(TabFragment.newInstance(""), "测试2", R.drawable.selector_tab_test)
+                .addTab(TabFragment.newInstance(""), "测试3", R.drawable.selector_tab_test)
                 .setTitleColor(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.red))
                 .setIndicatorColor(ContextCompat.getColor(this, R.color.wheat))
                 .setIndicatorHeight(3)
                 .setSelectOn(2)
+                .setViewpagerCanScroll(false)
                 .build();
+        zxTabPager.getTabLayout().setBackgroundColor(ContextCompat.getColor(this, R.color.violet));
 
     }
 }

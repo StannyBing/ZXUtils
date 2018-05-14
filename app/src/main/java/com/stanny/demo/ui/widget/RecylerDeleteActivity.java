@@ -18,8 +18,8 @@ public class RecylerDeleteActivity extends BaseActivity {
         mytab = (ZXTabViewPager) findViewById(R.id.vp_tab);
         mytab.setManager(getSupportFragmentManager())
                 .setTabLayoutGravity(ZXTabViewPager.TabGravity.GRAVITY_TOP)
-                .addTab(RecylerDeleteFragment.newInstance(""), "测试1")
-                .addTab(RecylerDeleteFragment.newInstance(""), "测试2")
+//                .addTab(RecylerDeleteFragment.newInstance(""), "测试1")
+//                .addTab(RecylerDeleteFragment.newInstance(""), "测试2")
                 .addTab(RecylerDeleteFragment.newInstance(""), "测试3")
                 .build();
     }
