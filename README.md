@@ -7,7 +7,7 @@ ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨�
 但同时可能会对原有的部分ui进行删除等操作，望体谅<br>
 <br>
 大家可点击下面的链接进行下载<br>
-[点击下载演示Demo](https://github.com/StannyBing/ZXUtils/blob/master/ZXUtil演示Demo.apk)<br>
+[点击下载演示Demo](https://github.com/StannyBing/ZXUtils/blob/master/ZXUtil演示Demo.apk?raw=true)<br>
 <br>
 A commonly used tool library for Android<br>
 本库包含常用android开发所需的所有工具类+网络请求+常用view<br>
