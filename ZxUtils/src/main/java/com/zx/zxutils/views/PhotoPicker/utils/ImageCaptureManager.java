@@ -76,6 +76,7 @@ public class ImageCaptureManager {
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                                 Uri.fromFile(photoFile));
                     } else {
+//                        Uri uri = FileProvider.getUriForFile(mContext, "com.stanny.demo.provider", photoFile);
                         ContentValues contentValues = new ContentValues(1);
                         contentValues.put(MediaStore.Images.Media.DATA, photoFile.getAbsolutePath());
                         Uri uri = mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);

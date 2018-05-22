@@ -1,6 +1,8 @@
 package com.stanny.demo.util;
 
 import android.app.Application;
+import android.os.Build;
+import android.os.StrictMode;
 
 import com.zx.zxutils.ZXApp;
 
@@ -15,5 +17,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ZXApp.init(this, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+        }
     }
 }

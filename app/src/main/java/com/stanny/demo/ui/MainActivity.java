@@ -4,7 +4,6 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import com.stanny.demo.R;
 import com.zx.zxutils.util.ZXPermissionUtil;
@@ -16,7 +15,7 @@ import static com.zx.zxutils.util.ZXToastUtil.showToast;
  * zxutil测试类
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private String[] permissions = new String[]{
             Manifest.permission.INTERNET,
@@ -25,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA
     };
 
     @Override

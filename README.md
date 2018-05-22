@@ -82,13 +82,14 @@ A commonly used tool library for Android<br>
 　　ZXPhotoView 可放大缩小的图片控件<br>
 　　ZXSpinner Spinnerview<br>
 　　ZXStatusBarCompat 透明状态栏<br>
+　　ZXCameraView 仿微信录像照相<br>
   <br>
 ### 5.使用方法<br>
 
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.0.9'
+    compile 'com.github.StannyBing:ZXUtils:2.1.0'
     ```
     
     注意需要在项目的build里面添加以下代码<br>

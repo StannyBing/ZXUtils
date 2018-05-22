@@ -1,5 +1,6 @@
 package com.stanny.demo.ui;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,13 +13,15 @@ import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
  * 功能：
  */
 
-public class BaseActivity extends AppCompatActivity implements BtnBarView.OnItemClickListener{
+public class BaseActivity extends AppCompatActivity implements BtnBarView.OnItemClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         ZXSwipeBackHelper.onCreate(this)
                 .setSwipeBackEnable(true)
                 .setSwipeRelateEnable(true);
+
     }
 
 

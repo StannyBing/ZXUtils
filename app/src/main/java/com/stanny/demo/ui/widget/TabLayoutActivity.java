@@ -27,7 +27,7 @@ public class TabLayoutActivity extends BaseActivity {
                 .setSelectOn(2)
                 .setViewpagerCanScroll(false)
                 .build();
-        zxTabPager.getTabLayout().setBackgroundColor(ContextCompat.getColor(this, R.color.violet));
+        zxTabPager.getTabLayout().setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
     }
 }
