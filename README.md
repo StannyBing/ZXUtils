@@ -1,9 +1,13 @@
 # ZXUtils
 ![](https://github.com/StannyBing/ZXUtils/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)<br>
+
 ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨入2.0.0版本。<br>
 为更好的使用工具库，仍然采用ZX开头的模式。<br>
 从这个版本起，ZXUtils会逐渐加入更多，更全，更好的工具以及UI控件<br>
 但同时可能会对原有的部分ui进行删除等操作，望体谅<br>
+<br>
+大家可点击下面的链接进行下载<br>
+[点击下载演示Demo](https://github.com/StannyBing/ZXUtils/blob/master/ZXUtil演示Demo.apk)<br>
 <br>
 A commonly used tool library for Android<br>
 本库包含常用android开发所需的所有工具类+网络请求+常用view<br>
@@ -17,6 +21,11 @@ A commonly used tool library for Android<br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_4.jpg"/></div><br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_5.jpg"/></div><br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_6.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_7.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_8.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_9.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_10.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_11.jpg"/></div><br>
 ### 1.工具库包含以下：<br>
 　　ZXAnimUtil 动画方法工具类<br>
 　　ZXAppUtil App相关工具类<br>
