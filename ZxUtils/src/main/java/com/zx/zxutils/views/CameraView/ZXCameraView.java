@@ -137,6 +137,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
     public ZXCameraView setMaxVedioDuration(int maxDurationSecend) {
         duration = maxDurationSecend * 1000;
+        mCaptureLayout.setDuration(duration);
         return this;
     }
 

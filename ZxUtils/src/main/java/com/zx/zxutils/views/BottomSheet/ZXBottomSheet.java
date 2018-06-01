@@ -31,7 +31,7 @@ public class ZXBottomSheet {
     private boolean showCheckMark = false;
     private int checkIndex = -1;
     private Type type;
-    private BottomSheetDialog bottomSheetDialog;
+    private MyBottomSheet bottomSheetDialog;
     private SheetAdapter sheetAdapter;
     private OnSheetItemClickListener onSheetItemClickListener;
 
@@ -124,7 +124,7 @@ public class ZXBottomSheet {
 
     public ZXBottomSheet build() {
         if (bottomSheetDialog == null) {
-            bottomSheetDialog = new BottomSheetDialog(context);
+            bottomSheetDialog = new MyBottomSheet(context);
             bottomSheetDialog.setCancelable(true);
             bottomSheetDialog.setCanceledOnTouchOutside(true);
             if (type != Type.CUSTOM_TYPE) {

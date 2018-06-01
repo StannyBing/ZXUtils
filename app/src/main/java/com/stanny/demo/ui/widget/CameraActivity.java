@@ -28,6 +28,7 @@ public class CameraActivity extends BaseActivity {
         zxCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "JCamera")
                 .setCameraMode(ZXCameraView.BUTTON_STATE_BOTH)
                 .setMediaQuality(ZXCameraView.MEDIA_QUALITY_MIDDLE)
+                .setMaxVedioDuration(30)
                 .setJCameraLisenter(new CameraListener() {
                     @Override
                     public void onCaptureCommit(Bitmap bitmap) {

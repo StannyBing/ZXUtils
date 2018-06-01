@@ -1,11 +1,14 @@
 package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
+import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleSimpleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZxRvHolder;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.RecylerMenu.ZXRecyclerDeleteHelper;
@@ -107,6 +110,34 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
         @Override
         public void onBindHolder(ZxRvHolder holder, Object itemEntity, int position) {
             holder.getTextView(R.id.tv_text).setText(datalist.get(position));
+        }
+    }
+
+    public class Test1Adpater extends ZXRecycleSimpleAdapter{
+
+        @Override
+        public RecyclerView.ViewHolder onItemHolder(ViewGroup parent, int viewType) {
+
+            return null;
+        }
+
+        @Override
+        public void onBindHolder(RecyclerView.ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public List onItemList() {
+            return null;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0){
+                return 0;
+            }else {
+                return 1;
+            }
         }
     }
 }
