@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.stanny.demo"
         minSdkVersion 16
@@ -36,16 +36,16 @@ android {
 }
 
 dependencies {
-    compile project(path: ':ZxUtils')
+    implementation project(path: ':ZxUtils')
     //    compile('com.mapbox.mapboxsdk:mapbox-android-sdk:5.0.2@aar') {
     //        transitive = true
     //    }
     //    compile 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-5'
     //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:27.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.jakewharton:butterknife:8.5.1'
-    compile 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.jakewharton:butterknife-compiler:8.8.1'
 }
 repositories {
     mavenCentral()

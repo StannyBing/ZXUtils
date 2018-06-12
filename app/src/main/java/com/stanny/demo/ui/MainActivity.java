@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.stanny.demo.R;
 import com.zx.zxutils.util.ZXPermissionUtil;
+import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager;
 
 import static com.zx.zxutils.util.ZXToastUtil.showToast;
@@ -31,6 +32,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ZXSwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
 
         ZXTabViewPager zxTabViewPager = findViewById(R.id.zxtvp_main);
         zxTabViewPager.setManager(getSupportFragmentManager())

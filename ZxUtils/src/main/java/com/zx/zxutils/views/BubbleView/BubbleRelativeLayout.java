@@ -37,8 +37,8 @@ public class BubbleRelativeLayout extends RelativeLayout {
     public static int PADDING = 30;
     public static int LEG_HALF_BASE = 30;
     public static float STROKE_WIDTH = 2.0f;
-    public static float CORNER_RADIUS = 8.0f;
-    public static int SHADOW_COLOR = Color.argb(100, 0, 0, 0);
+    public static float CORNER_RADIUS = 12.0f;
+    public static int SHADOW_COLOR = Color.argb(70, 0, 0, 0);
     public static float MIN_LEG_DISTANCE = PADDING + LEG_HALF_BASE;
 
     private Paint mFillPaint = null;
@@ -123,8 +123,8 @@ public class BubbleRelativeLayout extends RelativeLayout {
      */
     private void renderBubbleLegPrototype() {
         mBubbleLegPrototype.moveTo(0, 0);
-        mBubbleLegPrototype.lineTo(PADDING * 1.5f, -PADDING / 1.5f);
-        mBubbleLegPrototype.lineTo(PADDING * 1.5f, PADDING / 1.5f);
+        mBubbleLegPrototype.lineTo(PADDING * 1.5f, -PADDING / 1.2f);//越大越尖
+        mBubbleLegPrototype.lineTo(PADDING * 1.5f, PADDING / 1.2f);
         mBubbleLegPrototype.close();
     }
 
@@ -135,6 +135,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
 
     /**
      * 根据显示方向，获取尖角位置矩阵
+     *
      * @param width
      * @param height
      * @return
@@ -179,9 +180,11 @@ public class BubbleRelativeLayout extends RelativeLayout {
         final float width = canvas.getWidth();
         final float height = canvas.getHeight();
 
+        float[] radiusArray = {CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS};
+
         mPath.rewind();
-        mPath.addRoundRect(new RectF(PADDING, PADDING, width - PADDING, height - PADDING), CORNER_RADIUS, CORNER_RADIUS, Direction.CW);
-        mPath.addPath(mBubbleLegPrototype, renderBubbleLegMatrix(width, height));
+        mPath.addRoundRect(new RectF(PADDING, PADDING, width - PADDING, height - PADDING), radiusArray, Direction.CW);
+        mPath.addPath(mBubbleLegPrototype, renderBubbleLegMatrix(width, height));//尖角
 
         canvas.drawPath(mPath, mPaint);
         canvas.scale((width - STROKE_WIDTH) / width, (height - STROKE_WIDTH) / height, width / 2f, height / 2f);

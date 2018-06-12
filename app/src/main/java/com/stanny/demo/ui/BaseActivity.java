@@ -24,7 +24,6 @@ public class BaseActivity extends AppCompatActivity implements BtnBarView.OnItem
 
     }
 
-
     @Override
     public void onItemClick(int position) {
 
