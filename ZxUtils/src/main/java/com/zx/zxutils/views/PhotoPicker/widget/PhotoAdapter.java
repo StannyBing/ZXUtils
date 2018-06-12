@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.zx.zxutils.R;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.PhotoPicker.PhotoPickUtils;
@@ -123,10 +124,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             if (position == getItemCount() - 1) {//最后一个始终是+号，点击能够跳去添加图片
                 Glide.with(mContext)
                         .load("")
-                        .centerCrop()
+                        .apply(new RequestOptions()
+                                .centerCrop()
+                                .placeholder(R.mipmap.icon_pic_default)
+                                .error(R.mipmap.icon_pic_default)
+                        )
                         .thumbnail(0.1f)
-                        .placeholder(R.mipmap.icon_pic_default)
-                        .error(R.mipmap.icon_pic_default)
                         .into(holder.ivPhoto);
 //                holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
 //                    @Override
@@ -148,11 +151,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
                 Glide.with(mContext)
                         .load(str.startsWith("http") ? str : uri)
-                        .centerCrop()
+                        .apply(new RequestOptions()
+                                .centerCrop()
+                                .placeholder(R.drawable.__picker_default_weixin)
+                                .error(R.mipmap.__picker_ic_broken_image_black_48dp)
+                        )
                         .thumbnail(0.1f)
                         // .bitmapTransform(new RoundedCornersTransformation(mContext,6,0))
-                        .placeholder(R.drawable.__picker_default_weixin)
-                        .error(R.mipmap.__picker_ic_broken_image_black_48dp)
                         .into(holder.ivPhoto);
 
 
@@ -186,11 +191,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             Log.e("pic", photoPaths.get(position));
             Glide.with(mContext)
                     .load(photoPaths.get(position))
-                    .centerCrop()
+                    .apply(new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.__picker_default_weixin)
+                            .error(R.mipmap.__picker_ic_broken_image_black_48dp)
+                    )
                     .thumbnail(0.1f)
                     // .bitmapTransform(new RoundedCornersTransformation(mContext,4,0))
-                    .placeholder(R.drawable.__picker_default_weixin)
-                    .error(R.mipmap.__picker_ic_broken_image_black_48dp)
                     .into(holder.ivPhoto);
 
 //            holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
@@ -210,11 +217,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             Log.e("pic", photoPaths.get(position));
             Glide.with(mContext)
                     .load(photoPaths.get(position))
-                    .centerCrop()
+                    .apply(new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.__picker_default_weixin)
+                            .error(R.mipmap.__picker_ic_broken_image_black_48dp)
+                    )
                     .thumbnail(0.1f)
                     // .bitmapTransform(new RoundedCornersTransformation(mContext,4,0))
-                    .placeholder(R.drawable.__picker_default_weixin)
-                    .error(R.mipmap.__picker_ic_broken_image_black_48dp)
                     .into(holder.ivPhoto);
             holder.deleteBtn.setVisibility(View.VISIBLE);
             holder.deleteBtn.setOnClickListener(new View.OnClickListener() {

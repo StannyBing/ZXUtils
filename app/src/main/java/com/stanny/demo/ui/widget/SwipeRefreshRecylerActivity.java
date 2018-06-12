@@ -96,7 +96,6 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
 
     public class TestAdapter extends ZXRecycleAdapter {
 
-
         @Override
         public List<?> onItemList() {
             return datalist;

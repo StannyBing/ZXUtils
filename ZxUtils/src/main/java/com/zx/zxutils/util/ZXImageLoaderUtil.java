@@ -6,6 +6,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -13,11 +14,15 @@ import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.zx.zxutils.R;
 import com.zx.zxutils.ZXApp;
 
 import java.io.File;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -30,9 +35,9 @@ public class ZXImageLoaderUtil {
         Bitmap bitmap = null;
         try {
             bitmap = Glide.with(ZXApp.getContext())
-                    .load(url)
                     .asBitmap() //必须
-                    .into(width, height)
+                    .load(url)
+                    .submit(width, height)
                     .get();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -60,8 +65,8 @@ public class ZXImageLoaderUtil {
      */
     public static void getBitmap(String url, SimpleTarget<Bitmap> simpleTarget) {
         Glide.with(ZXApp.getContext())
-                .load(url)
                 .asBitmap()
+                .load(url)
                 .into(simpleTarget); //方法中设置asBitmap可以设置回调类型
     }
 
@@ -69,8 +74,15 @@ public class ZXImageLoaderUtil {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(ZXApp.getContext()).load(url).placeholder(placeholder)
-                .error(error).crossFade().into(imageView);
+        Glide.with(ZXApp.getContext())
+                .load(url)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(error)
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
+                .into(imageView);
     }
 
     public static void display(ImageView imageView, String url) {
@@ -81,11 +93,15 @@ public class ZXImageLoaderUtil {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(ZXApp.getContext()).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(errorImage)
-                .crossFade().into(imageView);
+        Glide.with(ZXApp.getContext())
+                .load(url)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(errorImage)
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
+                .into(imageView);
     }
 
     public static void display(ImageView imageView, Uri uri) {
@@ -97,10 +113,13 @@ public class ZXImageLoaderUtil {
             throw new IllegalArgumentException("argument error");
         }
         Glide.with(ZXApp.getContext()).load(uri)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(errorImage)
-                .crossFade().into(imageView);
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(errorImage)
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
+                .into(imageView);
     }
 
     public static void display(ImageView imageView, File file) {
@@ -112,10 +131,13 @@ public class ZXImageLoaderUtil {
             throw new IllegalArgumentException("argument error");
         }
         Glide.with(ZXApp.getContext()).load(file)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(errorImage)
-                .crossFade().into(imageView);
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(errorImage)
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
+                .into(imageView);
     }
 
     public static void displaySmallPhoto(ImageView imageView, String url) {
@@ -126,10 +148,14 @@ public class ZXImageLoaderUtil {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(ZXApp.getContext()).load(url).asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(errorImage)
+        Glide.with(ZXApp.getContext())
+                .asBitmap()
+                .load(url)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(errorImage)
+                )
                 .thumbnail(0.5f)
                 .into(imageView);
     }
@@ -142,11 +168,15 @@ public class ZXImageLoaderUtil {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(ZXApp.getContext()).load(url).asBitmap()
-                .format(DecodeFormat.PREFER_ARGB_8888)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(errorImage)
+        Glide.with(ZXApp.getContext())
+                .asBitmap()
+                .load(url)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(errorImage)
+                        .format(DecodeFormat.PREFER_ARGB_8888)
+                )
                 .into(imageView);
     }
 
@@ -158,21 +188,29 @@ public class ZXImageLoaderUtil {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(ZXApp.getContext()).load(resourceId)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(errorImage)
-                .crossFade().into(imageView);
+        Glide.with(ZXApp.getContext())
+                .load(resourceId)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(errorImage)
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
+                .into(imageView);
     }
 
     public static void displaySquare(ImageView imageView, String url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(ZXApp.getContext()).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .crossFade()
+        Glide.with(ZXApp.getContext())
+                .load(url)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .centerCrop()
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
                 .into(imageView);
     }
 
@@ -181,9 +219,12 @@ public class ZXImageLoaderUtil {
             throw new IllegalArgumentException("argument error");
         }
         Glide.with(ZXApp.getContext()).load(resourceId)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .crossFade()
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .centerCrop()
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
                 .into(imageView);
     }
 
@@ -196,14 +237,22 @@ public class ZXImageLoaderUtil {
             throw new IllegalArgumentException("argument error");
         }
         Glide.with(ZXApp.getContext()).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(errorImage)
-                .transform(new GlideRoundTransformUtil(ZXApp.getContext())).into(imageView);
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.mipmap.ic_image_loading)
+                        .error(errorImage)
+                        .transform(new GlideRoundTransformUtil(ZXApp.getContext()))
+                )
+                .transition(new DrawableTransitionOptions().crossFade())
+                .into(imageView);
     }
 
     private static class GlideRoundTransformUtil extends BitmapTransformation {
+        private static final String ID = "com.zx.zxutils.util.FillSpace";
+        private static final byte[] ID_BYTES = ID.getBytes(Charset.forName("UTF-8"));
+
         public GlideRoundTransformUtil(Context context) {
-            super(context);
+            super();
         }
 
         @Override
@@ -235,9 +284,14 @@ public class ZXImageLoaderUtil {
             return result;
         }
 
+//        @Override
+//        public String getId() {
+//            return getClass().getName();
+//        }
+
         @Override
-        public String getId() {
-            return getClass().getName();
+        public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+            messageDigest.update(ID_BYTES);
         }
     }
 
