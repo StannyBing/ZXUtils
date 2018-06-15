@@ -9,7 +9,6 @@ import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
-import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -27,9 +26,9 @@ import com.zx.zxutils.http.common.util.LogUtil;
 import com.zx.zxutils.util.ZXFileUtil;
 import com.zx.zxutils.util.ZXScreenUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
-import com.zx.zxutils.views.CameraView.listener.CaptureListener;
 import com.zx.zxutils.views.CameraView.listener.BtnClickListener;
 import com.zx.zxutils.views.CameraView.listener.CameraListener;
+import com.zx.zxutils.views.CameraView.listener.CaptureListener;
 import com.zx.zxutils.views.CameraView.listener.TypeListener;
 import com.zx.zxutils.views.CameraView.state.CameraMachine;
 import com.zx.zxutils.views.CameraView.view.CameraView;
@@ -46,7 +45,7 @@ import java.io.IOException;
  * =====================================
  */
 public class ZXCameraView extends FrameLayout implements CameraInterface.CameraOpenOverCallback, SurfaceHolder
-        .Callback, CameraView {
+        .Callback, CameraView, AlbumView.AlbumListener {
 //    private static final String TAG = "JCameraView";
 
     //Camera状态机
@@ -86,6 +85,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
     private Context mContext;
     private VideoView mVideoView;
+    private AlbumView mAlbumView;
     private ImageView mPhoto;
     private ImageView mSwitchCamera;
     private ImageView mFlashLamp;
@@ -146,20 +146,20 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 //        return this;
 //    }
 
-    public ZXCameraView setIconSize(int sizeDp) {
-        iconSize = sizeDp;
-        return this;
-    }
-
-    public ZXCameraView setIconLeft(@IdRes int iconLeft) {
-        this.iconLeft = iconLeft;
-        return this;
-    }
-
-    public ZXCameraView setIconRight(@IdRes int iconRight) {
-        this.iconRight = iconRight;
-        return this;
-    }
+//    public ZXCameraView setIconSize(int sizeDp) {
+//        iconSize = sizeDp;
+//        return this;
+//    }
+//
+//    public ZXCameraView setIconLeft(@DrawableRes int iconLeft) {
+//        this.iconLeft = iconLeft;
+//        return this;
+//    }
+//
+//    public ZXCameraView setIconRight(@DrawableRes int iconRight) {
+//        this.iconRight = iconRight;
+//        return this;
+//    }
 
     private void initData() {
         layout_width = ZXScreenUtil.getScreenWidth();
@@ -173,6 +173,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
         setWillNotDraw(false);
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_camera, this);
         mVideoView = (VideoView) view.findViewById(R.id.video_preview);
+        mAlbumView = view.findViewById(R.id.album_view);
         mPhoto = (ImageView) view.findViewById(R.id.image_photo);
         mSwitchCamera = (ImageView) view.findViewById(R.id.image_switch);
         mSwitchCamera.setImageResource(iconSrc);
@@ -187,6 +188,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
                 setFlashRes();
             }
         });
+        mAlbumView.setAlbumListener(this);
         mCaptureLayout = (CaptureLayout) view.findViewById(R.id.capture_layout);
         mCaptureLayout.setDuration(duration);
         mCaptureLayout.setIconSrc(iconLeft, iconRight);
@@ -282,6 +284,11 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
             public void onClick() {
                 if (rightClickListener != null) {
                     rightClickListener.onClick();
+                } else {
+                    mSwitchCamera.setVisibility(INVISIBLE);
+                    mFlashLamp.setVisibility(INVISIBLE);
+                    machine.capture();
+                    mAlbumView.setVisibility(VISIBLE);
                 }
             }
         });
@@ -417,8 +424,13 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
         return this;
     }
 
+    public ZXCameraView showAlbumView(boolean showAlbum) {
+        this.mCaptureLayout.showAlbum(showAlbum);
+        return this;
+    }
 
-    public ZXCameraView setJCameraLisenter(CameraListener jCameraLisenter) {
+
+    public ZXCameraView setCameraLisenter(CameraListener jCameraLisenter) {
         this.jCameraLisenter = jCameraLisenter;
         return this;
     }
@@ -629,5 +641,16 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
                 machine.flash(Camera.Parameters.FLASH_MODE_OFF);
                 break;
         }
+    }
+
+    @Override
+    public void onPicSelect(Bitmap bitmap) {
+        mAlbumView.setVisibility(GONE);
+        showPicture(bitmap, false);
+    }
+
+    @Override
+    public void onReturn() {
+        machine.cancle(mVideoView.getHolder(), screenProp);
     }
 }

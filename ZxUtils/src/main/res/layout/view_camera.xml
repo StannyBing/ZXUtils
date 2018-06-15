@@ -26,8 +26,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_gravity="right"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -59,4 +59,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="invisible"/>
+
+    <com.zx.zxutils.views.CameraView.AlbumView
+        android:id="@+id/album_view"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+    </com.zx.zxutils.views.CameraView.AlbumView>
 </FrameLayout>

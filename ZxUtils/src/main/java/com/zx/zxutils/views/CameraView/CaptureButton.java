@@ -32,7 +32,7 @@ import static com.zx.zxutils.views.CameraView.ZXCameraView.BUTTON_STATE_ONLY_REC
 public class CaptureButton extends View {
 
     private int state;              //当前按钮状态
-    private int button_state;       //按钮可执行的功能状态（拍照,录制,两者）
+    public int button_state;       //按钮可执行的功能状态（拍照,录制,两者）
 
     public static final int STATE_IDLE = 0x001;        //空闲状态
     public static final int STATE_PRESS = 0x002;       //按下状态

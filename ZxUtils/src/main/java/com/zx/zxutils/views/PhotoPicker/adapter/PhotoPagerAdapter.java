@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.zx.zxutils.R;
@@ -90,7 +89,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
-        Glide.with(container.getContext()).clear((View) object);
+//        Glide.with(container.getContext()).clear((View) object);
     }
 
     @Override

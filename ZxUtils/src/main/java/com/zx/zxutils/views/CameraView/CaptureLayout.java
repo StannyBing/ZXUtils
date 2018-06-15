@@ -54,6 +54,7 @@ public class CaptureLayout extends FrameLayout {
     private TypeButton btn_confirm;         //确认按钮
     private TypeButton btn_cancel;          //取消按钮
     private ReturnButton btn_return;        //返回按钮
+    private AlbumButton btn_album;          //相册
     private ImageView iv_custom_left;            //左边自定义按钮
     private ImageView iv_custom_right;            //右边自定义按钮
     private TextView txt_tip;               //提示文本
@@ -114,6 +115,8 @@ public class CaptureLayout extends FrameLayout {
             btn_return.setVisibility(GONE);
         if (this.iconRight != 0)
             iv_custom_right.setVisibility(GONE);
+        else
+            btn_album.setVisibility(GONE);
         btn_capture.setVisibility(GONE);
         btn_cancel.setVisibility(VISIBLE);
         btn_confirm.setVisibility(VISIBLE);
@@ -240,6 +243,23 @@ public class CaptureLayout extends FrameLayout {
                 }
             }
         });
+
+        //相册按钮
+        btn_album = new AlbumButton(getContext(), (int) (button_size / 2.5f));
+        LayoutParams btn_album_param = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        btn_album_param.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+        btn_album_param.setMargins(0, 0, layout_width / 6, 0);
+        btn_album.setLayoutParams(btn_album_param);
+        btn_album.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rightClickListener != null) {
+                    rightClickListener.onClick();
+                }
+            }
+        });
+
+
         //左边自定义按钮
         iv_custom_left = new ImageView(getContext());
         LayoutParams iv_custom_param_left = new LayoutParams((int) (button_size / 2.5f), (int) (button_size / 2.5f));
@@ -283,6 +303,7 @@ public class CaptureLayout extends FrameLayout {
         this.addView(btn_cancel);
         this.addView(btn_confirm);
         this.addView(btn_return);
+        this.addView(btn_album);
         this.addView(iv_custom_left);
         this.addView(iv_custom_right);
         this.addView(txt_tip);
@@ -303,6 +324,8 @@ public class CaptureLayout extends FrameLayout {
             btn_return.setVisibility(VISIBLE);
         if (this.iconRight != 0)
             iv_custom_right.setVisibility(VISIBLE);
+//        else
+//            btn_album.setVisibility(VISIBLE);
     }
 
 
@@ -330,6 +353,14 @@ public class CaptureLayout extends FrameLayout {
         btn_capture.setButtonFeatures(state);
     }
 
+    public void showAlbum(boolean showAlbum) {
+        if (btn_capture.button_state == ZXCameraView.BUTTON_STATE_ONLY_CAPTURE&&showAlbum) {
+            btn_album.setVisibility(VISIBLE);
+        }else {
+            btn_album.setVisibility(GONE);
+        }
+    }
+
     public void setTip(String tip) {
         txt_tip.setText(tip);
     }
@@ -354,6 +385,7 @@ public class CaptureLayout extends FrameLayout {
             iv_custom_right.setVisibility(VISIBLE);
         } else {
             iv_custom_right.setVisibility(GONE);
+//            btn_album.setVisibility(VISIBLE);
         }
     }
 
