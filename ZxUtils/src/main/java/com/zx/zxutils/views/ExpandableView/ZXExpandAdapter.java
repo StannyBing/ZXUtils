@@ -24,12 +24,14 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private List<ZXExpandBean> showList;
     private Context context;
+    private boolean showSelect = false;
     private boolean isMultiSelected = true;
     public MyHolder mLastViewTag = null;
 
-    public ZXExpandAdapter(Context context, List<ZXExpandBean> showList, boolean isMultiSelected) {
+    public ZXExpandAdapter(Context context, List<ZXExpandBean> showList, boolean showSelect, boolean isMultiSelected) {
         this.context = context;
         this.showList = showList;
+        this.showSelect = showSelect;
         this.isMultiSelected = isMultiSelected;
     }
 
@@ -56,16 +58,16 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             myHolder.ivArrow.setVisibility(View.VISIBLE);
             myHolder.ivArrow.setBackground(ContextCompat.getDrawable(context, R.mipmap.arrow_close));
         }
-        if (!isMultiSelected) {
-            myHolder.ivSelect.setVisibility(View.INVISIBLE);
-        } else if (expandBean.getChildList() != null) {
-            myHolder.ivSelect.setVisibility(View.INVISIBLE);
-        } else if (expandBean.isSelected()) {
-            myHolder.ivSelect.setVisibility(View.VISIBLE);
-            myHolder.ivSelect.setBackground(ContextCompat.getDrawable(context, R.mipmap.select));
+        if (showSelect) {
+            if (expandBean.isSelected()) {
+                myHolder.ivSelect.setVisibility(View.VISIBLE);
+                myHolder.ivSelect.setBackground(ContextCompat.getDrawable(context, R.mipmap.select));
+            } else {
+                myHolder.ivSelect.setVisibility(View.VISIBLE);
+                myHolder.ivSelect.setBackground(ContextCompat.getDrawable(context, R.mipmap.not_select));
+            }
         } else {
-            myHolder.ivSelect.setVisibility(View.VISIBLE);
-            myHolder.ivSelect.setBackground(ContextCompat.getDrawable(context, R.mipmap.not_select));
+            myHolder.ivSelect.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -87,8 +89,14 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewIndex = itemView.findViewById(R.id.view_index);
             ivArrow = itemView.findViewById(R.id.iv_arrow);
             ivSelect = itemView.findViewById(R.id.iv_select);
-            down=itemView.findViewById(R.id.down);
+            down = itemView.findViewById(R.id.down);
         }
+    }
+
+    public interface OnExpandListener {
+        void onViewClick(int position);
+
+        void onImageClick(int position);
     }
 
 }

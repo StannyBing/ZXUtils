@@ -42,7 +42,7 @@ public class UploadTestActivity extends BaseActivity implements ZXHttpListener {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_test_simpleStart:
-                cancelable = ZXHttpApi.uploadFile("http://192.168.110.238:7070/GAMarketSupervise/eventfileUpload", "file", new File(ZXSystemUtil.getSDCardPath() + "ga.txt"), new ZXHttpListener() {
+                cancelable = ZXHttpApi.uploadFile("http://192.168.21.18:8080/jjqwfjz/upload/uploadFile.do", "file", new File("/data/user/0/com.digitalcq.jjwfjz/files/CACHE/pic1530080346278.jpg"), new ZXHttpListener() {
                     @Override
                     public void OnHttpStart(int apiType) {
 

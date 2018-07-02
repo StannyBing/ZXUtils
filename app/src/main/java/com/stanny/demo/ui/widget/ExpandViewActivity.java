@@ -41,6 +41,7 @@ public class ExpandViewActivity extends AppCompatActivity {
         rvExpand = findViewById(R.id.rv_expand);
         ZXExpandRecyclerHelper.getInstance(this)
                 .withRecycler(rvExpand)
+                .showSelect(true,false)
                 .setData(dataList)
                 .setItemClickListener(new ZXExpandItemClickListener() {
                     @Override

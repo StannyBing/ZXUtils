@@ -22,7 +22,8 @@ public class ZXExpandRecyclerHelper {
     private Context context;
     private RecyclerView recyclerView;
     private ZXExpandAdapter adapter;
-    private boolean isMultiSelected = true;
+    private boolean showSelect = true;
+    private boolean isMultiSelected = false;
     private List<ZXExpandBean> dataList = new ArrayList<>();
     private List<ZXExpandBean> showList = new ArrayList<>();
     private ZXExpandItemClickListener itemClickListener;
@@ -48,8 +49,15 @@ public class ZXExpandRecyclerHelper {
                             if (id != null && id.length() > 0) {
                                 setShowById(dataList, id);
 
+                                if (!isMultiSelected) {
+                                    setSelect(dataList);
+//                                    for (int i = 0; i < showList.size(); i++) {
+//                                        showList.get(position).setSelected(false);
+//                                    }
+                                }
+
+                                showList.get(position).setSelected(!showList.get(position).isSelected());
                                 if (showList.get(position).getChildList() == null) {
-                                    showList.get(position).setSelected(!showList.get(position).isSelected());
                                     if (itemClickListener != null) {
                                         itemClickListener.onItemClick(showList.get(position));//数据点击事件
                                     }
@@ -71,6 +79,16 @@ public class ZXExpandRecyclerHelper {
                     }
                 });
         return this;
+    }
+
+    //刷新
+    private void setSelect(List<ZXExpandBean> dataList) {
+        for (int i = 0; i < dataList.size(); i++) {
+            dataList.get(i).setSelected(false);
+            if (dataList.get(i).getChildList() != null && dataList.get(i).getChildList().size() > 0 && dataList.get(i).isShowChild()) {
+                setSelect(dataList.get(i).getChildList());
+            }
+        }
     }
 
     //刷新
@@ -136,7 +154,8 @@ public class ZXExpandRecyclerHelper {
     }
 
     //是否可以多选
-    public ZXExpandRecyclerHelper multiSelected(boolean isMultiSelected) {
+    public ZXExpandRecyclerHelper showSelect(boolean show, boolean isMultiSelected) {
+        this.showSelect = show;
         this.isMultiSelected = isMultiSelected;
         return this;
     }
@@ -156,7 +175,7 @@ public class ZXExpandRecyclerHelper {
     //构建
     public void build() {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new ZXExpandAdapter(context, showList, isMultiSelected);
+        adapter = new ZXExpandAdapter(context, showList, showSelect, isMultiSelected);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

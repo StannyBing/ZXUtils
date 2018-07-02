@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
+import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.views.CameraView.ZXCameraView;
 import com.zx.zxutils.views.CameraView.listener.CameraListener;
 import com.zx.zxutils.views.ZXStatusBarCompat;
@@ -29,11 +30,12 @@ public class CameraActivity extends BaseActivity {
                 .setCameraMode(ZXCameraView.BUTTON_STATE_ONLY_CAPTURE)
                 .setMediaQuality(ZXCameraView.MEDIA_QUALITY_MIDDLE)
                 .setMaxVedioDuration(30)
-                .showAlbumView(false)
+                .showAlbumView(true)
                 .setCameraLisenter(new CameraListener() {
                     @Override
                     public void onCaptureCommit(Bitmap bitmap) {
-
+                        int height = bitmap.getHeight();
+                        ZXLogUtil.loge(height + "");
                     }
 
                     @Override

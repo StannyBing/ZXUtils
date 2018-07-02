@@ -80,12 +80,14 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
+
+        dataList = onItemList();
         int count = 0;
-        if (onItemList() != null) {
+        if (dataList != null) {
             if (hasLoadMore) {
-                count = onItemList().size() + 1;
+                count = dataList.size() + 1;
             } else {
-                count = onItemList().size();
+                count = dataList.size();
             }
         }
         return count;
