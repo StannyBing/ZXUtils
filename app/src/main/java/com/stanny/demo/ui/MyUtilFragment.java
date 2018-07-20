@@ -23,6 +23,7 @@ import com.stanny.demo.ui.util.ImageLoaderTestActivity;
 import com.stanny.demo.ui.util.LogTestActivity;
 import com.stanny.demo.ui.util.NetWorkTestActivity;
 import com.stanny.demo.ui.util.NotifyTestActivity;
+import com.stanny.demo.ui.util.QuickAdapterTestActivity;
 import com.stanny.demo.ui.util.ScreenTestActivity;
 import com.stanny.demo.ui.util.SharedPrefTestActivity;
 import com.stanny.demo.ui.util.ThreadPoolTestActivity;
@@ -63,6 +64,7 @@ public class MyUtilFragment extends Fragment {
     }
 
     private void initData() {
+        dataList.add(new MainEntity(QuickAdapterTestActivity.class, "ZXQuickAdapter", "快速Recycleview适配器", R.mipmap.util_adapter));
         dataList.add(new MainEntity(TimeTestActivity.class, "ZXTimeUtil", "时间工具", R.mipmap.util_time));
         dataList.add(new MainEntity(SharedPrefTestActivity.class, "ZXSharedPrefUtil", "共享存储工具", R.mipmap.util_sharedpref));
         dataList.add(new MainEntity(ScreenTestActivity.class, "ZXScreenUtil", "屏幕工具", R.mipmap.util_screen));

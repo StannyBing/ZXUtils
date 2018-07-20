@@ -1,5 +1,6 @@
 package com.zx.zxutils.other.ZXRecyclerAdapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,8 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
 
     private List<?> dataList;
 
+    private Context mContext;
+
     public List<?> getDataList() {
         return dataList;
     }
@@ -43,6 +46,7 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         if (viewType == ITEM_TYPE_FOOTER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycle_foot_view, parent, false);
             return new FooterViewHolder(view);

@@ -64,8 +64,6 @@
         </activity>
         <activity android:name=".ui.widget.TableActivity">
         </activity>
-        <activity android:name=".ui.widget.FloatScrollActivity">
-        </activity>
         <activity android:name=".ui.widget.SlidingActivity">
         </activity>
         <activity android:name=".ui.widget.RecylerDeleteActivity">
@@ -125,6 +123,8 @@
         <activity android:name=".ui.util.TimeTestActivity">
         </activity>
         <activity android:name=".ui.widget.CameraActivity">
+        </activity>
+        <activity android:name=".ui.util.QuickAdapterTestActivity">
         </activity>
     </application>
 

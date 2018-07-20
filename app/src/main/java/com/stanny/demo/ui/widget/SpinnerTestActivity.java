@@ -29,7 +29,7 @@ public class SpinnerTestActivity extends BaseActivity {
 
         //下拉框spinner
         List<KeyValueEntity> datalist = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
             datalist.add(new KeyValueEntity("测试" + i, "测试" + i));
         }
         spTestSpinner.setData(datalist)

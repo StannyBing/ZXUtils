@@ -5,6 +5,9 @@ ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨�
 为更好的使用工具库，仍然采用ZX开头的模式。<br>
 从这个版本起，ZXUtils会逐渐加入更多，更全，更好的工具以及UI控件<br>
 但同时可能会对原有的部分ui进行删除等操作，望体谅<br>
+
+引用：[来自于CymChad的BaseRecyclerViewAdapterHelper,可使用ZXQuickAdapter、ZXMultiItemQucikAdapter等进行使用](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
+
 <br>
 大家可点击下面的链接进行下载<br>
 [点击下载演示Demo](https://github.com/StannyBing/ZXUtils/blob/master/ZXUtil演示Demo.apk?raw=true)<br>
@@ -99,7 +102,7 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.1.5'
+    compile 'com.github.StannyBing:ZXUtils:2.1.6'
     ```
     
     注意需要在项目的build里面添加以下代码<br>

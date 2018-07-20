@@ -146,7 +146,7 @@ public class ZXSwipeRecyler extends LinearLayout {
      * @param adapter
      * @return
      */
-    public ZXSwipeRecyler setSimpleAdapter(final ZXRecycleSimpleAdapter adapter) {
+    public ZXSwipeRecyler setAdapter(final ZXRecycleSimpleAdapter adapter) {
         this.simpleAdapter = adapter;
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(new LoadMoreListener() {
