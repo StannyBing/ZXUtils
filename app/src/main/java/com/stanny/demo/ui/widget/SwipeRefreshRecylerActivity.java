@@ -1,14 +1,19 @@
 package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
+import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder;
 import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleSimpleAdapter;
+import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecyclerQuickAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZxRvHolder;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.RecylerMenu.ZXRecyclerDeleteHelper;
@@ -23,6 +28,7 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
     private ZXSwipeRecyler swipeRecyler;
     private List<String> datalist = new ArrayList<>();
     private int totalNum = 100;
+    Test2Adapter test2Adapter;
     ZXRecyclerDeleteHelper deleteHelper;
 
     @Override
@@ -53,8 +59,35 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
 //                        }
 //                    }
 //                });
-        swipeRecyler.setAdapter(new TestAdapter())
+//        swipeRecyler.setAdapter(new TestAdapter())
+//                .showLoadInfo(true)
+//                .setSRListener(new ZXSRListener<String>() {
+//                    @Override
+//                    public void onItemClick(String item, int position) {
+//                        ZXToastUtil.showToast("点击:" + item.toString());
+//                    }
+//
+//                    @Override
+//                    public void onItemLongClick(String item, int position) {
+//                        ZXToastUtil.showToast("长按:" + item.toString());
+//                    }
+//
+//                    @Override
+//                    public void onRefresh() {
+////                        swipeRecyler.stopRefresh();
+//                        addList();
+////                        swipeRecyler.setLoadInfo("阿西吧");
+//                    }
+//
+//                    @Override
+//                    public void onLoadMore() {
+//                        addList();
+////                        swipeRecyler.setLoadInfo("啊了个阿西吧");
+//                    }
+//                });
+        swipeRecyler.setLayoutManager(new LinearLayoutManager(this))
                 .showLoadInfo(true)
+                .setAdapter(test2Adapter = new Test2Adapter(datalist))
                 .setSRListener(new ZXSRListener<String>() {
                     @Override
                     public void onItemClick(String item, int position) {
@@ -75,10 +108,16 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
 
                     @Override
                     public void onLoadMore() {
-                        addList();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                addList();
+                            }
+                        },1000);
 //                        swipeRecyler.setLoadInfo("啊了个阿西吧");
                     }
                 });
+//        test2Adapter.withFooter(this);
         swipeRecyler.notifyDataSetChanged();
         ZXItemClickSupport.removeFrom(swipeRecyler.getRecyclerView());
         addList();
@@ -90,8 +129,8 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
             datalist.add(Math.random() * 10 + "");
         }
         swipeRecyler.stopRefresh();
-        swipeRecyler.notifyDataSetChanged();
         swipeRecyler.setLoadInfo(50);
+        swipeRecyler.notifyDataSetChanged();
     }
 
     public class TestAdapter extends ZXRecycleAdapter {
@@ -112,7 +151,7 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
         }
     }
 
-    public class Test1Adpater extends ZXRecycleSimpleAdapter{
+    public class Test1Adpater extends ZXRecycleSimpleAdapter {
 
         @Override
         public RecyclerView.ViewHolder onItemHolder(ViewGroup parent, int viewType) {
@@ -132,11 +171,23 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
 
         @Override
         public int getItemViewType(int position) {
-            if (position == 0){
+            if (position == 0) {
                 return 0;
-            }else {
+            } else {
                 return 1;
             }
+        }
+    }
+
+    public class Test2Adapter extends ZXRecyclerQuickAdapter<String, ZXBaseHolder> {
+
+        public Test2Adapter(@Nullable List data) {
+            super(R.layout.layout_custom, data);
+        }
+
+        @Override
+        public void quickConvert(ZXBaseHolder helper, String item) {
+            helper.setText(R.id.tv_text, item);
         }
     }
 }

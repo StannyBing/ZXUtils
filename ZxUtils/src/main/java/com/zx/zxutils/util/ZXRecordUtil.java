@@ -97,7 +97,7 @@ public class ZXRecordUtil {
     }
 
     private void setDefaultFilePath() {
-        File file = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".mp3");
+        File file = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".amr");
         if (!file.exists()) try {
             file.createNewFile();
         } catch (IOException e) {
@@ -209,8 +209,8 @@ public class ZXRecordUtil {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 //        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         mRecorder.setOutputFile(mFilePath);
         try {
             mRecorder.prepare();

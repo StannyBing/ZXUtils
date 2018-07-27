@@ -55,7 +55,7 @@ public class RecordTestActivity extends BaseActivity {
         recordUtil.setOnRecordListener(new ZXRecordListener() {
             @Override
             public String onInitPath() {
-                return ZXSystemUtil.getSDCardPath() + System.currentTimeMillis() + "x.mp3";
+                return ZXSystemUtil.getSDCardPath() + System.currentTimeMillis() + "x.amr";
             }
 
             @Override

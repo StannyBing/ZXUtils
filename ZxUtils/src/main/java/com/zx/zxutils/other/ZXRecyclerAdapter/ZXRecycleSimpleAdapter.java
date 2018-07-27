@@ -32,7 +32,7 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
 
     private List<?> dataList;
 
-    private Context mContext;
+    public Context mContext;
 
     public List<?> getDataList() {
         return dataList;
