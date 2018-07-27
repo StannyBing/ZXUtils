@@ -8,15 +8,16 @@
     <ProgressBar
         android:id="@+id/load_progress"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="gone"
         android:gravity="center"/>
 
     <TextView
         android:id="@+id/load_tv"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="正在加载更多...."
         android:visibility="gone"
