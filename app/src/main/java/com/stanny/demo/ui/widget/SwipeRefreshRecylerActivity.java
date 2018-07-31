@@ -117,7 +117,6 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
 //                        swipeRecyler.setLoadInfo("啊了个阿西吧");
                     }
                 });
-//        test2Adapter.withFooter(this);
         swipeRecyler.notifyDataSetChanged();
         ZXItemClickSupport.removeFrom(swipeRecyler.getRecyclerView());
         addList();
@@ -126,7 +125,7 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
     public void addList() {
         datalist.clear();
         for (int i = 0; i < 10; i++) {
-            datalist.add(Math.random() * 10 + "");
+//            datalist.add(Math.random() * 10 + "");
         }
         swipeRecyler.stopRefresh();
         swipeRecyler.setLoadInfo(50);

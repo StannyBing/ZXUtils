@@ -59,13 +59,18 @@ public abstract class ZXRecyclerQuickAdapter<T extends Object, K extends ZXBaseH
 
     @Override
     protected void convert(K helper, T item) {
-        if (notifyListener != null) {
-            notifyListener.onNotifyEnd();
-        }
         if (!hasLoadMore) {
             removeAllFooterView();
         }
         quickConvert(helper, item);
+    }
+
+    @Override
+    public void onBindViewHolder(K holder, int position) {
+        super.onBindViewHolder(holder, position);
+        if (notifyListener != null) {
+            notifyListener.onNotifyEnd();
+        }
     }
 
 //    @Override

@@ -236,6 +236,10 @@ public class ZXSwipeRecyler extends LinearLayout {
         return simpleAdapter;
     }
 
+    public ZXRecyclerQuickAdapter getQuickAdapter() {
+        return quickAdapter;
+    }
+
     /**
      * 获得recylerview对象
      *
