@@ -43,7 +43,8 @@ public class ZXBarChart extends BarChart {
         this.context = context;
         //设置标记
         Description description = new Description();
-        description.setText("重庆知行");
+//        description.setText("重庆知行");
+        description.setText("");
         description.setTextColor(ContextCompat.getColor(context, R.color.lightgray));
         description.setYOffset(10);
         setDescription(description);
@@ -99,6 +100,12 @@ public class ZXBarChart extends BarChart {
         return this;
     }
 
+    public void clear() {
+        labels.clear();
+        tempDataSets.clear();
+        addComplete(1);
+    }
+
     public ZXBarChart addComplete(int animMillis) {
         List<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.addAll(tempDataSets);
@@ -128,7 +135,7 @@ public class ZXBarChart extends BarChart {
             dataSet.setHighLightColor(ContextCompat.getColor(context, R.color.halfTransparent));//高亮线颜色
         }
         super.setData(lineData);
-        float groupSpace = 0.08f;
+        float groupSpace = 0.15f;
         float barSpace = 0.03f; // x4 DataSet
         float barWidth = (1 - groupSpace) / lineData.getDataSets().size() - barSpace; // x4 DataSet
         // (barWidth + barSpace) * dataset.size + groupSpace = 1.00 -> interval per "group" 必须满足

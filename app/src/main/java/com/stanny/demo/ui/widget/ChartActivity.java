@@ -29,6 +29,7 @@ public class ChartActivity extends BaseActivity {
         initLineChart();
         initPieChart();
         initBarChart();
+
     }
 
     private void initBarChart() {

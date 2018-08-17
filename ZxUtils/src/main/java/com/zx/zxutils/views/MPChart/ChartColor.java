@@ -17,4 +17,8 @@ public class ChartColor {
         return colors[num < ChartColor.colors.length ? num : ((int) (Math.random() * ChartColor.colors.length))];
     }
 
+    public static void setColor(int[] colorResIds) {
+        colors = colorResIds;
+    }
+
 }

@@ -77,6 +77,11 @@ public class ZXPieChart extends PieChart {
         return this;
     }
 
+    public void clear() {
+        pieData = new PieData(new PieDataSet(new ArrayList<PieEntry>(), ""));
+        addComplete(1);
+    }
+
     /**
      * 添加结束
      *

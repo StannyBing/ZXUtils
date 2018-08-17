@@ -103,6 +103,12 @@ public class ZXLineChart extends LineChart {
         return this;
     }
 
+    public void clear() {
+        labels.clear();
+        tempDataSets.clear();
+        addComplete(1);
+    }
+
     /**
      * 数据添加完成
      *
