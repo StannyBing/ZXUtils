@@ -281,6 +281,10 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      * @return
      */
     public ZXSpinner notifyDataSetChanged() {
+		List<KeyValueEntity> tempList = new ArrayList<>();
+		tempList.addAll(dataList);
+		dataList.clear();
+		dataList.addAll(tempList);
         mAdapter.notifyDataSetChanged();
         return this;
     }

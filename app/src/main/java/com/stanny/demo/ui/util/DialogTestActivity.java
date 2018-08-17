@@ -2,6 +2,7 @@ package com.stanny.demo.ui.util;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,10 +44,16 @@ public class DialogTestActivity extends BaseActivity {
         switch (position) {
             case 0://打开普通loaddialog
                 ZXDialogUtil.showLoadingDialog(this, "无进度条");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ZXDialogUtil.showLoadingDialog(DialogTestActivity.this, "正在加载中", 30);
+                    }
+                },2000);
 //                ZXDialogUtil.showLoadingDialog(this, "有进度条", 30);
                 break;
             case 1://打开进度loaddialog
-                int num = 10;
+                int num = 1;
                 if (ZXDialogUtil.isLoadingDialogShow()) {
                     ZXDialogUtil.dismissLoadingDialog();
                 } else {

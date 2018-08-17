@@ -2,10 +2,11 @@ package com.zx.zxutils.util;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zx.zxutils.R;
@@ -27,79 +30,191 @@ import java.util.List;
 public class ZXDialogUtil {
 
     private static Handler handler = new Handler();
-    private static boolean hasProgress = false;//是否为带进度条的loadingDialog
-    private static ProgressDialog loadingDialog;//简单进度dialog，适用于单纯显示正在加载的情况
+    //    private static ProgressDialog loadingDialog;//简单进度dialog，适用于单纯显示正在加载的情况
     //    private static Dialog dialog;//用于显示各种信息的dialog
     private static List<Dialog> dialogList = new ArrayList<>();
+    private static AlertDialog loadingDialog;
+    private static Context loadingContext;
 
-    /**
-     * 显示简单加载dialog
-     *
-     * @param context 上下文
-     * @param message 提示消息
-     */
-    public static ProgressDialog showLoadingDialog(Context context, String message) {
+    public static AlertDialog showLoadingDialog(Context context, String message) {
+        return showLoadingDialog(context, message, -1);
+    }
+
+    public static AlertDialog showLoadingDialog(Context context, String message, int progress) {
         try {
-            if (hasProgress == true && loadingDialog.isShowing()) {
-                loadingDialog.dismiss();
-            }
-            if (hasProgress == true || loadingDialog == null) {
-                showSimple(context, message);
+            if (loadingContext != null && loadingContext.getClass().equals(context.getClass())) {
+                if (loadingDialog != null && loadingDialog.isShowing()) {
+                    sendMessage(message, progress);
+                } else {
+                    showNewLoading(context, message, progress);
+                }
             } else {
-                loadingDialog.setMessage(message);
-                loadingDialog.show();
+                showNewLoading(context, message, progress);
             }
         } catch (Exception e) {
-            showSimple(context, message);
+            e.printStackTrace();
+            showNewLoading(context, message, progress);
         }
         return loadingDialog;
     }
 
-    private static void showSimple(Context context, String message) {
-        loadingDialog = null;
-        loadingDialog = ProgressDialog.show(context, "", message);
-        loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loadingDialog.setCancelable(true);
-        loadingDialog.setCanceledOnTouchOutside(false);
-        hasProgress = false;
+    public static boolean isMainThread() {
+        return Looper.getMainLooper() == Looper.myLooper();
     }
 
-    /**
-     * 显示带进度条的加载dialog
-     *
-     * @param context  上下文
-     * @param message  提示消息
-     * @param progress 进度
-     */
-    public static ProgressDialog showLoadingDialog(Context context, String message, int progress) {
-        try {
-            if (hasProgress == false && loadingDialog.isShowing()) {
+    private static void showNewLoading(Context context, String message, int progress) {
+        if (!isMainThread()) {
+            Looper.loop();
+        }
+        loadingContext = context;
+        if (loadingDialog != null) {
+            if (loadingDialog.isShowing()) {
                 loadingDialog.dismiss();
             }
-            if (hasProgress == false || loadingDialog == null) {
-                showProgress(context, message, progress);
-            } else {
-                loadingDialog.setMessage(message);
-                loadingDialog.setProgress(progress);
-                loadingDialog.show();
-            }
-        } catch (Exception e) {
-            showProgress(context, message, progress);
+            loadingDialog = null;
         }
-        return loadingDialog;
-    }
-
-    private static void showProgress(Context context, String message, int progress) {
-        loadingDialog = null;
-        loadingDialog = new ProgressDialog(context);
-        loadingDialog.setMessage(message);
-        loadingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading_view, null);
+        LinearLayout llSimple = view.findViewById(R.id.ll_loading_simple);
+        LinearLayout llProgress = view.findViewById(R.id.ll_loading_withprogress);
+        TextView tvMsg = view.findViewById(R.id.tv_loading_text);
+        TextView tvProgressMsg = view.findViewById(R.id.tv_loading_progresstext);
+        TextView tvProgress = view.findViewById(R.id.tv_loading_progress);
+        ProgressBar pbLoading = view.findViewById(R.id.pb_loading_dialog);
+        pbLoading.setProgress(progress);
+        tvMsg.setText(message);
+        tvProgressMsg.setText(message);
+        tvProgress.setText(progress + "%");
+        if (progress == -1) {
+            llSimple.setVisibility(View.VISIBLE);
+            llProgress.setVisibility(View.GONE);
+        } else {
+            llSimple.setVisibility(View.GONE);
+            llProgress.setVisibility(View.VISIBLE);
+        }
+        loadingDialog = new AlertDialog.Builder(context)
+                .setView(view)
+                .create();
         loadingDialog.setCancelable(true);
         loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setProgress(progress);
         loadingDialog.show();
-        hasProgress = true;
+        if (!isMainThread()) {
+            Looper.prepare();
+        }
     }
+
+    private static void sendMessage(String message, int progress) {
+        Message msg = new Message();
+        if (progress == -1) {
+            msg.what = 0;
+        } else {
+            msg.what = 1;
+        }
+        msg.arg1 = progress;
+        msg.obj = message;
+        loadingHandle.sendMessage(msg);
+    }
+
+
+    private static Handler loadingHandle = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            LinearLayout llSimple = loadingDialog.findViewById(R.id.ll_loading_simple);
+            LinearLayout llProgress = loadingDialog.findViewById(R.id.ll_loading_withprogress);
+            TextView tvMsg = loadingDialog.findViewById(R.id.tv_loading_text);
+            TextView tvProgressMsg = loadingDialog.findViewById(R.id.tv_loading_progresstext);
+            TextView tvProgress = loadingDialog.findViewById(R.id.tv_loading_progress);
+            ProgressBar pbLoading = loadingDialog.findViewById(R.id.pb_loading_dialog);
+            if (msg.what == 0) {
+                llProgress.setVisibility(View.GONE);
+                llSimple.setVisibility(View.VISIBLE);
+            } else {
+                llProgress.setVisibility(View.VISIBLE);
+                llSimple.setVisibility(View.GONE);
+            }
+            tvMsg.setText(msg.obj.toString());
+            tvProgressMsg.setText(msg.obj.toString());
+            tvProgress.setText(msg.arg1 + "%");
+            pbLoading.setProgress(msg.arg1);
+            super.handleMessage(msg);
+        }
+    };
+
+//    /**
+//     * 显示简单加载dialog
+//     *
+//     * @param context 上下文
+//     * @param message 提示消息
+//     */
+//    public static AlertDialog showLoadingDialog(Context context, String message) {
+//        try {
+//            if (loadingDialog == null) {
+//                showSimple(context, message);
+//            } else {
+//                //TODO
+//                loadingDialog.setMessage(message);
+//                loadingDialog.show();
+//            }
+//        } catch (Exception e) {
+//            showSimple(context, message);
+//        }
+//        return loadingDialog;
+//    }
+//
+//    private static void showSimple(Context context, String message) {
+//        loadingDialog = null;
+//        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading_view, null);
+//        TextView tvMsg = view.findViewById(R.id.tv_loading_text);
+//        tvMsg.setText(message);
+//        loadingDialog = new AlertDialog.Builder(context)
+//                .setView(view)
+//                .create();
+////        loadingDialog = ProgressDialog.show(context, "", message);
+////        loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        loadingDialog.setCancelable(true);
+//        loadingDialog.setCanceledOnTouchOutside(false);
+//        loadingDialog.show();
+//    }
+
+//    /**
+//     * 显示带进度条的加载dialog
+//     *
+//     * @param context  上下文
+//     * @param message  提示消息
+//     * @param progress 进度
+//     */
+//    public static AlertDialog showLoadingDialog(Context context, String message, int progress) {
+//        try {
+//            if (loadingDialog == null) {
+//                showProgress(context, message, progress);
+//            } else {
+//                loadingDialog.setMessage(message);
+////                loadingDialog.setProgress(progress);
+//                loadingDialog.show();
+//            }
+//        } catch (Exception e) {
+//            showProgress(context, message, progress);
+//        }
+//        return loadingDialog;
+//    }
+
+//    private static void showProgress(Context context, String message, int progress) {
+//        loadingDialog = null;
+//        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading_progress_view, null);
+//        TextView tvMsg = view.findViewById(R.id.tv_loading_text);
+//        TextView tvProgress = view.findViewById(R.id.tv_loading_progress);
+//        tvProgress.setText(progress + "%");
+//        tvMsg.setText(message);
+//        loadingDialog = new AlertDialog.Builder(context)
+//                .setView(view)
+//                .create();
+//        loadingDialog = new ProgressDialog(context);
+//        loadingDialog.setMessage(message);
+//        loadingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//        loadingDialog.setCancelable(true);
+//        loadingDialog.setCanceledOnTouchOutside(false);
+//        loadingDialog.setProgress(progress);
+//        loadingDialog.show();
+//    }
 
     /**
      * 判断加载dialog是否为打开状态
