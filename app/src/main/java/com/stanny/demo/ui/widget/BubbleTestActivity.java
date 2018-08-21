@@ -35,7 +35,7 @@ public class BubbleTestActivity extends BaseActivity {
                 bubble.setBubbleView(R.layout.layout_popup_view).show(view, Gravity.LEFT);
                 break;
             case R.id.btn_text_bubble3:
-                bubble.setBubbleView(bubbleView).show(view);
+                bubble.setBubbleView(bubbleView).show(view, Gravity.RIGHT);
                 break;
             case R.id.btn_text_bubble4:
                 bubble.setBubbleView(bubbleView).show(view, Gravity.TOP);

@@ -61,6 +61,8 @@ public class ZXBarChart extends BarChart {
         getAxisRight().setDrawAxisLine(false);//隐藏右边坐标轴
         setDrawBorders(false);//设置是否加边框
         getXAxis().setGranularity(1f);
+
+
         getXAxis().setCenterAxisLabels(false);
         getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
             @Override

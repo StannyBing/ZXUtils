@@ -28,9 +28,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="android:layout_width">match_parent</item>
@@ -39,5 +39,6 @@
         <item name="tabIndicatorHeight">6dp</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
+
 
 </resources>

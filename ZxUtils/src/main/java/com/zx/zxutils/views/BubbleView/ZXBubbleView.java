@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import com.zx.zxutils.R;
 import com.zx.zxutils.util.ZXScreenUtil;
 
 /**
@@ -68,6 +69,16 @@ public class ZXBubbleView extends PopupWindow {
      * @param bubbleOffset 气泡尖角位置偏移量。默认位于中间
      */
     public void show(View parent, int gravity, float bubbleOffset) {
+        if (gravity == Gravity.LEFT){
+            setAnimationStyle(R.style.Pop_bubble_anim_left);
+        }else if (gravity == Gravity.RIGHT){
+            setAnimationStyle(R.style.Pop_bubble_anim_right);
+        }else if (gravity == Gravity.TOP){
+            setAnimationStyle(R.style.Pop_bubble_anim_top);
+        }else if (gravity == Gravity.BOTTOM){
+            setAnimationStyle(R.style.Pop_bubble_anim_bottom);
+        }
+
         float defaultOffSet = 0;
         BubbleRelativeLayout.BubbleLegOrientation orientation = BubbleRelativeLayout.BubbleLegOrientation.LEFT;
         int[] location = new int[2];

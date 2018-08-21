@@ -79,4 +79,24 @@
         <!-- 模糊 -->
     </style>
 
+    <style name="Pop_bubble_anim_left" parent="Widget.AppCompat.PopupWindow">
+        <item name="android:windowEnterAnimation">@anim/pop_bubble_show_left</item>
+        <item name="android:windowExitAnimation">@anim/pop_bubble_hide_left</item>
+    </style>
+
+    <style name="Pop_bubble_anim_right" parent="Widget.AppCompat.PopupWindow">
+        <item name="android:windowEnterAnimation">@anim/pop_bubble_show_right</item>
+        <item name="android:windowExitAnimation">@anim/pop_bubble_hide_right</item>
+    </style>
+
+    <style name="Pop_bubble_anim_top" parent="Widget.AppCompat.PopupWindow">
+        <item name="android:windowEnterAnimation">@anim/pop_bubble_show_top</item>
+        <item name="android:windowExitAnimation">@anim/pop_bubble_hide_top</item>
+    </style>
+
+    <style name="Pop_bubble_anim_bottom" parent="Widget.AppCompat.PopupWindow">
+        <item name="android:windowEnterAnimation">@anim/pop_bubble_show_bottom</item>
+        <item name="android:windowExitAnimation">@anim/pop_bubble_hide_bottom</item>
+    </style>
+
 </resources>

@@ -38,7 +38,8 @@ public class ZXPieChart extends PieChart {
         this.context = context;
         //设置标记
         Description description = new Description();
-        description.setText("重庆知行");
+//        description.setText("重庆知行");
+        description.setText("");
         description.setTextColor(ContextCompat.getColor(context, R.color.lightgray));
         description.setYOffset(10);
         setDescription(description);

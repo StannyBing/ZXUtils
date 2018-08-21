@@ -37,8 +37,8 @@ public class BubbleRelativeLayout extends RelativeLayout {
     public static int PADDING = 30;
     public static int LEG_HALF_BASE = 30;
     public static float STROKE_WIDTH = 2.0f;
-    public static float CORNER_RADIUS = 12.0f;
-    public static int SHADOW_COLOR = Color.argb(70, 0, 0, 0);
+    public static float CORNER_RADIUS = 30.0f;
+    public static int SHADOW_COLOR = Color.argb(40, 60, 60, 60);
     public static float MIN_LEG_DISTANCE = PADDING + LEG_HALF_BASE;
 
     private Paint mFillPaint = null;
@@ -46,7 +46,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
     private final Path mBubbleLegPrototype = new Path();
     private final Paint mPaint = new Paint(Paint.DITHER_FLAG);
 
-    private float mBubbleLegOffset = 0.75f;
+    private float mBubbleLegOffset = 1.0f;
     private BubbleLegOrientation mBubbleOrientation = BubbleLegOrientation.LEFT;
 
     public BubbleRelativeLayout(Context context) {
@@ -86,12 +86,12 @@ public class BubbleRelativeLayout extends RelativeLayout {
             }
         }
 
-        mPaint.setColor(SHADOW_COLOR);
-        mPaint.setStyle(Style.FILL);
+        mPaint.setColor(Color.WHITE);
+        mPaint.setStyle(Style.FILL_AND_STROKE);
         mPaint.setStrokeCap(Cap.BUTT);
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(STROKE_WIDTH);
-        mPaint.setStrokeJoin(Paint.Join.MITER);
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setPathEffect(new CornerPathEffect(CORNER_RADIUS));
 
         if (Build.VERSION.SDK_INT >= 11) {
@@ -105,7 +105,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
         if (Build.VERSION.SDK_INT >= 11) {
             setLayerType(LAYER_TYPE_SOFTWARE, mFillPaint);
         }
-        mPaint.setShadowLayer(2f, 2F, 5F, SHADOW_COLOR);
+        mPaint.setShadowLayer(3f, 1F, 2F, SHADOW_COLOR);
 
         renderBubbleLegPrototype();
 
@@ -123,8 +123,8 @@ public class BubbleRelativeLayout extends RelativeLayout {
      */
     private void renderBubbleLegPrototype() {
         mBubbleLegPrototype.moveTo(0, 0);
-        mBubbleLegPrototype.lineTo(PADDING * 1.5f, -PADDING / 1.2f);//越大越尖
-        mBubbleLegPrototype.lineTo(PADDING * 1.5f, PADDING / 1.2f);
+        mBubbleLegPrototype.lineTo(PADDING * 2.5f, -PADDING / 0.8f);//越大越尖
+        mBubbleLegPrototype.lineTo(PADDING * 2.5f, PADDING / 0.8f);
         mBubbleLegPrototype.close();
     }
 
@@ -180,14 +180,15 @@ public class BubbleRelativeLayout extends RelativeLayout {
         final float width = canvas.getWidth();
         final float height = canvas.getHeight();
 
-        float[] radiusArray = {CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS};
+//        float[] radiusArray = {CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS};
+        float[] radiusArray = {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
 
         mPath.rewind();
         mPath.addRoundRect(new RectF(PADDING, PADDING, width - PADDING, height - PADDING), radiusArray, Direction.CW);
         mPath.addPath(mBubbleLegPrototype, renderBubbleLegMatrix(width, height));//尖角
 
         canvas.drawPath(mPath, mPaint);
-        canvas.scale((width - STROKE_WIDTH) / width, (height - STROKE_WIDTH) / height, width / 2f, height / 2f);
+        canvas.scale((width - STROKE_WIDTH) / width, (height - STROKE_WIDTH) / height, width / 2.5f, height / 2.5f);
 
         canvas.drawPath(mPath, mFillPaint);
     }
