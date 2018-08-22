@@ -20,7 +20,7 @@ A commonly used tool library for Android<br>
 所有的工具等都是以ZX..开头，如ZXDialogUtil、ZXFileUtil、ZXSystemUtil<br>
 所有涉及到view的比如自定义view及dialog等都是基于Material Design进行设计，并都提供了自定义的功能，方便设计<br>
 <br>
-部分截图如下(该截图为2018-1-23所截，后期可能会产生部分变化)：<br>
+部分截图如下(该截图为2018-8-22所截，后期可能会产生部分变化)：<br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_1.jpg"/></div><br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_2.jpg"/></div><br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_3.jpg"/></div><br>
