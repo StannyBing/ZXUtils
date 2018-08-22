@@ -1,5 +1,7 @@
 # ZXUtils
 ![](https://github.com/StannyBing/ZXUtils/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)<br>
+[英文版Readme](https://github.com/StannyBing/ZXUtils/blob/master/README-English.md)<br>
+
 
 ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨入2.0.0版本。<br>
 为更好的使用工具库，仍然采用ZX开头的模式。<br>
@@ -15,7 +17,7 @@ ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨�
 <br>
 大家可点击下面的链接进行下载<br>
 [点击下载演示Demo](https://github.com/StannyBing/ZXUtils/blob/master/ZXUtil演示Demo.apk?raw=true)<br>
-<span style="color:red">PS:Demo中的功能只包括了部分功能的展示，由于有些工具的方法太多，就只挑选了部分进行演示</span><br>
+PS:Demo中的功能只包括了部分功能的展示，由于有些工具的方法太多，就只挑选了部分进行演示<br>
 <br>
 A commonly used tool library for Android<br>
 本库包含常用android开发所需的所有工具类+网络请求+常用view<br>
