@@ -13,6 +13,8 @@ Reference：[BaseRecyclerViewAdapterHelper from CymChad, can be used with ZXQuic
 //2018-8-22<br>
 Reference：[SlideUp-Android from mancj, which can be used with ZXSlideUp, ZXSlideUpBuilder, etc.](https://github.com/mancj/SlideUp-Android)<br>
 
+As mentioned in the above quote, ZXUtils infringes your rights, please contact me, I will immediately remove the relevant tools and sincerely apologize.<br>
+
 <br>
 You can download it by clicking the link below.<br>
 [Click to download Demo Apk](https://github.com/StannyBing/ZXUtils/blob/master/ZXUtil演示Demo.apk?raw=true)<br>
