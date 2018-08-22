@@ -27,8 +27,8 @@ A commonly used tool library for Android<br>
 所有涉及到view的比如自定义view及dialog等都是基于Material Design进行设计，并都提供了自定义的功能，方便设计<br>
 <br>
 部分截图如下(该截图为2018-8-22所截，后期可能会产生部分变化)：<br>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_1.jpg"/></div>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_2.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_1.jpg"/>
+<img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_2.jpg"/></div><br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_3.jpg"/></div>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_4.jpg"/></div><br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_5.jpg"/></div>
