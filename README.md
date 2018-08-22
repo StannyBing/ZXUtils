@@ -21,12 +21,12 @@ A commonly used tool library for Android<br>
 所有涉及到view的比如自定义view及dialog等都是基于Material Design进行设计，并都提供了自定义的功能，方便设计<br>
 <br>
 部分截图如下(该截图为2018-8-22所截，后期可能会产生部分变化)：<br>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_1.jpg"/></div><br>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_2.jpg"/></div><br>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_3.jpg"/></div><br>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_4.jpg"/></div><br>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_5.jpg"/></div><br>
-<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/screenshot_6.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_1.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_2.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_3.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_4.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_5.jpg"/></div><br>
+<div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_6.jpg"/></div><br>
 ### 1.工具库包含以下：<br>
 　　ZXAnimUtil 动画方法工具类<br>
 　　ZXAppUtil App相关工具类<br>
@@ -61,6 +61,7 @@ A commonly used tool library for Android<br>
 　　ZXWindowUtil 窗口工具类<br>
 　　ZXRecordUtil 录音及播放类<br>
 　　ZXDeviceUtil 录音及播放类<br>
+　　ZXQuickAdapter 快速封装适配器<br>
 <br>
 ### 2.网络请求框架：<br>
 　　网络请求进行了深度封装，使用时新建一个网络请求类继承ZXHttpApi，实现<br>
@@ -93,6 +94,8 @@ A commonly used tool library for Android<br>
 　　ZXSpinner Spinnerview<br>
 　　ZXStatusBarCompat 透明状态栏<br>
 　　ZXCameraView 仿微信录像照相<br>
+　　ZXSlideUp 滑动控件工具<br>
+　　ZXShadowLayout 阴影效果<br>
   <br>
 ### 5.使用方法<br>
 
