@@ -6,9 +6,11 @@ ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨�
 从这个版本起，ZXUtils会逐渐加入更多，更全，更好的工具以及UI控件<br>
 但同时可能会对原有的部分ui进行删除等操作，望体谅<br>
 
+//2018-7-10
 引用：[来自于CymChad的BaseRecyclerViewAdapterHelper,可使用ZXQuickAdapter、ZXMultiItemQucikAdapter等进行使用](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
 
-引用：
+//2018-8-22
+引用：[来自于mancj的SlideUp-Android,可使用ZXSlideUp、ZXSlideUpBuilder等进行使用](https://github.com/mancj/SlideUp-Android)<br>
 
 <br>
 大家可点击下面的链接进行下载<br>
