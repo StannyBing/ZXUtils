@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.widget.ShadowTestActivity">
+
+    <com.zx.zxutils.views.ZXShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:shadow_angle="40"
+        app:shadow_distance="3dp"
+        app:shadow_radius="5dp"
+        app:shadowed="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试文字阴影效果（带偏移）"
+            android:textSize="16sp"/>
+    </com.zx.zxutils.views.ZXShadowLayout>
+
+    <com.zx.zxutils.views.ZXShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:shadow_angle="40"
+        app:shadow_distance="0dp"
+        app:shadow_radius="5dp"
+        app:shadowed="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试文字阴影效果（不带偏移）"
+            android:textSize="16sp"/>
+    </com.zx.zxutils.views.ZXShadowLayout>
+
+    <com.zx.zxutils.views.ZXShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:shadow_angle="40"
+        app:shadow_color="@color/colorAccent"
+        app:shadow_distance="10dp"
+        app:shadow_radius="3dp"
+        app:shadowed="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试按钮阴影效果（带偏移）"
+            android:textSize="16sp"/>
+    </com.zx.zxutils.views.ZXShadowLayout>
+
+    <com.zx.zxutils.views.ZXShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:shadow_angle="40"
+        app:shadow_color="@color/colorAccent"
+        app:shadow_distance="0dp"
+        app:shadow_radius="5dp"
+        app:shadowed="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试按钮阴影效果（不带偏移）"
+            android:textSize="16sp"/>
+    </com.zx.zxutils.views.ZXShadowLayout>
+
+    <com.zx.zxutils.views.ZXShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:shadow_angle="40"
+        app:shadow_color="@color/colorPrimary"
+        app:shadow_distance="0dp"
+        app:shadow_radius="10dp"
+        app:shadowed="true">
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试普通view阴影效果"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </com.zx.zxutils.views.ZXShadowLayout>
+
+    <com.zx.zxutils.views.ZXShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:shadow_angle="10"
+        app:shadow_color="@color/colorPrimary"
+        app:shadow_distance="0dp"
+        app:shadow_radius="3dp"
+        app:shadowed="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@mipmap/ui_shadow"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试图片阴影效果"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </com.zx.zxutils.views.ZXShadowLayout>
+
+</LinearLayout>

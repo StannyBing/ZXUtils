@@ -9,12 +9,14 @@
         <attr name="halfBaseOfLeg" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="ShadowLayout">
-        <attr name="sl_shadowed" format="boolean"/>
-        <attr name="sl_shadow_distance" format="dimension"/>
-        <attr name="sl_shadow_angle" format="integer"/>
-        <attr name="sl_shadow_radius" format="dimension"/>
-        <attr name="sl_shadow_color" format="color"/>
+    <declare-styleable name="ZXShadowLayout">
+        <attr name="shadowed" format="boolean"/>
+        <attr name="shadow_distance" format="dimension"/>
+        <attr name="shadow_angle" format="integer"/>
+        <attr name="shadow_radius" format="dimension"/>
+        <attr name="shadow_color" format="color"/>
     </declare-styleable>
+
+    <bool name="is_right_to_left">false</bool>
 
 </resources>

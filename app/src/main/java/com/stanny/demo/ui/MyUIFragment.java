@@ -21,6 +21,8 @@ import com.stanny.demo.ui.widget.PhotoPickerTestActivity;
 import com.stanny.demo.ui.widget.RecordTestActivity;
 import com.stanny.demo.ui.widget.RecylerDeleteActivity;
 import com.stanny.demo.ui.widget.SeekBarTestActivity;
+import com.stanny.demo.ui.widget.ShadowTestActivity;
+import com.stanny.demo.ui.widget.SlideUpTestActivity;
 import com.stanny.demo.ui.widget.SlidingActivity;
 import com.stanny.demo.ui.widget.SpinnerTestActivity;
 import com.stanny.demo.ui.widget.SwipeRefreshRecylerActivity;
@@ -59,6 +61,8 @@ public class MyUIFragment extends Fragment {
     }
 
     private void initData() {
+        dataList.add(new MainEntity(SlideUpTestActivity.class, "ZXSlideUp", "滑动控件工具", R.mipmap.ui_slideup));
+        dataList.add(new MainEntity(ShadowTestActivity.class, "ZXShadowLayout", "阴影效果", R.mipmap.ui_shadow));
         dataList.add(new MainEntity(CameraActivity.class, "ZXCameraView", "相机+录像功能", R.mipmap.ui_camera));
         dataList.add(new MainEntity(BottomSheetActivity.class, "ZXBottomSheet", "底部弹出列表", R.mipmap.ui_bottom));
         dataList.add(new MainEntity(ExpandViewActivity.class, "ZXExpandView", "多级菜单", R.mipmap.ui_expand));

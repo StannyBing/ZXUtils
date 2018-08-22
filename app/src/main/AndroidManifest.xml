@@ -126,6 +126,10 @@
         </activity>
         <activity android:name=".ui.util.QuickAdapterTestActivity">
         </activity>
+        <activity android:name=".ui.widget.ShadowTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.SlideUpTestActivity">
+        </activity>
     </application>
 
 </manifest>

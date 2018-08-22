@@ -91,27 +91,28 @@ public class ZXShadowLayout extends FrameLayout {
         setLayerType(LAYER_TYPE_HARDWARE, mPaint);
 
         // Retrieve attributes from xml
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShadowLayout);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ZXShadowLayout);
         try {
-            setIsShadowed(typedArray.getBoolean(R.styleable.ShadowLayout_sl_shadowed, true));
+            setIsShadowed(typedArray.getBoolean(R.styleable.ZXShadowLayout_shadowed, true));
             setShadowRadius(
                     typedArray.getDimension(
-                            R.styleable.ShadowLayout_sl_shadow_radius, DEFAULT_SHADOW_RADIUS
+                            R.styleable.ZXShadowLayout_shadow_radius, DEFAULT_SHADOW_RADIUS
                     )
             );
+
             setShadowDistance(
                     typedArray.getDimension(
-                            R.styleable.ShadowLayout_sl_shadow_distance, DEFAULT_SHADOW_DISTANCE
+                            R.styleable.ZXShadowLayout_shadow_distance, DEFAULT_SHADOW_DISTANCE
                     )
             );
             setShadowAngle(
                     typedArray.getInteger(
-                            R.styleable.ShadowLayout_sl_shadow_angle, (int) DEFAULT_SHADOW_ANGLE
+                            R.styleable.ZXShadowLayout_shadow_angle, (int) DEFAULT_SHADOW_ANGLE
                     )
             );
             setShadowColor(
                     typedArray.getColor(
-                            R.styleable.ShadowLayout_sl_shadow_color, DEFAULT_SHADOW_COLOR
+                            R.styleable.ZXShadowLayout_shadow_color, DEFAULT_SHADOW_COLOR
                     )
             );
         } finally {

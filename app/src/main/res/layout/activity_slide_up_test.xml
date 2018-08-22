@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.widget.SlideUpTestActivity">
+
+    <FrameLayout
+    android:id="@+id/fm_slide_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"/>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_slide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="20dp"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/test_img"/>
+
+            <TextView
+                android:id="@+id/tv_slide_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_margin="10dp"
+                android:text="上滑打开，下滑关闭"
+                android:textColor="@color/white"
+                android:textSize="20sp"/>
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_slide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ui_slideup"
+            app:backgroundTint="@color/white"
+            app:fabSize="auto"
+            app:pressedTranslationZ="50dp"
+            app:rippleColor="@color/white"
+            app:useCompatPadding="true"/>
+</RelativeLayout>
