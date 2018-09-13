@@ -26,6 +26,8 @@ public class ZXExpandRecyclerHelper {
     private List<ZXExpandBean> showList = new ArrayList<>();
     private ZXExpandItemClickListener itemClickListener;
     private boolean showMenuSelectView = false;
+    private boolean selectChild = true;
+    private boolean menuCanSelect = true;
     private ZXExpandAdapter.OnExpandListener expandListener;
     private int textSizeSp = 14;
     private int heightDp = 40;
@@ -83,11 +85,11 @@ public class ZXExpandRecyclerHelper {
     }
 
     //刷新
-    private void setSelect(List<ZXExpandBean> dataList) {
+    private void setSelect(List<ZXExpandBean> dataList, boolean select) {
         for (int i = 0; i < dataList.size(); i++) {
-            dataList.get(i).setSelected(false);
+            dataList.get(i).setSelected(select);
             if (dataList.get(i).getChildList() != null && dataList.get(i).getChildList().size() > 0 && dataList.get(i).isShowChild()) {
-                setSelect(dataList.get(i).getChildList());
+                setSelect(dataList.get(i).getChildList(),select);
             }
         }
     }
@@ -176,7 +178,7 @@ public class ZXExpandRecyclerHelper {
     //构建
     public void build() {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new ZXExpandAdapter(context, showList, showSelect, isMultiSelected, textSizeSp, heightDp);
+        adapter = new ZXExpandAdapter(context, showList, showSelect, isMultiSelected, textSizeSp, heightDp,menuCanSelect);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         expandListener = new ZXExpandAdapter.OnExpandListener() {
@@ -218,10 +220,11 @@ public class ZXExpandRecyclerHelper {
                     String id = showList.get(position).getId();
                     if (id != null && id.length() > 0) {
                         if (!isMultiSelected) {
-                            setSelect(dataList);
-//                                    for (int i = 0; i < showList.size(); i++) {
-//                                        showList.get(position).setSelected(false);
-//                                    }
+                            setSelect(dataList,false);
+                        } else {
+                            if (showList.get(position).getChildList() != null && showList.get(position).getChildList().size() > 0) {
+                                setSelect(showList.get(position).getChildList(), !showList.get(position).isSelected());
+                            }
                         }
                         showList.get(position).setSelected(!showList.get(position).isSelected());
                         showList.clear();
@@ -255,6 +258,16 @@ public class ZXExpandRecyclerHelper {
 
     public ZXExpandRecyclerHelper setItemHeightDp(int heightDp) {
         this.heightDp = heightDp;
+        return this;
+    }
+
+    public ZXExpandRecyclerHelper setChildSelectWhenMenuSelect(boolean selectChild) {
+        this.selectChild = selectChild;
+        return this;
+    }
+
+    public ZXExpandRecyclerHelper setMenuCanSelect(boolean canSelect) {
+        this.menuCanSelect = canSelect;
         return this;
     }
 

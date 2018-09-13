@@ -27,17 +27,19 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private boolean showSelect = false;
     private boolean isMultiSelected = true;
     public MyHolder mLastViewTag = null;
+    private boolean menuCanSelect = true;
     private OnExpandListener expandListener;
     private int textSizeSp = 14;
     private int heightDp = 40;
 
-    public ZXExpandAdapter(Context context, List<ZXExpandBean> showList, boolean showSelect, boolean isMultiSelected, int textSizeSp, int heightDp) {
+    public ZXExpandAdapter(Context context, List<ZXExpandBean> showList, boolean showSelect, boolean isMultiSelected, int textSizeSp, int heightDp, boolean menuCanSelect) {
         this.context = context;
         this.showList = showList;
         this.showSelect = showSelect;
         this.isMultiSelected = isMultiSelected;
         this.textSizeSp = textSizeSp;
         this.heightDp = heightDp;
+        this.menuCanSelect = menuCanSelect;
     }
 
     @Override
@@ -75,6 +77,11 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 myHolder.ivSelect.setVisibility(View.VISIBLE);
                 myHolder.ivSelect.setBackground(ContextCompat.getDrawable(context, R.mipmap.not_select));
             }
+            if (expandBean.getChildList() != null && !menuCanSelect) {
+                myHolder.ivSelect.setVisibility(View.INVISIBLE);
+            } else {
+                myHolder.ivSelect.setVisibility(View.VISIBLE);
+            }
         } else {
             myHolder.ivSelect.setVisibility(View.INVISIBLE);
         }
@@ -90,7 +97,7 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView tvInfo;
         private View viewIndex;
         private ImageView ivArrow, ivSelect;
-        private LinearLayout down, llArrow,llSelect;
+        private LinearLayout down, llArrow, llSelect;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -112,7 +119,7 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             llSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (expandListener != null) {
+                    if (expandListener != null && ivSelect.getVisibility() == View.VISIBLE) {
                         expandListener.onSelectClick(getAdapterPosition());
                     }
                 }

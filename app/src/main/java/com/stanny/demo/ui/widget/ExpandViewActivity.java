@@ -42,10 +42,12 @@ public class ExpandViewActivity extends AppCompatActivity {
         rvExpand = findViewById(R.id.rv_expand);
         recyclerHelper = ZXExpandRecyclerHelper.getInstance(this);
         recyclerHelper.withRecycler(rvExpand)
-                .showSelect(true, false)
+                .showSelect(true, true)
                 .setData(dataList)
                 .setItemTextSizeSp(14)
                 .setItemHeightDp(40)
+                .setChildSelectWhenMenuSelect(true)
+                .setMenuCanSelect(true)
                 .setItemClickListener(new ZXExpandItemClickListener() {
                     @Override
                     public void onItemClick(ZXExpandBean expandBean, int showPosition) {
