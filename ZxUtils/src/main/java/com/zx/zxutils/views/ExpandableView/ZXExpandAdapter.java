@@ -27,12 +27,17 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private boolean showSelect = false;
     private boolean isMultiSelected = true;
     public MyHolder mLastViewTag = null;
+    private OnExpandListener expandListener;
+    private int textSizeSp = 14;
+    private int heightDp = 40;
 
-    public ZXExpandAdapter(Context context, List<ZXExpandBean> showList, boolean showSelect, boolean isMultiSelected) {
+    public ZXExpandAdapter(Context context, List<ZXExpandBean> showList, boolean showSelect, boolean isMultiSelected, int textSizeSp, int heightDp) {
         this.context = context;
         this.showList = showList;
         this.showSelect = showSelect;
         this.isMultiSelected = isMultiSelected;
+        this.textSizeSp = textSizeSp;
+        this.heightDp = heightDp;
     }
 
     @Override
@@ -58,6 +63,10 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             myHolder.ivArrow.setVisibility(View.VISIBLE);
             myHolder.ivArrow.setBackground(ContextCompat.getDrawable(context, R.mipmap.arrow_close));
         }
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) myHolder.down.getLayoutParams();
+        layoutParams.height = ZXSystemUtil.dp2px(heightDp);
+        myHolder.down.setLayoutParams(layoutParams);
+        myHolder.tvInfo.setTextSize(textSizeSp);
         if (showSelect) {
             if (expandBean.isSelected()) {
                 myHolder.ivSelect.setVisibility(View.VISIBLE);
@@ -81,7 +90,7 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView tvInfo;
         private View viewIndex;
         private ImageView ivArrow, ivSelect;
-        private LinearLayout down;
+        private LinearLayout down, llArrow,llSelect;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -90,13 +99,46 @@ public class ZXExpandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ivArrow = itemView.findViewById(R.id.iv_arrow);
             ivSelect = itemView.findViewById(R.id.iv_select);
             down = itemView.findViewById(R.id.down);
+            llArrow = itemView.findViewById(R.id.ll_arrow);
+            llSelect = itemView.findViewById(R.id.ll_select);
+            llArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (expandListener != null) {
+                        expandListener.onOpenClick(getAdapterPosition());
+                    }
+                }
+            });
+            llSelect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (expandListener != null) {
+                        expandListener.onSelectClick(getAdapterPosition());
+                    }
+                }
+            });
+            tvInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (expandListener != null) {
+                        expandListener.onTextClick(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 
-    public interface OnExpandListener {
-        void onViewClick(int position);
 
-        void onImageClick(int position);
+    public void setExpandListener(OnExpandListener expandListener) {
+        this.expandListener = expandListener;
+    }
+
+    public interface OnExpandListener {
+        void onTextClick(int position);
+
+        void onOpenClick(int position);
+
+        void onSelectClick(int position);
     }
 
 }

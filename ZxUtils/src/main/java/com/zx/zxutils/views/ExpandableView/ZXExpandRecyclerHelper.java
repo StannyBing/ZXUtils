@@ -3,10 +3,8 @@ package com.zx.zxutils.views.ExpandableView;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.zx.zxutils.other.ZXExpandItemClickListener;
-import com.zx.zxutils.other.ZXItemClickSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +26,9 @@ public class ZXExpandRecyclerHelper {
     private List<ZXExpandBean> showList = new ArrayList<>();
     private ZXExpandItemClickListener itemClickListener;
     private boolean showMenuSelectView = false;
+    private ZXExpandAdapter.OnExpandListener expandListener;
+    private int textSizeSp = 14;
+    private int heightDp = 40;
 
     public static ZXExpandRecyclerHelper getInstance(Context context) {
         ZXExpandRecyclerHelper zxExpandRecyclerHelper = new ZXExpandRecyclerHelper(context);
@@ -40,44 +41,44 @@ public class ZXExpandRecyclerHelper {
 
     public ZXExpandRecyclerHelper withRecycler(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
-        ZXItemClickSupport.addTo(recyclerView)
-                .setOnItemClickListener(new ZXItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(final RecyclerView recyclerView, int position, View view) {
-                        try {
-                            String id = showList.get(position).getId();
-                            if (id != null && id.length() > 0) {
-                                setShowById(dataList, id);
-
-                                if (!isMultiSelected) {
-                                    setSelect(dataList);
-//                                    for (int i = 0; i < showList.size(); i++) {
-//                                        showList.get(position).setSelected(false);
+//        ZXItemClickSupport.addTo(recyclerView)
+//                .setOnItemClickListener(new ZXItemClickSupport.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClicked(final RecyclerView recyclerView, int position, View view) {
+//                        try {
+//                            String id = showList.get(position).getId();
+//                            if (id != null && id.length() > 0) {
+//                                setShowById(dataList, id);
+//
+//                                if (!isMultiSelected) {
+//                                    setSelect(dataList);
+////                                    for (int i = 0; i < showList.size(); i++) {
+////                                        showList.get(position).setSelected(false);
+////                                    }
+//                                }
+//
+//                                showList.get(position).setSelected(!showList.get(position).isSelected());
+//                                if (showList.get(position).getChildList() == null) {
+//                                    if (itemClickListener != null) {
+//                                        itemClickListener.onItemClick(showList.get(position));//数据点击事件
 //                                    }
-                                }
-
-                                showList.get(position).setSelected(!showList.get(position).isSelected());
-                                if (showList.get(position).getChildList() == null) {
-                                    if (itemClickListener != null) {
-                                        itemClickListener.onItemClick(showList.get(position));//数据点击事件
-                                    }
-                                } else {
-                                    if (itemClickListener != null) {
-                                        itemClickListener.onMenuClick(showList.get(position));//菜单点击事件
-                                    }
-                                }
-
-                                showList.clear();
-                                refresh(dataList);
-
-
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+//                                } else {
+//                                    if (itemClickListener != null) {
+//                                        itemClickListener.onMenuClick(showList.get(position));//菜单点击事件
+//                                    }
+//                                }
+//
+//                                showList.clear();
+//                                refresh(dataList);
+//
+//
+//                                adapter.notifyDataSetChanged();
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
         return this;
     }
 
@@ -175,9 +176,86 @@ public class ZXExpandRecyclerHelper {
     //构建
     public void build() {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new ZXExpandAdapter(context, showList, showSelect, isMultiSelected);
+        adapter = new ZXExpandAdapter(context, showList, showSelect, isMultiSelected, textSizeSp, heightDp);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        expandListener = new ZXExpandAdapter.OnExpandListener() {
+            @Override
+            public void onTextClick(int position) {
+                try {
+                    String id = showList.get(position).getId();
+                    if (id != null && id.length() > 0) {
+                        if (itemClickListener != null) {
+                            itemClickListener.onItemClick(showList.get(position), position);//数据点击事件
+                        } else {
+                            onOpenClick(position);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onOpenClick(int position) {
+                try {
+                    String id = showList.get(position).getId();
+                    if (id != null && id.length() > 0) {
+                        setShowById(dataList, id);
+                        showList.clear();
+                        refresh(dataList);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSelectClick(int position) {
+                try {
+                    String id = showList.get(position).getId();
+                    if (id != null && id.length() > 0) {
+                        if (!isMultiSelected) {
+                            setSelect(dataList);
+//                                    for (int i = 0; i < showList.size(); i++) {
+//                                        showList.get(position).setSelected(false);
+//                                    }
+                        }
+                        showList.get(position).setSelected(!showList.get(position).isSelected());
+                        showList.clear();
+                        refresh(dataList);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        adapter.setExpandListener(expandListener);
+    }
+
+    public void changeOpenStatus(int showPosition) {
+        if (expandListener != null) {
+            expandListener.onOpenClick(showPosition);
+        }
+    }
+
+    public void changeSelectStatus(int showPosition) {
+        if (expandListener != null) {
+            expandListener.onSelectClick(showPosition);
+        }
+    }
+
+    public ZXExpandRecyclerHelper setItemTextSizeSp(int textSizeSp) {
+        this.textSizeSp = textSizeSp;
+        return this;
+    }
+
+    public ZXExpandRecyclerHelper setItemHeightDp(int heightDp) {
+        this.heightDp = heightDp;
+        return this;
     }
 
     public void notifyDataSetChanged() {

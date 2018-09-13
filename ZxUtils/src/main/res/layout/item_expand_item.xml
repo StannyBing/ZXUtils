@@ -7,41 +7,57 @@
     <LinearLayout
         android:id="@+id/down"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
         <View
             android:id="@+id/view_index"
             android:layout_width="0dp"
-            android:layout_height="35dp"/>
+            android:layout_height="match_parent"/>
 
-        <ImageView
-            android:id="@+id/iv_arrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:id="@+id/ll_arrow"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/arrow_open"/>
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/arrow_open"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_info"
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:paddingLeft="15dp"
             android:singleLine="true"
             android:text="123123123123"
-            android:textSize="12sp"/>
+            android:textSize="14sp"/>
 
-        <ImageView
-            android:id="@+id/iv_select"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:id="@+id/ll_select"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:background="@mipmap/select"/>
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_select"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/select"/>
+        </LinearLayout>
     </LinearLayout>
 
     <View

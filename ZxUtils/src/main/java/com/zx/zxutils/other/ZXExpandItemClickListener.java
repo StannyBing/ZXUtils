@@ -8,7 +8,5 @@ import com.zx.zxutils.views.ExpandableView.ZXExpandBean;
  */
 
 public interface ZXExpandItemClickListener {
-    void onItemClick(ZXExpandBean expandBean);
-
-    void onMenuClick(ZXExpandBean expandBean);
+    void onItemClick(ZXExpandBean expandBean, int showPosition);
 }

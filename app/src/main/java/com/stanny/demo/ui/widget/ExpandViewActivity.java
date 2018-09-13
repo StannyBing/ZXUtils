@@ -17,6 +17,7 @@ public class ExpandViewActivity extends AppCompatActivity {
 
     private RecyclerView rvExpand;
     private List<ZXExpandBean> dataList = new ArrayList<>();
+    private ZXExpandRecyclerHelper recyclerHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +40,17 @@ public class ExpandViewActivity extends AppCompatActivity {
         }
 
         rvExpand = findViewById(R.id.rv_expand);
-        ZXExpandRecyclerHelper.getInstance(this)
-                .withRecycler(rvExpand)
-                .showSelect(true,false)
+        recyclerHelper = ZXExpandRecyclerHelper.getInstance(this);
+        recyclerHelper.withRecycler(rvExpand)
+                .showSelect(true, false)
                 .setData(dataList)
+                .setItemTextSizeSp(14)
+                .setItemHeightDp(40)
                 .setItemClickListener(new ZXExpandItemClickListener() {
                     @Override
-                    public void onItemClick(ZXExpandBean expandBean) {
+                    public void onItemClick(ZXExpandBean expandBean, int showPosition) {
                         ZXToastUtil.showToast(expandBean.getId());
-                    }
-
-                    @Override
-                    public void onMenuClick(ZXExpandBean expandBean) {
-                        ZXToastUtil.showToast(expandBean.getChildList().size() + "");
+                        recyclerHelper.changeOpenStatus(showPosition);
                     }
                 })
                 .build();
