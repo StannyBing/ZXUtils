@@ -69,7 +69,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         ArrayList<String> tempList = new ArrayList<>();
         tempList.addAll(this.photoPaths);
         this.photoPaths.clear();
-        this.photoPaths.addAll(photoPaths);
+        if (this.photoPaths.size() + photoPaths.size() > maxNum) {
+            this.photoPaths.addAll(photoPaths.subList(0, maxNum - this.photoPaths.size()));
+        } else {
+            this.photoPaths.addAll(photoPaths);
+        }
         if (!preview) {
             for (int i = 0; i < tempList.size(); i++) {
                 if (tempList.get(i).startsWith("http")) {
