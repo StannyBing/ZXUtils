@@ -12,9 +12,12 @@ public class ZXThreadPool {
 
     private static int cpu_num = Runtime.getRuntime().availableProcessors();
 
-    private static final ZXThreadPoolExecutor priorityThreadPool = new ZXThreadPoolExecutor(cpu_num + 1, cpu_num * 2 + 1, 0L, TimeUnit.SECONDS, new PriorityBlockingQueue());
+    private static ZXThreadPoolExecutor priorityThreadPool;
 
     public static void execute(ZXRunnable runnable) {
+        if (priorityThreadPool == null) {
+            priorityThreadPool = new ZXThreadPoolExecutor(cpu_num + 1, cpu_num * 2 + 1, 0L, TimeUnit.SECONDS, new PriorityBlockingQueue());
+        }
         priorityThreadPool.execute(runnable);
     }
 
@@ -23,6 +26,13 @@ public class ZXThreadPool {
      */
     public static void shutDown() {
         priorityThreadPool.shutdown();
+    }
+
+    /**
+     * 重新创建一个线程池
+     */
+    public static void reCreatePool() {
+        priorityThreadPool = new ZXThreadPoolExecutor(cpu_num + 1, cpu_num * 2 + 1, 0L, TimeUnit.SECONDS, new PriorityBlockingQueue());
     }
 
     /**
