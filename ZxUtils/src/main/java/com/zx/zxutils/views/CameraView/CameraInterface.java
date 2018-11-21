@@ -23,9 +23,9 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.widget.ImageView;
 
-import com.zx.zxutils.http.common.util.LogUtil;
 import com.zx.zxutils.util.ZXDeviceUtil;
 import com.zx.zxutils.util.ZXFileUtil;
+import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.util.ZXScreenUtil;
 import com.zx.zxutils.views.CameraView.listener.CameraListener;
 import com.zx.zxutils.views.CameraView.util.AngleUtil;
@@ -250,7 +250,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                     mParams.setZoom(nowScaleRate);
                     mCamera.setParameters(mParams);
                 }
-                LogUtil.i("setZoom = " + nowScaleRate);
+                ZXLogUtil.logi("setZoom = " + nowScaleRate);
                 break;
         }
 
@@ -335,7 +335,7 @@ public class CameraInterface implements Camera.PreviewCallback {
             SELECTED_CAMERA = CAMERA_POST_POSITION;
         }
         doDestroyCamera();
-        LogUtil.i("open start");
+        ZXLogUtil.logi("open start");
         openCamera(SELECTED_CAMERA);
 //        mCamera = Camera.open();
         if (Build.VERSION.SDK_INT > 17 && this.mCamera != null) {
@@ -345,7 +345,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                 e.printStackTrace();
             }
         }
-        LogUtil.i("open end");
+        ZXLogUtil.logi("open end");
         doStartPreview(holder, screenProp);
     }
 
@@ -354,7 +354,7 @@ public class CameraInterface implements Camera.PreviewCallback {
      */
     public void doStartPreview(SurfaceHolder holder, float screenProp) {
         if (isPreviewing) {
-            LogUtil.i("doStartPreview isPreviewing");
+            ZXLogUtil.logi("doStartPreview isPreviewing");
         }
         if (this.screenProp < 0) {
             this.screenProp = screenProp;

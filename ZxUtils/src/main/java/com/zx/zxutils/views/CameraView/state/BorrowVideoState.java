@@ -3,7 +3,7 @@ package com.zx.zxutils.views.CameraView.state;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import com.zx.zxutils.http.common.util.LogUtil;
+import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.views.CameraView.CameraInterface;
 import com.zx.zxutils.views.CameraView.ZXCameraView;
 
@@ -80,7 +80,7 @@ public class BorrowVideoState implements State {
 
     @Override
     public void zoom(float zoom, int type) {
-        LogUtil.i( "zoom");
+        ZXLogUtil.logi( "zoom");
     }
 
     @Override

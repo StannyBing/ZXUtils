@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import com.zx.zxutils.http.common.util.LogUtil;
 import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.views.CameraView.CameraInterface;
 import com.zx.zxutils.views.CameraView.ZXCameraView;
@@ -40,7 +39,7 @@ class PreviewState implements State {
 
     @Override
     public void foucs(float x, float y, CameraInterface.FocusCallback callback) {
-        LogUtil.i("preview state foucs");
+        ZXLogUtil.logi("preview state foucs");
         if (machine.getView().handlerFoucs(x, y)) {
             CameraInterface.getInstance().handleFocus(machine.getContext(), x, y, callback);
         }
@@ -63,7 +62,7 @@ class PreviewState implements State {
             public void captureResult(Bitmap bitmap, boolean isVertical) {
                 machine.getView().showPicture(bitmap, isVertical);
                 machine.setState(machine.getBorrowPictureState());
-                LogUtil.i("capture");
+                ZXLogUtil.logi("capture");
             }
         });
     }
@@ -90,12 +89,12 @@ class PreviewState implements State {
 
     @Override
     public void cancle(SurfaceHolder holder, float screenProp) {
-        LogUtil.i("浏览状态下,没有 cancle 事件");
+        ZXLogUtil.logi("浏览状态下,没有 cancle 事件");
     }
 
     @Override
     public void confirm() {
-        LogUtil.i("浏览状态下,没有 confirm 事件");
+        ZXLogUtil.logi("浏览状态下,没有 confirm 事件");
     }
 
     @Override

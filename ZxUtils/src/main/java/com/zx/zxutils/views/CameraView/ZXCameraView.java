@@ -22,8 +22,8 @@ import android.widget.ImageView;
 import android.widget.VideoView;
 
 import com.zx.zxutils.R;
-import com.zx.zxutils.http.common.util.LogUtil;
 import com.zx.zxutils.util.ZXFileUtil;
+import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.util.ZXScreenUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.views.CameraView.listener.BtnClickListener;
@@ -165,7 +165,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
         layout_width = ZXScreenUtil.getScreenWidth();
         //缩放梯度
         zoomGradient = (int) (layout_width / 16f);
-        LogUtil.i("zoom = " + zoomGradient);
+        ZXLogUtil.logi("zoom = " + zoomGradient);
         machine = new CameraMachine(getContext(), this, this);
     }
 
@@ -237,7 +237,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
             @Override
             public void recordZoom(float zoom) {
-                LogUtil.i("recordZoom");
+                ZXLogUtil.logi("recordZoom");
                 machine.zoom(zoom, CameraInterface.TYPE_RECORDER);
             }
 
@@ -311,7 +311,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
     //生命周期onResume
     public void onResume() {
-        LogUtil.i("JCameraView onResume");
+        ZXLogUtil.logi("JCameraView onResume");
         resetState(TYPE_DEFAULT); //重置状态
         CameraInterface.getInstance().registerSensorManager(mContext);
         CameraInterface.getInstance().setSwitchView(mSwitchCamera, mFlashLamp);
@@ -320,7 +320,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
     //生命周期onPause
     public void onPause() {
-        LogUtil.i("JCameraView onPause");
+        ZXLogUtil.logi("JCameraView onPause");
         stopVideo();
         resetState(TYPE_PICTURE);
         CameraInterface.getInstance().isPreview(false);
@@ -330,7 +330,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
     //SurfaceView生命周期
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        LogUtil.i("JCameraView SurfaceCreated");
+        ZXLogUtil.logi("JCameraView SurfaceCreated");
         new Thread() {
             @Override
             public void run() {
@@ -345,7 +345,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        LogUtil.i("JCameraView SurfaceDestroyed");
+        ZXLogUtil.logi("JCameraView SurfaceDestroyed");
         CameraInterface.getInstance().doDestroyCamera();
     }
 
@@ -584,7 +584,7 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
     @Override
     public void startPreviewCallback() {
-        LogUtil.i("startPreviewCallback");
+        ZXLogUtil.logi("startPreviewCallback");
         handlerFoucs(mFoucsView.getWidth() / 2, mFoucsView.getHeight() / 2);
     }
 

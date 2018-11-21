@@ -40,6 +40,7 @@ public class NotifyTestActivity extends BaseActivity {
         switch (position) {
             case 0://基本notify
                 Intent intents = new Intent(this, NotifyTestActivity.class);
+                intents.putExtra("type", 1);
                 ZXNotifyUtil.showSingleLineNotify(intents, R.mipmap.ic_launcher, "标题", "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
                 break;
             case 1://多条notify

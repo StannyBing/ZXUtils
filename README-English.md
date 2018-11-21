@@ -21,7 +21,7 @@ You can download it by clicking the link below.<br>
 PS: The functions in Demo only include some functions. Because there are too many methods in some tools, only some of them are selected for demonstration.<br>
 <br>
 A commonly used tool library for Android<br>
-This library contains all the tools required for common android development + network request + common view<br>
+This library contains all the tools required for common android development + network request + common view(after the 2.2.0, the network request library was removed)<br>
 All tools, etc. start with ZX.., such as ZXDialogUtil, ZXFileUtil, ZXSystemUtil<br>
 All the views, such as custom views and dialogs, are designed based on Material Design and all provide custom functions for easy design.<br>
 <br>
@@ -68,21 +68,14 @@ Some screenshots are as follows (this screenshot is cut by 2018-8-22, and some c
 　　ZXDeviceUtil    Recording and playback<br>
 　　ZXQuickAdapter    Fast package adapter<br>
 <br>
-### 2.Network request framework：<br>
-　　The network request is deeply encapsulated. When used, a new network request class inherits ZXHttpApi and implements<br>
-　　①.Construction method<br>
-　　②getHttpParams    Used to encapsulate the parameters passed in the request<br>
-　　③getHttpResult    Used to accept the successful return of the request<br>
-　　Specific use to see the demo<br>
-  <br>
-### 3.Other related tools<br>
+### 2.Other related tools<br>
 　　ZXThreadPool    Thread pool tool for building thread pools<br>
 　　ZXBroadCastManager    Package broadcast broadcastreceiver<br>
 　　ZXInScrollRecylerManager    Can be nested into the Manager of Recylerview in the ScrollView<br>
 　　ZXItemClickSupport    Recylerview click event, no need to adapt the listener in the adapter<br>
 　　ZXOnDoubleClickListener    Double click event listener<br>
   <br>
-### 4.view<br>
+### 3.view<br>
 　　ZXBubbleView    Bubble pop-up view<br>
 　　ZXSeekBar    Scaled Seekbar<br>
 　　ZXBarChar、ZXLineChart、ZXPieChart    Statistical graph correlation<br>
@@ -102,7 +95,7 @@ Some screenshots are as follows (this screenshot is cut by 2018-8-22, and some c
 　　ZXSlideUp    Sliding control tool<br>
 　　ZXShadowLayout    Shadow effect<br>
   <br>
-### 5.Instructions<br>
+### 4.Instructions<br>
 
     Import dependency packages first<br>
     

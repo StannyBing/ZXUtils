@@ -22,7 +22,7 @@ ZXUtils现在已开始逐步加入各种好看的第三方UI控件，全面跨�
 PS:Demo中的功能只包括了部分功能的展示，由于有些工具的方法太多，就只挑选了部分进行演示<br>
 <br>
 A commonly used tool library for Android<br>
-本库包含常用android开发所需的所有工具类+网络请求+常用view<br>
+本库包含常用android开发所需的所有工具类+网络请求+常用view(2.2.0以后移除了网络请求库)<br>
 所有的工具等都是以ZX..开头，如ZXDialogUtil、ZXFileUtil、ZXSystemUtil<br>
 所有涉及到view的比如自定义view及dialog等都是基于Material Design进行设计，并都提供了自定义的功能，方便设计<br>
 <br>
@@ -69,21 +69,14 @@ A commonly used tool library for Android<br>
 　　ZXDeviceUtil 录音及播放类<br>
 　　ZXQuickAdapter 快速封装适配器<br>
 <br>
-### 2.网络请求框架：<br>
-　　网络请求进行了深度封装，使用时新建一个网络请求类继承ZXHttpApi，实现<br>
-　　①.构造方法<br>
-　　②getHttpParams 用于封装请求传入的参数<br>
-　　③getHttpResult 用于接受请求成功的回传<br>
-　　具体使用看demo<br>
-  <br>
-### 3.其他相关工具<br>
+### 2.其他相关工具<br>
 　　ZXThreadPool 线程池工具，用于建立线程池<br>
 　　ZXBroadCastManager 封装广播broadcastreceiver<br>
 　　ZXInScrollRecylerManager 可以嵌套进ScrollView中的Recylerview的Manager<br>
 　　ZXItemClickSupport recylerview的点击事件，不需要再adapter中再适配监听器<br>
 　　ZXOnDoubleClickListener 双击事件监听器<br>
   <br>
-### 4.view<br>
+### 3.view<br>
 　　ZXBubbleView 气泡弹出框view<br>
 　　ZXSeekBar 带刻度的Seekbar<br>
 　　ZXBarChar、ZXLineChart、ZXPieChart 统计图相关<br>
@@ -103,7 +96,7 @@ A commonly used tool library for Android<br>
 　　ZXSlideUp 滑动控件工具<br>
 　　ZXShadowLayout 阴影效果<br>
   <br>
-### 5.使用方法<br>
+### 4.使用方法<br>
 
     先导入依赖包<br>
     

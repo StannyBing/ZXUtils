@@ -76,12 +76,6 @@
         </activity>
         <activity android:name=".ui.util.NotifyTestActivity">
         </activity>
-        <activity android:name=".ui.util.DownTestActivity">
-        </activity>
-        <activity android:name=".ui.util.UploadTestActivity">
-        </activity>
-        <activity android:name=".ui.util.HttpTestActivity">
-        </activity>
         <activity android:name=".ui.util.BroadCastTestActivity">
         </activity>
         <activity android:name=".ui.util.UnZipOrRarTestActivity">

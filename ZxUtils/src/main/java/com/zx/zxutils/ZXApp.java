@@ -3,7 +3,6 @@ package com.zx.zxutils;
 import android.app.Application;
 import android.content.Context;
 
-import com.zx.zxutils.http.x;
 import com.zx.zxutils.util.ZXCrashUtil;
 
 /**
@@ -23,7 +22,6 @@ public class ZXApp {
      * @param isDebug
      */
     public static void init(Application context, boolean isDebug) {
-        x.Ext.init(context);
         zxContext = context;
         ZXApp.isDebug = isDebug;
         if (!isDebug) {

@@ -16,9 +16,7 @@ import com.stanny.demo.ui.util.AnimationTestActivity;
 import com.stanny.demo.ui.util.BitmapTestActivity;
 import com.stanny.demo.ui.util.BroadCastTestActivity;
 import com.stanny.demo.ui.util.DialogTestActivity;
-import com.stanny.demo.ui.util.DownTestActivity;
 import com.stanny.demo.ui.util.FormatCheckTestActivity;
-import com.stanny.demo.ui.util.HttpTestActivity;
 import com.stanny.demo.ui.util.ImageLoaderTestActivity;
 import com.stanny.demo.ui.util.LogTestActivity;
 import com.stanny.demo.ui.util.NetWorkTestActivity;
@@ -30,7 +28,6 @@ import com.stanny.demo.ui.util.ThreadPoolTestActivity;
 import com.stanny.demo.ui.util.TimeTestActivity;
 import com.stanny.demo.ui.util.ToastTestActivity;
 import com.stanny.demo.ui.util.UnZipOrRarTestActivity;
-import com.stanny.demo.ui.util.UploadTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,9 +70,6 @@ public class MyUtilFragment extends Fragment {
         dataList.add(new MainEntity(DialogTestActivity.class, "ZXDialogUtil", "弹框", R.mipmap.util_dialog));
         dataList.add(new MainEntity(ToastTestActivity.class, "ZXToastUtil", "吐司", R.mipmap.util_toast));
         dataList.add(new MainEntity(NotifyTestActivity.class, "ZXNotifyUtil", "提示", R.mipmap.util_notify));
-        dataList.add(new MainEntity(HttpTestActivity.class, "ZXHttpApi", "普通请求", R.mipmap.util_http));
-        dataList.add(new MainEntity(DownTestActivity.class, "ZXHttpApi", "下载", R.mipmap.util_down));
-        dataList.add(new MainEntity(UploadTestActivity.class, "ZXHttpApi", "上传", R.mipmap.util_up));
         dataList.add(new MainEntity(BroadCastTestActivity.class, "ZXBroadCastUtil", "广播", R.mipmap.util_broad));
         dataList.add(new MainEntity(UnZipOrRarTestActivity.class, "ZXUnZipOrRarUtil", "解压", R.mipmap.util_rar));
         dataList.add(new MainEntity(BitmapTestActivity.class, "ZXBitmapUtil", "bitmap", R.mipmap.util_bitmap));
