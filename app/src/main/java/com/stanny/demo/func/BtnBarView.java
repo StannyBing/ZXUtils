@@ -1,4 +1,4 @@
-package com.stanny.demo.view;
+package com.stanny.demo.func;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

@@ -14,7 +14,8 @@
         <TextView
             android:id="@+id/tv_print_info"
             android:layout_width="0dp"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"

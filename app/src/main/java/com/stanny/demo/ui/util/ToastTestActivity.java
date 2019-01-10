@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
-import com.stanny.demo.view.BtnBarView;
+import com.stanny.demo.func.BtnBarView;
 import com.zx.zxutils.util.ZXToastUtil;
 
 import butterknife.BindView;

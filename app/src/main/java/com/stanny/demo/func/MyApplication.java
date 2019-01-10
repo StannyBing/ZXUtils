@@ -1,4 +1,4 @@
-package com.stanny.demo.util;
+package com.stanny.demo.func;
 
 import android.app.Application;
 import android.os.Build;

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.stanny.demo.view.BtnBarView;
+import com.stanny.demo.func.BtnBarView;
 import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper;
 
 /**
@@ -20,7 +20,6 @@ public class BaseActivity extends AppCompatActivity implements BtnBarView.OnItem
         ZXSwipeBackHelper.onCreate(this)
                 .setSwipeBackEnable(true)
                 .setSwipeRelateEnable(true);
-
     }
 
     @Override

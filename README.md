@@ -68,6 +68,8 @@ A commonly used tool library for Android<br>
 　　ZXRecordUtil 录音及播放类<br>
 　　ZXDeviceUtil 录音及播放类<br>
 　　ZXQuickAdapter 快速封装适配器<br>
+　　ZXLightUtil 亮度控制工具<br>
+　　ZXLocationUtil 定位相关工具<br>
 <br>
 ### 2.其他相关工具<br>
 　　ZXThreadPool 线程池工具，用于建立线程池<br>

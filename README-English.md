@@ -67,6 +67,8 @@ Some screenshots are as follows (this screenshot is cut by 2018-8-22, and some c
 　　ZXRecordUtil    Recording and playback<br>
 　　ZXDeviceUtil    Recording and playback<br>
 　　ZXQuickAdapter    Fast package adapter<br>
+　　ZXLightUtil   Brightness related tool<br>
+　　ZXLocationUtil   Location related tool<br>
 <br>
 ### 2.Other related tools<br>
 　　ZXThreadPool    Thread pool tool for building thread pools<br>

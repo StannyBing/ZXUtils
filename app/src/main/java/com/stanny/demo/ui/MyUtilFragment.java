@@ -15,10 +15,15 @@ import com.stanny.demo.model.MainEntity;
 import com.stanny.demo.ui.util.AnimationTestActivity;
 import com.stanny.demo.ui.util.BitmapTestActivity;
 import com.stanny.demo.ui.util.BroadCastTestActivity;
+import com.stanny.demo.ui.util.ClipboardTestActivity;
 import com.stanny.demo.ui.util.DialogTestActivity;
 import com.stanny.demo.ui.util.FormatCheckTestActivity;
+import com.stanny.demo.ui.util.FragmentTestActivity;
 import com.stanny.demo.ui.util.ImageLoaderTestActivity;
+import com.stanny.demo.ui.util.LightTestActivity;
+import com.stanny.demo.ui.util.LocationTestActivity;
 import com.stanny.demo.ui.util.LogTestActivity;
+import com.stanny.demo.ui.util.MD5TestActivity;
 import com.stanny.demo.ui.util.NetWorkTestActivity;
 import com.stanny.demo.ui.util.NotifyTestActivity;
 import com.stanny.demo.ui.util.QuickAdapterTestActivity;
@@ -61,6 +66,11 @@ public class MyUtilFragment extends Fragment {
     }
 
     private void initData() {
+        dataList.add(new MainEntity(LocationTestActivity.class, "ZXLocationUtil", "定位相关工具", R.mipmap.util_location));
+        dataList.add(new MainEntity(FragmentTestActivity.class, "ZXFragmentUtil", "Fragment工具", R.mipmap.util_fragment));
+        dataList.add(new MainEntity(ClipboardTestActivity.class, "ZXClipboardUtil", "剪切板工具", R.mipmap.util_clipboard));
+        dataList.add(new MainEntity(MD5TestActivity.class, "ZXMD5Util", "加密相关（不仅MD5）", R.mipmap.util_md5));
+        dataList.add(new MainEntity(LightTestActivity.class, "ZXLightUtil", "亮度相关工具", R.mipmap.util_light));
         dataList.add(new MainEntity(QuickAdapterTestActivity.class, "ZXQuickAdapter", "快速Recycleview适配器", R.mipmap.util_adapter));
         dataList.add(new MainEntity(TimeTestActivity.class, "ZXTimeUtil", "时间工具", R.mipmap.util_time));
         dataList.add(new MainEntity(SharedPrefTestActivity.class, "ZXSharedPrefUtil", "共享存储工具", R.mipmap.util_sharedpref));

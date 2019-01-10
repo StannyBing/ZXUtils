@@ -4,9 +4,8 @@ import android.os.Bundle;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
-import com.stanny.demo.view.BtnBarView;
+import com.stanny.demo.func.BtnBarView;
 import com.zx.zxutils.util.ZXFormatCheckUtil;
-import com.zx.zxutils.util.ZXToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
