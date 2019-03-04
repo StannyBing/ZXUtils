@@ -27,6 +27,7 @@ public class PhotoPicker {
     public final static String EXTRA_GRID_COLUMN = "column";
     public final static String EXTRA_ORIGINAL_PHOTOS = "ORIGINAL_PHOTOS";
     public final static String EXTRA_PREVIEW_ENABLED = "PREVIEW_ENABLED";
+    public final static String EXTRA_JUST_CAMERA = "just_camera";
 
     public static PhotoPickerBuilder builder() {
         return new PhotoPickerBuilder();
@@ -122,6 +123,11 @@ public class PhotoPicker {
 
         public PhotoPickerBuilder setViewId(String viewId) {
             mPickerOptionsBundle.putString("id", viewId);
+            return this;
+        }
+
+        public PhotoPickerBuilder setJustCamera(boolean justCamera) {
+            mPickerOptionsBundle.putBoolean(EXTRA_JUST_CAMERA, justCamera);
             return this;
         }
     }

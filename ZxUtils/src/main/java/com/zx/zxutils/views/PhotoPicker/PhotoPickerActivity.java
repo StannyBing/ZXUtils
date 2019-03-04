@@ -21,37 +21,41 @@ import static android.widget.Toast.LENGTH_LONG;
 
 public class PhotoPickerActivity extends AppCompatActivity {
 
-  private PhotoPickerFragment pickerFragment;
-  private ImagePagerFragment imagePagerFragment;
-  //private MenuItem menuDoneItem;
+    private PhotoPickerFragment pickerFragment;
+    private ImagePagerFragment imagePagerFragment;
+    //private MenuItem menuDoneItem;
 
-  private int maxCount = PhotoPicker.DEFAULT_MAX_COUNT;
+    private int maxCount = PhotoPicker.DEFAULT_MAX_COUNT;
 
-  /** to prevent multiple calls to inflate menu */
- // private boolean menuIsInflated = false;
+    /**
+     * to prevent multiple calls to inflate menu
+     */
+    // private boolean menuIsInflated = false;
 
-  private boolean showGif = false;
-  private String viewId;
-  private int columnNumber = PhotoPicker.DEFAULT_COLUMN_NUMBER;
-  private ArrayList<String> originalPhotos = null;
+    private boolean showGif = false;
+    private String viewId;
+    private int columnNumber = PhotoPicker.DEFAULT_COLUMN_NUMBER;
+    private ArrayList<String> originalPhotos = null;
 
-  private Titlebar titlebar;
+    private Titlebar titlebar;
 
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    viewId = getIntent().getStringExtra("id");
-    boolean showCamera      = getIntent().getBooleanExtra(PhotoPicker.EXTRA_SHOW_CAMERA, true);
-    boolean showGif         = getIntent().getBooleanExtra(PhotoPicker.EXTRA_SHOW_GIF, false);
-    boolean previewEnabled  = getIntent().getBooleanExtra(PhotoPicker.EXTRA_PREVIEW_ENABLED, true);
+        viewId = getIntent().getStringExtra("id");
+        boolean showCamera = getIntent().getBooleanExtra(PhotoPicker.EXTRA_SHOW_CAMERA, true);
+        boolean showGif = getIntent().getBooleanExtra(PhotoPicker.EXTRA_SHOW_GIF, false);
+        boolean previewEnabled = getIntent().getBooleanExtra(PhotoPicker.EXTRA_PREVIEW_ENABLED, true);
+        boolean justCamera = getIntent().getBooleanExtra(PhotoPicker.EXTRA_JUST_CAMERA, false);
 
-    setShowGif(showGif);
+        setShowGif(showGif);
 
-    setContentView(R.layout.__picker_activity_photo_picker);
+        setContentView(R.layout.__picker_activity_photo_picker);
 
-    titlebar = (Titlebar) findViewById(R.id.titlebar);
-    titlebar.init(this);
+        titlebar = (Titlebar) findViewById(R.id.titlebar);
+        titlebar.init(this);
 
    /* Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(mToolbar);
@@ -76,38 +80,38 @@ public class PhotoPickerActivity extends AppCompatActivity {
       actionBar.setElevation(25);
     }*/
 
-    maxCount = getIntent().getIntExtra(PhotoPicker.EXTRA_MAX_COUNT, PhotoPicker.DEFAULT_MAX_COUNT);
-    columnNumber = getIntent().getIntExtra(PhotoPicker.EXTRA_GRID_COLUMN, PhotoPicker.DEFAULT_COLUMN_NUMBER);
-    originalPhotos = getIntent().getStringArrayListExtra(PhotoPicker.EXTRA_ORIGINAL_PHOTOS);
+        maxCount = getIntent().getIntExtra(PhotoPicker.EXTRA_MAX_COUNT, PhotoPicker.DEFAULT_MAX_COUNT);
+        columnNumber = getIntent().getIntExtra(PhotoPicker.EXTRA_GRID_COLUMN, PhotoPicker.DEFAULT_COLUMN_NUMBER);
+        originalPhotos = getIntent().getStringArrayListExtra(PhotoPicker.EXTRA_ORIGINAL_PHOTOS);
 
-    pickerFragment = (PhotoPickerFragment) getSupportFragmentManager().findFragmentByTag("tag");
-    if (pickerFragment == null) {
-      pickerFragment = PhotoPickerFragment
-          .newInstance(showCamera, showGif, previewEnabled, columnNumber, maxCount, originalPhotos);
-      getSupportFragmentManager()
-          .beginTransaction()
-          .replace(R.id.container, pickerFragment, "tag")
-          .commit();
-      getSupportFragmentManager().executePendingTransactions();
-    }
-
-    //右边的点击事件
-    titlebar.getTvRight().setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        ArrayList<String> photos = pickerFragment.getPhotoGridAdapter().getSelectedPhotoPaths();
-        if (photos != null && photos.size() > 0){
-          Intent intent = new Intent();
-          intent.putStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS, photos);
-          intent.putExtra("id", viewId);
-          setResult(RESULT_OK, intent);
-          finish();
-        }else {
-          Toast.makeText(getApplicationContext(),"还没有选择图片",Toast.LENGTH_SHORT).show();
+        pickerFragment = (PhotoPickerFragment) getSupportFragmentManager().findFragmentByTag("tag");
+        if (pickerFragment == null) {
+            pickerFragment = PhotoPickerFragment
+                    .newInstance(showCamera, showGif, previewEnabled, columnNumber, maxCount, originalPhotos, justCamera);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, pickerFragment, "tag")
+                    .commit();
+            getSupportFragmentManager().executePendingTransactions();
         }
-      }
-    });
-	titlebar.setLeftOnclickListener(new View.OnClickListener() {
+
+        //右边的点击事件
+        titlebar.getTvRight().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> photos = pickerFragment.getPhotoGridAdapter().getSelectedPhotoPaths();
+                if (photos != null && photos.size() > 0) {
+                    Intent intent = new Intent();
+                    intent.putStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS, photos);
+                    intent.putExtra("id", viewId);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "还没有选择图片", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        titlebar.setLeftOnclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Fragment> fragments = getSupportFragmentManager().getFragments();
@@ -121,63 +125,75 @@ public class PhotoPickerActivity extends AppCompatActivity {
             }
         });
 
-    pickerFragment.getPhotoGridAdapter().setOnItemCheckListener(new OnItemCheckListener() {
-      @Override public boolean OnItemCheck(int position, Photo photo, final boolean isCheck, int selectedItemCount) {
+        pickerFragment.getPhotoGridAdapter().setOnItemCheckListener(new OnItemCheckListener() {
+            @Override
+            public boolean OnItemCheck(int position, Photo photo, final boolean isCheck, int selectedItemCount) {
 
-        int total = selectedItemCount + (isCheck ? -1 : 1);
+                int total = selectedItemCount + (isCheck ? -1 : 1);
 
-       // menuDoneItem.setEnabled(total > 0);
-
-
-        if (maxCount <= 1) {
-          List<Photo> photos = pickerFragment.getPhotoGridAdapter().getSelectedPhotos();
-          if (!photos.contains(photo)) {
-            photos.clear();
-            pickerFragment.getPhotoGridAdapter().notifyDataSetChanged();
-          }
-          return true;
-        }
-
-        if (total > maxCount) {
-          Toast.makeText(getActivity(), getString(R.string.__picker_over_max_count_tips, maxCount),
-              LENGTH_LONG).show();
-          return false;
-        }
-        titlebar.getTvRight().setText(getString(R.string.__picker_done_with_count, total, maxCount));
-        return true;
-      }
-    });
-
-  }
+                // menuDoneItem.setEnabled(total > 0);
 
 
-  /**
-   * Overriding this method allows us to run our exit animation first, then exiting
-   * the activity when it complete.
-   */
-  @Override public void onBackPressed() {
-    if (imagePagerFragment != null && imagePagerFragment.isVisible()) {
-      imagePagerFragment.runExitAnimation(new Runnable() {
-        public void run() {
-          if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-          }
-        }
-      });
-    } else {
-      super.onBackPressed();
+                if (maxCount <= 1) {
+                    List<Photo> photos = pickerFragment.getPhotoGridAdapter().getSelectedPhotos();
+                    if (!photos.contains(photo)) {
+                        photos.clear();
+                        pickerFragment.getPhotoGridAdapter().notifyDataSetChanged();
+                    }
+                    return true;
+                }
+
+                if (total > maxCount) {
+                    Toast.makeText(getActivity(), getString(R.string.__picker_over_max_count_tips, maxCount),
+                            LENGTH_LONG).show();
+                    return false;
+                }
+                titlebar.getTvRight().setText(getString(R.string.__picker_done_with_count, total, maxCount));
+                return true;
+            }
+        });
+
     }
-  }
+
+    public void onJustCameraResult() {
+        ArrayList<String> photos = pickerFragment.getPhotoGridAdapter().getSelectedPhotoPaths();
+        if (photos != null && photos.size() > 0) {
+            Intent intent = new Intent();
+            intent.putStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS, photos);
+            intent.putExtra("id", viewId);
+            setResult(RESULT_OK, intent);
+        }
+        finish();
+    }
+
+    /**
+     * Overriding this method allows us to run our exit animation first, then exiting
+     * the activity when it complete.
+     */
+    @Override
+    public void onBackPressed() {
+        if (imagePagerFragment != null && imagePagerFragment.isVisible()) {
+            imagePagerFragment.runExitAnimation(new Runnable() {
+                public void run() {
+                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                        getSupportFragmentManager().popBackStack();
+                    }
+                }
+            });
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 
-  public void addImagePagerFragment(ImagePagerFragment imagePagerFragment) {
-    this.imagePagerFragment = imagePagerFragment;
-    getSupportFragmentManager()
-        .beginTransaction()
-        .replace(R.id.container, this.imagePagerFragment)
-        .addToBackStack(null)
-        .commit();
-  }
+    public void addImagePagerFragment(ImagePagerFragment imagePagerFragment) {
+        this.imagePagerFragment = imagePagerFragment;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, this.imagePagerFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
  /* @Override public boolean onCreateOptionsMenu(Menu menu) {
     if (!menuIsInflated) {
@@ -217,15 +233,15 @@ public class PhotoPickerActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }*/
 
-  public PhotoPickerActivity getActivity() {
-    return this;
-  }
+    public PhotoPickerActivity getActivity() {
+        return this;
+    }
 
-  public boolean isShowGif() {
-    return showGif;
-  }
+    public boolean isShowGif() {
+        return showGif;
+    }
 
-  public void setShowGif(boolean showGif) {
-    this.showGif = showGif;
-  }
+    public void setShowGif(boolean showGif) {
+        this.showGif = showGif;
+    }
 }

@@ -70,7 +70,7 @@ public class ZXPhotoPickerView extends FrameLayout {
         viewId = UUID.randomUUID().toString();
     }
 
-    public String getViewId(){
+    public String getViewId() {
         return viewId;
     }
 
@@ -149,6 +149,10 @@ public class ZXPhotoPickerView extends FrameLayout {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(num, OrientationHelper.VERTICAL));
     }
 
+    //区分拍摄方式
+    public void setDivisionShootMethod(boolean divisionShootMethod) {
+        photoAdapter.divisionShootMethod = divisionShootMethod;
+    }
 
     public void showPics(List<String> paths) {
         if (paths != null) {
@@ -161,7 +165,7 @@ public class ZXPhotoPickerView extends FrameLayout {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data==null||!viewId.equals(data.getStringExtra("id"))) {
+        if (data == null || !viewId.equals(data.getStringExtra("id"))) {
             return;
         }
         if (action == ACTION_SELECT) {

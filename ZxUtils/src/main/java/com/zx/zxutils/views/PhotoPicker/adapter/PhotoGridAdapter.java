@@ -45,12 +45,12 @@ public class PhotoGridAdapter extends SelectableAdapter<PhotoGridAdapter.PhotoVi
     private int imageSize;
     private int columnNumber = COL_NUMBER_DEFAULT;
 
-
     public PhotoGridAdapter(Context context, RequestManager requestManager, List<PhotoDirectory> photoDirectories) {
         this.photoDirectories = photoDirectories;
         this.glide = requestManager;
         inflater = LayoutInflater.from(context);
         setColumnNumber(context, columnNumber);
+
     }
 
     public PhotoGridAdapter(Context context, RequestManager requestManager, List<PhotoDirectory> photoDirectories, ArrayList<String> orginalPhotos, int colNum) {
@@ -125,6 +125,7 @@ public class PhotoGridAdapter extends SelectableAdapter<PhotoGridAdapter.PhotoVi
                     .into(holder.ivPhoto);
 
             final boolean isChecked = isSelected(photo);
+//            final boolean isChecked = photo.isSelect();
 
             holder.vSelected.setSelected(isChecked);
             holder.cover.setSelected(isChecked);

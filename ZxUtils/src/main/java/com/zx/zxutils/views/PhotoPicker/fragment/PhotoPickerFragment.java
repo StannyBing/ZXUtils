@@ -56,6 +56,8 @@ public class PhotoPickerFragment extends Fragment {
     //传入的已选照片
     private ArrayList<String> originalPhotos;
 
+    private boolean justCamera = false;
+
     private int SCROLL_THRESHOLD = 30;
     int column;
     //目录弹出框的一次最多显示的目录数目
@@ -72,11 +74,12 @@ public class PhotoPickerFragment extends Fragment {
     private Titlebar titlebar;
 
     public static PhotoPickerFragment newInstance(boolean showCamera, boolean showGif,
-                                                  boolean previewEnable, int column, int maxCount, ArrayList<String> originalPhotos) {
+                                                  boolean previewEnable, int column, int maxCount, ArrayList<String> originalPhotos, boolean justCamera) {
         Bundle args = new Bundle();
         args.putBoolean(EXTRA_CAMERA, showCamera);
         args.putBoolean(EXTRA_GIF, showGif);
         args.putBoolean(PhotoPicker.EXTRA_PREVIEW_ENABLED, previewEnable);
+        args.putBoolean(PhotoPicker.EXTRA_JUST_CAMERA, justCamera);
         args.putInt(EXTRA_COLUMN, column);
         args.putInt(EXTRA_COUNT, maxCount);
         args.putStringArrayList(EXTRA_ORIGIN, originalPhotos);
@@ -105,6 +108,7 @@ public class PhotoPickerFragment extends Fragment {
         column = getArguments().getInt(EXTRA_COLUMN, PhotoPicker.DEFAULT_COLUMN_NUMBER);
         boolean showCamera = getArguments().getBoolean(EXTRA_CAMERA, true);
         boolean previewEnable = getArguments().getBoolean(PhotoPicker.EXTRA_PREVIEW_ENABLED, true);
+        justCamera = getArguments().getBoolean(PhotoPicker.EXTRA_JUST_CAMERA, false);
 
         photoGridAdapter = new PhotoGridAdapter(mContext, mGlideRequestManager, directories, originalPhotos, column);
         photoGridAdapter.setShowCamera(showCamera);
@@ -127,6 +131,15 @@ public class PhotoPickerFragment extends Fragment {
                 });
 
         captureManager = new ImageCaptureManager(getActivity());
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+        if (justCamera) {
+            doCameraAction(justCamera);
+        }
+//            }
+//        }, 1000);
     }
 
 
@@ -268,6 +281,13 @@ public class PhotoPickerFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (justCamera) {
+            List<Photo> photos = getPhotoGridAdapter().getCurrentPhotos();
+            for (int i = 0; i < photos.size(); i++) {
+                Photo photo = photos.get(i);
+                photo.setSelect(getPhotoGridAdapter().isSelected(photo));
+            }
+        }
         if (requestCode == ImageCaptureManager.REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             captureManager.galleryAddPic();
             if (directories.size() > 0) {
@@ -276,7 +296,14 @@ public class PhotoPickerFragment extends Fragment {
                 directory.getPhotos().add(MediaStoreHelper.INDEX_ALL_PHOTOS, new Photo(path.hashCode(), path));
                 directory.setCoverPath(path);
                 photoGridAdapter.notifyDataSetChanged();
+                if (justCamera) {
+                getPhotoGridAdapter().toggleSelection(getPhotoGridAdapter().getCurrentPhotos().get(0));
+                    ((PhotoPickerActivity) getActivity()).onJustCameraResult();
+                }
             }
+        }
+        if (justCamera) {
+            ((PhotoPickerActivity) getActivity()).onJustCameraResult();
         }
     }
 
@@ -327,5 +354,17 @@ public class PhotoPickerFragment extends Fragment {
         }
         directories.clear();
         directories = null;
+    }
+
+    public void doCameraAction(boolean justCamera) {
+        this.justCamera = justCamera;
+        if (justCamera) {
+            try {
+                Intent intent = captureManager.dispatchTakePictureIntent();
+                startActivityForResult(intent, ImageCaptureManager.REQUEST_TAKE_PHOTO);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

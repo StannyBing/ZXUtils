@@ -10,11 +10,25 @@
         style="@style/MyTabLayoutStyle">
     </android.support.design.widget.TabLayout>
 
+    <TextView
+        android:id="@+id/_tv_zx_dividerTop"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:visibility="gone"
+        android:background="@color/light_gray"/>
+
     <com.zx.zxutils.views.ZXNoScrllViewPager
         android:id="@+id/_vp_zx_pager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/_tv_zx_dividerBottom"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:visibility="gone"
+        android:background="@color/light_gray"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/_tb_zx_layoutBottom"

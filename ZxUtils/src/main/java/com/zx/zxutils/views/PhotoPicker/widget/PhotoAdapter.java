@@ -2,6 +2,7 @@ package com.zx.zxutils.views.PhotoPicker.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXDialogUtil;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.PhotoPicker.PhotoPickUtils;
 import com.zx.zxutils.views.PhotoPicker.ZXPhotoPreview;
@@ -33,6 +35,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     private OnDeleteListener deleteListener;
     private OnPhotoItemClickListener photoItemClickListener;
 
+    public boolean divisionShootMethod = false;//区分拍摄方式
     private Context mContext;
     public int maxNum = 9;
     private String viewId;
@@ -270,7 +273,20 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 if (photoPaths != null && photoPaths.size() >= maxNum) {
                     ZXToastUtil.showToast("图片数已到达上限");
                 } else {
-                    PhotoPickUtils.startPick((Activity) mContext, false, 9, photoPaths, viewId);
+                    if (divisionShootMethod) {
+                        ZXDialogUtil.showListDialog(mContext, "", "取消", new String[]{"拍摄", "从手机相册选择"}, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0) {
+                                    PhotoPickUtils.startPick((Activity) mContext, false, maxNum, photoPaths, viewId, false, true);
+                                } else {
+                                    PhotoPickUtils.startPick((Activity) mContext, false, maxNum, photoPaths, viewId, false, false);
+                                }
+                            }
+                        }, true);
+                    } else {
+                        PhotoPickUtils.startPick((Activity) mContext, false, maxNum, photoPaths, viewId, true, false);
+                    }
                 }
             } else {
                 ZXPhotoPreview.builder()

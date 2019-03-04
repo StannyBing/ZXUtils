@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/iv_item_tab"
-        android:layout_marginTop="5dp"
         android:layout_width="22dp"
-        android:layout_height="22dp"/>
+        android:layout_height="22dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_item_tab_num"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_marginLeft="-8dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/iv_item_tab"
+        android:background="@drawable/circle_drawable_red"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="9sp"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_item_tab"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/iv_item_tab"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
         android:text="123"
         android:textSize="10sp"/>
 
-</LinearLayout>
+</RelativeLayout>

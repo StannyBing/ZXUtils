@@ -9,10 +9,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.views.ZXNoScrllViewPager;
 
 import java.util.ArrayList;
@@ -28,9 +30,13 @@ import static com.zx.zxutils.views.TabViewPager.ZXTabViewPager.TabGravity.GRAVIT
 public class ZXTabViewPager extends RelativeLayout {
     private ZXPagerAdapter myPagerAdapter;
     private TabLayout tabLayoutTop, tabLayoutBottom, tabLayout;
+    private TextView tvDividerTop, tvDividerBottom, tvDivider;
     private ZXNoScrllViewPager viewPager;
     private Context context;
     private int normalTextColor, selectTextColor;
+    private int tabTextSizeSp = 10;
+    private int tabTextSelectSizeSp = 10;
+    private int tabImageSizeDp = 22;
     //    public static final int GRAVITY_TOP = 0;
 //    public static final int GRAVITY_BOTTOM = 1;
     private List<Integer> iconList = new ArrayList<>();
@@ -49,9 +55,12 @@ public class ZXTabViewPager extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_tab_viewpager_layout, this, true);
         tabLayoutTop = findViewById(R.id._tb_zx_layoutTop);
         tabLayoutBottom = findViewById(R.id._tb_zx_layoutBottom);
+        tvDividerTop = findViewById(R.id._tv_zx_dividerTop);
+        tvDividerBottom = findViewById(R.id._tv_zx_dividerBottom);
         viewPager = findViewById(R.id._vp_zx_pager);
         iconList.clear();
         tabLayout = tabLayoutTop;
+        tvDivider = tvDividerTop;
         this.context = context;
     }
 
@@ -106,6 +115,83 @@ public class ZXTabViewPager extends RelativeLayout {
     }
 
     /**
+     * 设置tablayout的背景颜色
+     *
+     * @return
+     */
+    public ZXTabViewPager setTablayoutBackgroundColor(int bgColor) {
+        tabLayout.setBackgroundColor(bgColor);
+        return this;
+    }
+
+    /**
+     * 设置Tablayout的高度
+     *
+     * @param heightDp
+     * @return
+     */
+    public ZXTabViewPager setTablayoutHeight(int heightDp) {
+        ViewGroup.LayoutParams p = tabLayout.getLayoutParams();
+        p.height = ZXSystemUtil.dp2px(heightDp);
+        tabLayout.setLayoutParams(p);
+        return this;
+    }
+
+    /**
+     * 设置tab的字体大小
+     *
+     * @param sizeSP
+     * @return
+     */
+    public ZXTabViewPager setTabTextSize(int sizeSP) {
+        tabTextSizeSp = sizeSP;
+        return this;
+    }
+
+    /**
+     * 设置tab的字体大小(包含选中字体大小)
+     *
+     * @param sizeSP
+     * @return
+     */
+    public ZXTabViewPager setTabTextSize(int sizeSP, int sizeSelectSp) {
+        tabTextSizeSp = sizeSP;
+        tabTextSelectSizeSp = sizeSelectSp;
+        return this;
+    }
+
+    /**
+     * 设置tab的图片里的大小（前提要设置显示了图片）
+     *
+     * @param imageSizeDp
+     * @return
+     */
+    public ZXTabViewPager setTabImageSize(int imageSizeDp) {
+        tabImageSizeDp = imageSizeDp;
+        return this;
+    }
+
+    /**
+     * 设置tab的数量显示
+     *
+     * @param positon
+     * @param tabNum
+     * @return
+     */
+    public ZXTabViewPager setTabTitleNum(int positon, int tabNum) {
+        try {
+            TextView tvNum = tabLayout.getTabAt(positon).getCustomView().findViewById(R.id.tv_item_tab_num);
+            if (tabNum > 0) {
+                tvNum.setVisibility(GONE);
+            }
+            tvNum.setText(tabNum + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
      * 完成构建
      */
     public void build() {
@@ -117,15 +203,21 @@ public class ZXTabViewPager extends RelativeLayout {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
                 tab.setCustomView(R.layout.item_tablayout);
                 tab.getCustomView().findViewById(R.id.iv_item_tab).setBackground(myPagerAdapter.normalBgList.get(i));
+                ViewGroup.LayoutParams params = tab.getCustomView().findViewById(R.id.iv_item_tab).getLayoutParams();
+                params.height = ZXSystemUtil.dp2px(tabImageSizeDp);
+                params.width = ZXSystemUtil.dp2px(tabImageSizeDp);
+                tab.getCustomView().findViewById(R.id.iv_item_tab).setLayoutParams(params);
                 ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setText(myPagerAdapter.getPageTitle(i));
 
                 if (i == 0) {
                     if (selectTextColor != 0) {
                         ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(selectTextColor);
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextSize(tabTextSelectSizeSp);
                     }
                 } else {
                     if (normalTextColor != 0) {
                         ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(normalTextColor);
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextSize(tabTextSizeSp);
                     }
                 }
             }
@@ -136,6 +228,7 @@ public class ZXTabViewPager extends RelativeLayout {
                     tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(true);
                     if (selectTextColor != 0) {
                         ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(selectTextColor);
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextSize(tabTextSelectSizeSp);
                     }
                 }
 
@@ -145,6 +238,7 @@ public class ZXTabViewPager extends RelativeLayout {
                     tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(false);
                     if (normalTextColor != 0) {
                         ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextColor(normalTextColor);
+                        ((TextView) tab.getCustomView().findViewById(R.id.tv_item_tab)).setTextSize(tabTextSizeSp);
                     }
                 }
 
@@ -165,13 +259,37 @@ public class ZXTabViewPager extends RelativeLayout {
     public ZXTabViewPager setTabLayoutGravity(TabGravity gravity) {
         if (gravity == GRAVITY_TOP) {
             tabLayout = tabLayoutTop;
+            tvDivider = tvDividerTop;
             tabLayoutTop.setVisibility(VISIBLE);
             tabLayoutBottom.setVisibility(GONE);
         } else if (gravity == GRAVITY_BOTTOM) {
             tabLayout = tabLayoutBottom;
+            tvDivider = tvDividerBottom;
             tabLayoutBottom.setVisibility(VISIBLE);
             tabLayoutTop.setVisibility(GONE);
         }
+        return this;
+    }
+
+    /**
+     * 展示分隔线
+     *
+     * @param dividerColor
+     * @return
+     */
+    public ZXTabViewPager showDivider(int dividerColor) {
+        tvDivider.setVisibility(VISIBLE);
+        tvDivider.setBackgroundColor(dividerColor);
+        return this;
+    }
+
+    /**
+     * 展示分隔线
+     *
+     * @return
+     */
+    public ZXTabViewPager showDivider() {
+        tvDivider.setVisibility(VISIBLE);
         return this;
     }
 

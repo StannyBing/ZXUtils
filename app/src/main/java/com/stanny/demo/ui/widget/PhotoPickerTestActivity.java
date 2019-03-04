@@ -52,6 +52,7 @@ public class PhotoPickerTestActivity extends BaseActivity {
         mprvPhoto1.init(this, ZXPhotoPickerView.ACTION_ONLY_SHOW, photoList1);
 
         mprvPhoto2.init(this, ZXPhotoPickerView.ACTION_SELECT, photoList2);
+//        mprvPhoto2.setDivisionShootMethod(true);
 
         mprvPhoto3.init(this, ZXPhotoPickerView.ACTION_DELETE, photoList3, new OnDeleteListener() {
             @Override

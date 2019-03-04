@@ -7,6 +7,7 @@ public class Photo {
 
   private int id;
   private String path;
+  private boolean isSelect = false;
 
   public Photo(int id, String path) {
     this.id = id;
@@ -43,5 +44,13 @@ public class Photo {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public boolean isSelect() {
+    return isSelect;
+  }
+
+  public void setSelect(boolean select) {
+    isSelect = select;
   }
 }

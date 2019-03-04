@@ -21,13 +21,18 @@ public class TabLayoutActivity extends BaseActivity {
                 .addTab(TabFragment.newInstance(""), "测试1", R.drawable.selector_tab_test)
                 .addTab(TabFragment.newInstance(""), "测试2", R.drawable.selector_tab_test)
                 .addTab(TabFragment.newInstance(""), "测试3", R.drawable.selector_tab_test)
-                .setTitleColor(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.red))
+                .setTitleColor(ContextCompat.getColor(this, R.color.colorPrimary), ContextCompat.getColor(this, R.color.colorAccent))
                 .setIndicatorColor(ContextCompat.getColor(this, R.color.wheat))
                 .setIndicatorHeight(3)
                 .setSelectOn(2)
                 .setViewpagerCanScroll(false)
+                .setTablayoutHeight(60)
+                .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                .setTabTextSize(12, 14)
+                .showDivider(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setTabImageSize(30)
                 .build();
-        zxTabPager.getTabLayout().setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
+//        zxTabPager.setTabTitleNum(0, 10);
     }
 }
