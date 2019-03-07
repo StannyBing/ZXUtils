@@ -103,7 +103,7 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.2.1'
+    compile 'com.github.StannyBing:ZXUtils:2.2.2'
     ```
     
     注意需要在项目的build里面添加以下代码<br>

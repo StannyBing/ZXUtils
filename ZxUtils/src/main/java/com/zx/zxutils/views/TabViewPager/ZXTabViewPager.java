@@ -37,6 +37,7 @@ public class ZXTabViewPager extends RelativeLayout {
     private int tabTextSizeSp = 10;
     private int tabTextSelectSizeSp = 10;
     private int tabImageSizeDp = 22;
+    private int tabImageSelectSizeDp = 22;
     //    public static final int GRAVITY_TOP = 0;
 //    public static final int GRAVITY_BOTTOM = 1;
     private List<Integer> iconList = new ArrayList<>();
@@ -145,6 +146,7 @@ public class ZXTabViewPager extends RelativeLayout {
      */
     public ZXTabViewPager setTabTextSize(int sizeSP) {
         tabTextSizeSp = sizeSP;
+        tabTextSelectSizeSp = sizeSP;
         return this;
     }
 
@@ -172,6 +174,19 @@ public class ZXTabViewPager extends RelativeLayout {
     }
 
     /**
+     * 设置tab的图片里的大小（前提要设置显示了图片）
+     *
+     * @param imageSizeDp
+     * @param imageSelcetSizeDp
+     * @return
+     */
+    public ZXTabViewPager setTabImageSize(int imageSizeDp, int imageSelcetSizeDp) {
+        tabImageSizeDp = imageSizeDp;
+        tabImageSelectSizeDp = imageSelcetSizeDp;
+        return this;
+    }
+
+    /**
      * 设置tab的数量显示
      *
      * @param positon
@@ -182,9 +197,33 @@ public class ZXTabViewPager extends RelativeLayout {
         try {
             TextView tvNum = tabLayout.getTabAt(positon).getCustomView().findViewById(R.id.tv_item_tab_num);
             if (tabNum > 0) {
+                tvNum.setVisibility(VISIBLE);
+            }else {
                 tvNum.setVisibility(GONE);
             }
             tvNum.setText(tabNum + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * 设置tab的数量显示
+     *
+     * @param positon
+     * @param tabNumString
+     * @return
+     */
+    public ZXTabViewPager setTabTitleNum(int positon, String tabNumString) {
+        try {
+            TextView tvNum = tabLayout.getTabAt(positon).getCustomView().findViewById(R.id.tv_item_tab_num);
+            if (tabNumString.length() > 0) {
+                tvNum.setVisibility(VISIBLE);
+            }else {
+                tvNum.setVisibility(GONE);
+            }
+            tvNum.setText(tabNumString);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -224,6 +263,10 @@ public class ZXTabViewPager extends RelativeLayout {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
+                    ViewGroup.LayoutParams params = tab.getCustomView().findViewById(R.id.iv_item_tab).getLayoutParams();
+                    params.height = ZXSystemUtil.dp2px(tabImageSelectSizeDp);
+                    params.width = ZXSystemUtil.dp2px(tabImageSelectSizeDp);
+                    tab.getCustomView().findViewById(R.id.iv_item_tab).setLayoutParams(params);
                     tab.getCustomView().findViewById(R.id.iv_item_tab).setSelected(true);
                     tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(true);
                     if (selectTextColor != 0) {
@@ -234,6 +277,10 @@ public class ZXTabViewPager extends RelativeLayout {
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
+                    ViewGroup.LayoutParams params = tab.getCustomView().findViewById(R.id.iv_item_tab).getLayoutParams();
+                    params.height = ZXSystemUtil.dp2px(tabImageSizeDp);
+                    params.width = ZXSystemUtil.dp2px(tabImageSizeDp);
+                    tab.getCustomView().findViewById(R.id.iv_item_tab).setLayoutParams(params);
                     tab.getCustomView().findViewById(R.id.iv_item_tab).setSelected(false);
                     tab.getCustomView().findViewById(R.id.tv_item_tab).setSelected(false);
                     if (normalTextColor != 0) {
