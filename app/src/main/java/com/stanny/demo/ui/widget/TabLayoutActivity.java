@@ -1,6 +1,7 @@
 package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 
 import com.stanny.demo.R;
@@ -28,11 +29,18 @@ public class TabLayoutActivity extends BaseActivity {
                 .setViewpagerCanScroll(false)
                 .setTablayoutHeight(60)
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.white))
-                .setTabTextSize(12, 14)
+                .setTabTextSize(14)
                 .showDivider(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setTabImageSize(30)
                 .build();
 
-//        zxTabPager.setTabTitleNum(0, 10);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                zxTabPager.setTabTitleNum(0, 10);
+                zxTabPager.setTabTitleNum(1, 5);
+            }
+        }, 3000);
+
     }
 }

@@ -170,6 +170,7 @@ public class ZXTabViewPager extends RelativeLayout {
      */
     public ZXTabViewPager setTabImageSize(int imageSizeDp) {
         tabImageSizeDp = imageSizeDp;
+        tabImageSelectSizeDp = imageSizeDp;
         return this;
     }
 
@@ -202,28 +203,6 @@ public class ZXTabViewPager extends RelativeLayout {
                 tvNum.setVisibility(GONE);
             }
             tvNum.setText(tabNum + "");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
-
-    /**
-     * 设置tab的数量显示
-     *
-     * @param positon
-     * @param tabNumString
-     * @return
-     */
-    public ZXTabViewPager setTabTitleNum(int positon, String tabNumString) {
-        try {
-            TextView tvNum = tabLayout.getTabAt(positon).getCustomView().findViewById(R.id.tv_item_tab_num);
-            if (tabNumString.length() > 0) {
-                tvNum.setVisibility(VISIBLE);
-            }else {
-                tvNum.setVisibility(GONE);
-            }
-            tvNum.setText(tabNumString);
         } catch (Exception e) {
             e.printStackTrace();
         }
