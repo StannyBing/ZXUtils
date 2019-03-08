@@ -3,8 +3,6 @@ package com.zx.zxutils;
 import android.app.Application;
 import android.content.Context;
 
-import com.zx.zxutils.util.ZXCrashUtil;
-
 /**
  * Created by Xiangb on 2017/6/28.
  * 功能：使用前需要在当前的application中进行初始化
@@ -24,9 +22,6 @@ public class ZXApp {
     public static void init(Application context, boolean isDebug) {
         zxContext = context;
         ZXApp.isDebug = isDebug;
-        if (!isDebug) {
-            ZXCrashUtil.getInstance().init();
-        }
     }
 
     /**
