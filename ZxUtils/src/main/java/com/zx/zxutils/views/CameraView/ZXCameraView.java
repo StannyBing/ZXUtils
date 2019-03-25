@@ -192,6 +192,9 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
         mCaptureLayout = (CaptureLayout) view.findViewById(R.id.capture_layout);
         mCaptureLayout.setDuration(duration);
         mCaptureLayout.setIconSrc(iconLeft, iconRight);
+        LayoutParams captureParam = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        captureParam.gravity = Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM;
+        mCaptureLayout.setLayoutParams(captureParam);
         mFoucsView = (FoucsView) view.findViewById(R.id.fouce_view);
         mVideoView.getHolder().addCallback(this);
         //切换摄像头
@@ -508,11 +511,11 @@ public class ZXCameraView extends FrameLayout implements CameraInterface.CameraO
 
     @Override
     public void showPicture(Bitmap bitmap, boolean isVertical) {
-        if (isVertical) {
-            mPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
-        } else {
-            mPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        }
+//        if (isVertical) {
+//            mPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+//        } else {
+//            mPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//        }
         captureBitmap = bitmap;
         mPhoto.setImageBitmap(bitmap);
         mPhoto.setVisibility(VISIBLE);

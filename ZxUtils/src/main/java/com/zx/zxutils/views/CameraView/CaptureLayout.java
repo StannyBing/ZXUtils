@@ -85,7 +85,7 @@ public class CaptureLayout extends FrameLayout {
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             layout_width = outMetrics.widthPixels;
         } else {
-            layout_width = outMetrics.widthPixels / 2;
+            layout_width = outMetrics.widthPixels/2;
         }
         button_size = (int) (layout_width / 4.5f);
         layout_height = button_size + (button_size / 5) * 2 + 100;
@@ -354,7 +354,7 @@ public class CaptureLayout extends FrameLayout {
     }
 
     public void showAlbum(boolean showAlbum) {
-        if (btn_capture.button_state == ZXCameraView.BUTTON_STATE_ONLY_CAPTURE&&showAlbum) {
+        if (showAlbum) {
             btn_album.setVisibility(VISIBLE);
         }else {
             btn_album.setVisibility(GONE);

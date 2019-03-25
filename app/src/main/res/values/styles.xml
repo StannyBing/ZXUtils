@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:screenOrientation">portrait</item>
+        <item name="android:configChanges">orientation|screenSize|keyboardHidden</item>
         <item name="android:windowIsTranslucent">true</item>
         <!--<item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>-->
         <!--<item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>-->

@@ -18,7 +18,8 @@
             android:id="@+id/image_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#000"
+            android:scaleType="fitXY"
+            android:background="#FFFFFF"
             android:visibility="invisible"/>
     </FrameLayout>
 
