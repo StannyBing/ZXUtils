@@ -144,10 +144,7 @@ public abstract class ZXRecycleSimpleAdapter extends RecyclerView.Adapter<Recycl
                     pageTotal = mTotalNum / pageSize + 1;
                 }
                 loadText.setText("点击加载更多，第" + mPageNum + "页，共" + pageTotal + "页");
-            } else if (mPageNum == 1 && mTotalNum < pageSize) {
-                loadProgress.setVisibility(View.GONE);
-                loadText.setVisibility(View.GONE);
-            } else {
+            }else {
                 loadProgress.setVisibility(View.GONE);
                 loadText.setText("已加载完");
             }
