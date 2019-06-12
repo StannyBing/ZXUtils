@@ -18,7 +18,6 @@ import android.provider.Settings;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.zx.zxutils.ZXApp;
 
@@ -58,13 +57,6 @@ public class ZXLocationUtil {
             } else {
                 mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, myLocationListener);
                 location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            }
-            if (location != null) {
-//                    double latitude = location.getLatitude();
-//                    double longitude = location.getLongitude();
-//                    strArr = new String[]{String.valueOf(latitude), String.valueOf(longitude)};
-            } else {
-                Toast.makeText(mActivity, "获取经纬度信息失败！", Toast.LENGTH_SHORT).show();
             }
         }
         return location;
