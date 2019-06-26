@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder;
-import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleSimpleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecyclerQuickAdapter;
@@ -37,9 +36,9 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
         setContentView(R.layout.activity_swipe_refresh_recyler);
         swipeRecyler = findViewById(R.id.sr_layout);
         swipeRecyler.setLayoutManager(new LinearLayoutManager(this))
-                .showLoadInfo(true)
-                .setPageSize(20)
                 .setAdapter(test2Adapter = new Test2Adapter(datalist))
+                .setPageSize(15)
+                .autoLoadMore()
                 .setSRListener(new ZXSRListener<String>() {
                     @Override
                     public void onItemClick(String item, int position) {
@@ -70,18 +69,15 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
                     }
                 });
         swipeRecyler.notifyDataSetChanged();
-        ZXItemClickSupport.removeFrom(swipeRecyler.getRecyclerView());
         addList();
     }
 
     public void addList() {
-//        datalist.clear();
-        for (int i = 0; i < 20; i++) {
-            datalist.add(Math.random() * 10 + "");
+        List<String> newData =  new ArrayList();
+        for (int i = 0; i < 15; i++) {
+            newData.add(Math.random() * 10 + "");
         }
-        swipeRecyler.stopRefresh();
-        swipeRecyler.setLoadInfo(50);
-        swipeRecyler.notifyDataSetChanged();
+        swipeRecyler.refreshData(newData, 50);
     }
 
     public class TestAdapter extends ZXRecycleAdapter {

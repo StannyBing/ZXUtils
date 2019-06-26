@@ -102,7 +102,7 @@ Some screenshots are as follows (this screenshot is cut by 2018-8-22, and some c
     Import dependency packages first<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.2.7'
+    compile 'com.github.StannyBing:ZXUtils:2.2.8'
     ```
     
     Note that you need to add the following code to the project's build.<br>

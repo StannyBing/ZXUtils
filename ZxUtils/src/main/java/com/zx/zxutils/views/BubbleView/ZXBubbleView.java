@@ -3,6 +3,7 @@ package com.zx.zxutils.views.BubbleView;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.ColorRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +41,21 @@ public class ZXBubbleView extends PopupWindow {
         return this;
     }
 
+    public ZXBubbleView setBgColor(@ColorRes int bgColor) {
+
+        return this;
+    }
+
     public ZXBubbleView setBubbleView(View view) {
-        bubbleView = new BubbleRelativeLayout(context);
+        bubbleView = new BubbleRelativeLayout(context, 0);
+        bubbleView.setBackgroundColor(Color.TRANSPARENT);
+        bubbleView.addView(view);
+        setContentView(bubbleView);
+        return this;
+    }
+
+    public ZXBubbleView setBubbleView(View view, @ColorRes int bgColor) {
+        bubbleView = new BubbleRelativeLayout(context, bgColor);
         bubbleView.setBackgroundColor(Color.TRANSPARENT);
         bubbleView.addView(view);
         setContentView(bubbleView);
@@ -69,13 +83,13 @@ public class ZXBubbleView extends PopupWindow {
      * @param bubbleOffset 气泡尖角位置偏移量。默认位于中间
      */
     public void show(View parent, int gravity, float bubbleOffset) {
-        if (gravity == Gravity.LEFT){
+        if (gravity == Gravity.LEFT) {
             setAnimationStyle(R.style.Pop_bubble_anim_left);
-        }else if (gravity == Gravity.RIGHT){
+        } else if (gravity == Gravity.RIGHT) {
             setAnimationStyle(R.style.Pop_bubble_anim_right);
-        }else if (gravity == Gravity.TOP){
+        } else if (gravity == Gravity.TOP) {
             setAnimationStyle(R.style.Pop_bubble_anim_top);
-        }else if (gravity == Gravity.BOTTOM){
+        } else if (gravity == Gravity.BOTTOM) {
             setAnimationStyle(R.style.Pop_bubble_anim_bottom);
         }
 

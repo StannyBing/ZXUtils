@@ -16,6 +16,8 @@ import android.graphics.Path.Direction;
 import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
 import android.os.Build;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -49,20 +51,22 @@ public class BubbleRelativeLayout extends RelativeLayout {
     private float mBubbleLegOffset = 1.0f;
     private BubbleLegOrientation mBubbleOrientation = BubbleLegOrientation.LEFT;
 
-    public BubbleRelativeLayout(Context context) {
-        this(context, null);
+    private int bgColor = Color.WHITE;
+
+    public BubbleRelativeLayout(Context context, @ColorRes int bgColor) {
+        this(context, null, bgColor);
     }
 
-    public BubbleRelativeLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public BubbleRelativeLayout(Context context, AttributeSet attrs, @ColorRes int bgColor) {
+        super(context, attrs);
+        init(context, attrs, bgColor);
     }
 
-    public BubbleRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context, attrs);
-    }
+    private void init(final Context context, final AttributeSet attrs, @ColorRes int mColor) {
 
-    private void init(final Context context, final AttributeSet attrs) {
+        if (mColor!=0){
+            bgColor = ContextCompat.getColor(context, mColor);
+        }
 
         //setGravity(Gravity.CENTER);
 
@@ -86,7 +90,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
             }
         }
 
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(bgColor);//边线
         mPaint.setStyle(Style.FILL_AND_STROKE);
         mPaint.setStrokeCap(Cap.BUTT);
         mPaint.setAntiAlias(true);
@@ -99,8 +103,8 @@ public class BubbleRelativeLayout extends RelativeLayout {
         }
 
         mFillPaint = new Paint(mPaint);
-        mFillPaint.setColor(Color.WHITE);
-        mFillPaint.setShader(new LinearGradient(100f, 0f, 100f, 200f, Color.WHITE, Color.WHITE, TileMode.CLAMP));
+        mFillPaint.setColor(Color.WHITE);//这个颜色无用
+        mFillPaint.setShader(new LinearGradient(100f, 0f, 100f, 200f, bgColor, bgColor, TileMode.CLAMP));//内部填充的颜色
 
         if (Build.VERSION.SDK_INT >= 11) {
             setLayerType(LAYER_TYPE_SOFTWARE, mFillPaint);
@@ -131,6 +135,10 @@ public class BubbleRelativeLayout extends RelativeLayout {
     public void setBubbleParams(final BubbleLegOrientation bubbleOrientation, final float bubbleOffset) {
         mBubbleLegOffset = bubbleOffset;
         mBubbleOrientation = bubbleOrientation;
+    }
+
+    public void setBgColor() {
+
     }
 
     /**
@@ -181,7 +189,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
         final float height = canvas.getHeight();
 
 //        float[] radiusArray = {CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS,CORNER_RADIUS};
-        float[] radiusArray = {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
+        float[] radiusArray = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
         mPath.rewind();
         mPath.addRoundRect(new RectF(PADDING, PADDING, width - PADDING, height - PADDING), radiusArray, Direction.CW);

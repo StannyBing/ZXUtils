@@ -18,6 +18,8 @@ import java.util.List;
  * Created by Xiangb on 2016/9/21.
  * 功能：封装的Recycler适配器。用于待FooterView的情况
  */
+@Deprecated
+//该类已过期，请使用ZXRecyclerQuickAdapter
 public abstract class ZXRecycleAdapter extends RecyclerView.Adapter<RvHolder> {
     private LoadMoreListener mLoadMoreListener;
     public FooterViewHolder footerViewHolder;

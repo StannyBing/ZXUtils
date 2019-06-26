@@ -29,12 +29,16 @@ public abstract class ZXRecyclerQuickAdapter<T extends Object, K extends ZXBaseH
     public int pageSize = 10;
     public boolean hasLoadMore = true;
 
+    public List<T> dataBeans;
+
     public ZXRecyclerQuickAdapter(int layoutResId, @Nullable List<T> data) {
         super(layoutResId, data);
+        dataBeans = data;
     }
 
     public ZXRecyclerQuickAdapter(@Nullable List<T> data) {
         super(data);
+        dataBeans = data;
     }
 
     public ZXRecyclerQuickAdapter(int layoutResId) {

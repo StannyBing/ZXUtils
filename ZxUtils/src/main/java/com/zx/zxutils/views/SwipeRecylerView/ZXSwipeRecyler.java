@@ -12,10 +12,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter;
 import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecycleSimpleAdapter;
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecyclerQuickAdapter;
+
+import java.util.List;
 
 
 /**
@@ -31,6 +34,7 @@ public class ZXSwipeRecyler extends LinearLayout {
     private ZXRecycleAdapter mAdapter;
     private ZXRecycleSimpleAdapter simpleAdapter;
     private ZXRecyclerQuickAdapter quickAdapter;
+    private boolean autoLoadMore = false;
     private int pageNum = 1, totalNum = 0, pageSize = 10;
 
 
@@ -91,8 +95,12 @@ public class ZXSwipeRecyler extends LinearLayout {
             @Override
             public void onRefresh() {
                 if (zxsrListener != null) {
-                    if (pageNum > 1) {
-                        pageNum--;
+                    if (autoLoadMore) {
+                        pageNum = 1;
+                    } else {
+                        if (pageNum > 1) {
+                            pageNum--;
+                        }
                     }
                     zxsrListener.onRefresh();
                 }
@@ -145,7 +153,9 @@ public class ZXSwipeRecyler extends LinearLayout {
                 } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
                     simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
                 } else if (quickAdapter != null) {
-                    quickAdapter.setStatus(pageNum, totalNum);
+                    if (!autoLoadMore) {
+                        quickAdapter.setStatus(pageNum, totalNum);
+                    }
                 }
             }
         });
@@ -183,7 +193,9 @@ public class ZXSwipeRecyler extends LinearLayout {
                 } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
                     simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
                 } else if (quickAdapter != null) {
-                    quickAdapter.setStatus(pageNum, totalNum);
+                    if (!autoLoadMore) {
+                        quickAdapter.setStatus(pageNum, totalNum);
+                    }
                 }
             }
         });
@@ -193,20 +205,6 @@ public class ZXSwipeRecyler extends LinearLayout {
     public ZXSwipeRecyler setAdapter(ZXRecyclerQuickAdapter adapter) {
         quickAdapter = adapter;
         recyclerView.setAdapter(quickAdapter);
-        quickAdapter.setOnLoadMoreListener(new LoadMoreListener() {
-            @Override
-            public void LoadMore() {
-                if (zxsrListener != null) {
-                    if (pageNum * pageSize < totalNum) {
-                        if (quickAdapter != null) {
-                            quickAdapter.doLoading();
-                        }
-                        pageNum++;
-                        zxsrListener.onLoadMore();
-                    }
-                }
-            }
-        });
         quickAdapter.setNotifyListener(new NotifyListener() {
             @Override
             public void onNotifyEnd() {
@@ -215,11 +213,48 @@ public class ZXSwipeRecyler extends LinearLayout {
                 } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
                     simpleAdapter.footerViewHolder.setStatus(pageNum, totalNum);
                 } else if (quickAdapter != null) {
-                    quickAdapter.setStatus(pageNum, totalNum);
+                    if (!autoLoadMore) {
+                        quickAdapter.setStatus(pageNum, totalNum);
+                    }
                 }
             }
         });
-        quickAdapter.withFooter(context);
+        if (!autoLoadMore) {
+            quickAdapter.withFooter(context);
+        }
+        if (autoLoadMore) {
+            quickAdapter.setOnLoadMoreListener(new ZXQuickAdapter.RequestLoadMoreListener() {
+                @Override
+                public void onLoadMoreRequested() {
+                    if (zxsrListener != null) {
+                        if (pageNum * pageSize < totalNum) {
+                            if (quickAdapter != null && !autoLoadMore) {
+                                quickAdapter.doLoading();
+                            }
+                            pageNum++;
+                            zxsrListener.onLoadMore();
+                        } else {
+                            quickAdapter.loadMoreEnd();
+                        }
+                    }
+                }
+            }, recyclerView);
+        } else {
+            quickAdapter.setOnLoadMoreListener(new LoadMoreListener() {
+                @Override
+                public void LoadMore() {
+                    if (zxsrListener != null) {
+                        if (pageNum * pageSize < totalNum) {
+                            if (quickAdapter != null && !autoLoadMore) {
+                                quickAdapter.doLoading();
+                            }
+                            pageNum++;
+                            zxsrListener.onLoadMore();
+                        }
+                    }
+                }
+            });
+        }
         return this;
     }
 
@@ -285,6 +320,63 @@ public class ZXSwipeRecyler extends LinearLayout {
     public ZXSwipeRecyler setSRListener(ZXSRListener zxsrListener) {
         this.zxsrListener = zxsrListener;
         return this;
+    }
+
+    /**
+     * 设置自动加载更多
+     *
+     * @return
+     */
+    public ZXSwipeRecyler autoLoadMore() {
+        autoLoadMore = true;
+        if (quickAdapter != null) {
+            quickAdapter.setOnLoadMoreListener(new ZXQuickAdapter.RequestLoadMoreListener() {
+                @Override
+                public void onLoadMoreRequested() {
+                    if (zxsrListener != null) {
+                        if (pageNum * pageSize < totalNum) {
+                            if (quickAdapter != null && !autoLoadMore) {
+                                quickAdapter.doLoading();
+                            }
+                            pageNum++;
+                            zxsrListener.onLoadMore();
+                        } else {
+                            quickAdapter.loadMoreEnd();
+                        }
+                    }
+                }
+            }, recyclerView);
+        }
+        return this;
+    }
+
+    /**
+     * 数据更新
+     */
+    public void refreshData(List data, int totalNum) {
+        if (quickAdapter != null) {
+            if (autoLoadMore) {
+                if (pageNum == 1) {
+                    quickAdapter.dataBeans.clear();
+                    quickAdapter.getData().clear();
+                }
+//                quickAdapter.dataBeans.addAll(data);
+                quickAdapter.addData(data);
+                if (pageNum < totalNum / pageSize + 1) {
+                    quickAdapter.loadMoreComplete();
+                } else {
+                    quickAdapter.loadMoreEnd();
+                }
+            } else {
+                quickAdapter.dataBeans.clear();
+                quickAdapter.getData().clear();
+                quickAdapter.dataBeans.addAll(data);
+                quickAdapter.setNewData(data);
+                recyclerView.scrollToPosition(0);
+            }
+            setLoadInfo(totalNum);
+            stopRefresh();
+        }
     }
 
     /**
@@ -358,7 +450,9 @@ public class ZXSwipeRecyler extends LinearLayout {
         } else if (simpleAdapter != null && simpleAdapter.footerViewHolder != null) {
             simpleAdapter.footerViewHolder.setStatus(infoMsg);
         } else if (quickAdapter != null) {
-            quickAdapter.setStatus(infoMsg);
+            if (!autoLoadMore) {
+                quickAdapter.setStatus(infoMsg);
+            }
         }
     }
 

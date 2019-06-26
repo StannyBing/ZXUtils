@@ -28,7 +28,7 @@ public class BubbleTestActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_text_bubble1:
 //                bubble.setBubbleView(R.layout.layout_popup_view)
-                bubble.setBubbleView(bubbleView)
+                bubble.setBubbleView(bubbleView, R.color.colorPrimary)
                         .show(view, Gravity.BOTTOM);
                 break;
             case R.id.btn_text_bubble2:
