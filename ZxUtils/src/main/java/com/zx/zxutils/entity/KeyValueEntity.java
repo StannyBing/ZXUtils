@@ -7,8 +7,9 @@ package com.zx.zxutils.entity;
 public class KeyValueEntity {
     public String key;
     public Object value;
+    public boolean select = false;
 
-    public KeyValueEntity(String key, String value) {
+    public KeyValueEntity(String key, Object value) {
         this.key = key;
         this.value = value;
     }

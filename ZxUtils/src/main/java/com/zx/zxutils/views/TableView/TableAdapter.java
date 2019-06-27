@@ -1,7 +1,6 @@
 package com.zx.zxutils.views.TableView;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXSystemUtil;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -40,7 +40,7 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public TableAdapter(Context context, List<ZXTableKeyValues> tableList) {
         this.context = context;
         this.tableList = tableList;
-        titleBgColor = ContextCompat.getColor(context, R.color.cadetblue);
+        titleBgColor = ZXSystemUtil.transColor( R.color.cadetblue);
     }
 
     @Override
@@ -123,18 +123,18 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private void setColor(Holder myHolder, ZXTableKeyValues tableEntity) {
         if (tableEntity.isTitle()) {
             myHolder.llTable.setBackgroundColor(titleBgColor);
-            myHolder.tvKey.setTextColor(ContextCompat.getColor(context, R.color.whitesmoke));
-            myHolder.tvItem1.setTextColor(ContextCompat.getColor(context, R.color.whitesmoke));
-            myHolder.tvItem2.setTextColor(ContextCompat.getColor(context, R.color.whitesmoke));
-            myHolder.tvItem3.setTextColor(ContextCompat.getColor(context, R.color.whitesmoke));
-            myHolder.tvPercent.setTextColor(ContextCompat.getColor(context, R.color.whitesmoke));
+            myHolder.tvKey.setTextColor(ZXSystemUtil.transColor(R.color.whitesmoke));
+            myHolder.tvItem1.setTextColor(ZXSystemUtil.transColor(R.color.whitesmoke));
+            myHolder.tvItem2.setTextColor(ZXSystemUtil.transColor(R.color.whitesmoke));
+            myHolder.tvItem3.setTextColor(ZXSystemUtil.transColor( R.color.whitesmoke));
+            myHolder.tvPercent.setTextColor(ZXSystemUtil.transColor( R.color.whitesmoke));
         } else {
-            myHolder.llTable.setBackgroundColor(ContextCompat.getColor(context, R.color.whitesmoke));
-            myHolder.tvKey.setTextColor(ContextCompat.getColor(context, R.color.gray));
-            myHolder.tvItem1.setTextColor(ContextCompat.getColor(context, R.color.gray));
-            myHolder.tvItem2.setTextColor(ContextCompat.getColor(context, R.color.gray));
-            myHolder.tvItem3.setTextColor(ContextCompat.getColor(context, R.color.gray));
-            myHolder.tvPercent.setTextColor(ContextCompat.getColor(context, R.color.gray));
+            myHolder.llTable.setBackgroundColor(ZXSystemUtil.transColor( R.color.whitesmoke));
+            myHolder.tvKey.setTextColor(ZXSystemUtil.transColor(R.color.gray));
+            myHolder.tvItem1.setTextColor(ZXSystemUtil.transColor(R.color.gray));
+            myHolder.tvItem2.setTextColor(ZXSystemUtil.transColor(R.color.gray));
+            myHolder.tvItem3.setTextColor(ZXSystemUtil.transColor(R.color.gray));
+            myHolder.tvPercent.setTextColor(ZXSystemUtil.transColor(R.color.gray));
         }
     }
 

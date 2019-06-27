@@ -367,6 +367,12 @@ public class ZXSwipeRecyler extends LinearLayout {
                 } else {
                     quickAdapter.loadMoreEnd();
                 }
+                if (totalNum == 0){
+                    quickAdapter.loadText.setVisibility(View.VISIBLE);
+                    quickAdapter.loadText.setText("暂无数据");
+                }else {
+                    quickAdapter.loadText.setVisibility(View.GONE);
+                }
             } else {
                 quickAdapter.dataBeans.clear();
                 quickAdapter.getData().clear();

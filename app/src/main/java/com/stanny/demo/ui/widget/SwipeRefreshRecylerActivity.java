@@ -69,7 +69,8 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
                     }
                 });
         swipeRecyler.notifyDataSetChanged();
-        addList();
+//        addList();
+        swipeRecyler.refreshData(new ArrayList(), 0);
     }
 
     public void addList() {
@@ -77,7 +78,7 @@ public class SwipeRefreshRecylerActivity extends BaseActivity {
         for (int i = 0; i < 15; i++) {
             newData.add(Math.random() * 10 + "");
         }
-        swipeRecyler.refreshData(newData, 50);
+        swipeRecyler.refreshData(newData, 100);
     }
 
     public class TestAdapter extends ZXRecycleAdapter {

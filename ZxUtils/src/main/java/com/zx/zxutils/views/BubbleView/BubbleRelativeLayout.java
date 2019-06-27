@@ -17,12 +17,12 @@ import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
 import android.os.Build;
 import android.support.annotation.ColorRes;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXSystemUtil;
 
 /**
  * 气泡布局
@@ -65,7 +65,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
     private void init(final Context context, final AttributeSet attrs, @ColorRes int mColor) {
 
         if (mColor!=0){
-            bgColor = ContextCompat.getColor(context, mColor);
+            bgColor = ZXSystemUtil.transColor(mColor);
         }
 
         //setGravity(Gravity.CENTER);

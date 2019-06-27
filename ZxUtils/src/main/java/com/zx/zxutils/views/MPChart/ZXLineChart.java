@@ -1,10 +1,10 @@
 package com.zx.zxutils.views.MPChart;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.views.MPChart.charts.LineChart;
 import com.zx.zxutils.views.MPChart.components.AxisBase;
 import com.zx.zxutils.views.MPChart.components.Description;
@@ -51,13 +51,13 @@ public class ZXLineChart extends LineChart {
         Description description = new Description();
 //        description.setText("重庆知行");
         description.setText("");
-        description.setTextColor(ContextCompat.getColor(context, R.color.lightgray));
+        description.setTextColor(ZXSystemUtil.transColor(R.color.lightgray));
         description.setYOffset(10);
         setDescription(description);
 
         //属性设置
         setNoDataText("暂未获取到数据");
-        setNoDataTextColor(ContextCompat.getColor(context, R.color.deepskyblue));
+        setNoDataTextColor(ZXSystemUtil.transColor( R.color.deepskyblue));
         setAutoScaleMinMaxEnabled(true);
         setScaleYEnabled(false);//禁止Y轴滑动
         getAxisRight().setDrawGridLines(false);//隐藏右边坐标轴横向网格线
@@ -66,7 +66,7 @@ public class ZXLineChart extends LineChart {
         getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置X轴label的位置
         getAxisRight().setDrawAxisLine(false);//隐藏右边坐标轴
         setDrawBorders(false);//设置是否加边框
-        getAxisLeft().setGridColor(ContextCompat.getColor(context, R.color.gray_de));//横向背景色
+        getAxisLeft().setGridColor(ZXSystemUtil.transColor( R.color.gray_de));//横向背景色
         getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -140,9 +140,9 @@ public class ZXLineChart extends LineChart {
             LineDataSet dataSet = (LineDataSet) dataSets.get(i);
             dataSet.setLineWidth(2.0f);//线宽
             dataSet.setCircleRadius(3.5f);//圆形大小
-            dataSet.setColor(ContextCompat.getColor(context, ChartColor.getColor(i)));//颜色
-            dataSet.setCircleColor(ContextCompat.getColor(context, ChartColor.getColor(i)));//圆形颜色
-            dataSet.setHighLightColor(ContextCompat.getColor(context, ChartColor.getColor(i)));//高亮线颜色
+            dataSet.setColor(ZXSystemUtil.transColor(ChartColor.getColor(i)));//颜色
+            dataSet.setCircleColor(ZXSystemUtil.transColor( ChartColor.getColor(i)));//圆形颜色
+            dataSet.setHighLightColor(ZXSystemUtil.transColor( ChartColor.getColor(i)));//高亮线颜色
         }
         super.setData(lineData);
         tempDataSets.clear();

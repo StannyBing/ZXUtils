@@ -24,7 +24,7 @@ public abstract class ZXRecyclerQuickAdapter<T extends Object, K extends ZXBaseH
     private LoadMoreListener mLoadMoreListener;
     private NotifyListener notifyListener;
 
-    private TextView loadText;
+    public TextView loadText;
     private ProgressBar loadProgress;
     public int pageSize = 10;
     public boolean hasLoadMore = true;

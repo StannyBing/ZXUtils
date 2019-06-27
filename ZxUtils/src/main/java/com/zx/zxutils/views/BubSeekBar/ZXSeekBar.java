@@ -18,7 +18,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -28,6 +27,7 @@ import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXSystemUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -139,9 +139,9 @@ public class ZXSeekBar extends View {
                 mSecondTrackSize * 2);
         mSectionCount = a.getInteger(R.styleable.ZXSeekBar_bsb_section_count, 10);
         mTrackColor = a.getColor(R.styleable.ZXSeekBar_bsb_track_color,
-                ContextCompat.getColor(context, R.color.bobPrimary));
+                ZXSystemUtil.transColor( R.color.bobPrimary));
         mSecondTrackColor = a.getColor(R.styleable.ZXSeekBar_bsb_second_track_color,
-                ContextCompat.getColor(context, R.color.bobAccent));
+                ZXSystemUtil.transColor( R.color.bobAccent));
         mThumbColor = a.getColor(R.styleable.ZXSeekBar_bsb_thumb_color, mSecondTrackColor);
         isShowSectionText = a.getBoolean(R.styleable.ZXSeekBar_bsb_show_section_text, false);
         mSectionTextSize = a.getDimensionPixelSize(R.styleable.ZXSeekBar_bsb_section_text_size, sp2px(14));
@@ -228,11 +228,11 @@ public class ZXSeekBar extends View {
      * @return
      */
     public ZXSeekBar setTrackColor(int leftColor, int rightColor) {
-        mTrackColor = ContextCompat.getColor(getContext(), rightColor);
+        mTrackColor = ZXSystemUtil.transColor( rightColor);
         if (!isChangeTextColor) {
             mSectionTextColor = mTrackColor;
         }
-        mSecondTrackColor = ContextCompat.getColor(getContext(), leftColor);
+        mSecondTrackColor =ZXSystemUtil.transColor(leftColor);
         mThumbColor = mSecondTrackColor;
         mThumbTextColor = mSecondTrackColor;
         mBubbleColor = mSecondTrackColor;

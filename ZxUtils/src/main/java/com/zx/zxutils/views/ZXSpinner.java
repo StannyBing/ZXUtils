@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +70,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
         super.onDraw(canvas);
         if (showUnderLine) {
             if (underLineColor == 0) {
-                underLineColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
+                underLineColor = defaultArray.getColor(0, ZXSystemUtil.transColor(R.color.gray));
             }
             Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
             paint.setColor(underLineColor);
@@ -147,7 +146,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      */
     public ZXSpinner showDivider(boolean showDivider, int dividerColor) {
         this.showDivider = showDivider;
-        this.dividerColor = ContextCompat.getColor(mContext, dividerColor);
+        this.dividerColor = ZXSystemUtil.transColor(dividerColor);
         return this;
     }
 
@@ -158,7 +157,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      */
     public ZXSpinner showUnderineColor(boolean showUnderLine) {
         this.showUnderLine = showUnderLine;
-        underLineColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
+        underLineColor = defaultArray.getColor(0, ZXSystemUtil.transColor(R.color.gray));
         return this;
     }
 
@@ -169,7 +168,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      */
     public ZXSpinner showUnderineColor(boolean showUnderLine, int color) {
         this.showUnderLine = showUnderLine;
-        underLineColor = ContextCompat.getColor(mContext, color);
+        underLineColor = ZXSystemUtil.transColor(color);
         return this;
     }
 
@@ -181,7 +180,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      */
     public ZXSpinner showSelectedTextColor(boolean showSelectedTextColor) {
         this.showSelectedTextColor = showSelectedTextColor;
-        selectedTextColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
+        selectedTextColor = defaultArray.getColor(0, ZXSystemUtil.transColor(R.color.gray));
         this.selectedLyoutColor = 0;
         this.showSelectedLayoutColor = false;
         return this;
@@ -196,7 +195,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      */
     public ZXSpinner showSelectedTextColor(boolean showSelectedTextColor, int selectedTextColor) {
         this.showSelectedTextColor = showSelectedTextColor;
-        this.selectedTextColor = ContextCompat.getColor(mContext, selectedTextColor);
+        this.selectedTextColor = ZXSystemUtil.transColor(selectedTextColor);
         this.selectedLyoutColor = 0;
         this.showSelectedLayoutColor = false;
         return this;
@@ -210,8 +209,8 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      */
     public ZXSpinner showSeletedLayoutColor(boolean showSelectedLayoutColor) {
         this.showSelectedLayoutColor = showSelectedLayoutColor;
-        selectedLyoutColor = defaultArray.getColor(0, ContextCompat.getColor(mContext, R.color.gray));
-        this.selectedTextColor = ContextCompat.getColor(mContext, R.color.white);
+        selectedLyoutColor = defaultArray.getColor(0, ZXSystemUtil.transColor(R.color.gray));
+        this.selectedTextColor = ZXSystemUtil.transColor(R.color.white);
         this.showSelectedTextColor = false;
         return this;
     }
@@ -225,8 +224,8 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      */
     public ZXSpinner showSeletedLayoutColor(boolean showSelectedLayoutColor, int seletedLayoutColor) {
         this.showSelectedLayoutColor = showSelectedLayoutColor;
-        this.selectedLyoutColor = ContextCompat.getColor(mContext, seletedLayoutColor);
-        this.selectedTextColor = ContextCompat.getColor(mContext, R.color.white);
+        this.selectedLyoutColor = ZXSystemUtil.transColor(seletedLayoutColor);
+        this.selectedTextColor = ZXSystemUtil.transColor(R.color.white);
         this.showSelectedTextColor = false;
         return this;
     }
@@ -281,10 +280,10 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
      * @return
      */
     public ZXSpinner notifyDataSetChanged() {
-		List<KeyValueEntity> tempList = new ArrayList<>();
-		tempList.addAll(dataList);
-		dataList.clear();
-		dataList.addAll(tempList);
+        List<KeyValueEntity> tempList = new ArrayList<>();
+        tempList.addAll(dataList);
+        dataList.clear();
+        dataList.addAll(tempList);
         mAdapter.notifyDataSetChanged();
         return this;
     }
@@ -398,7 +397,7 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
         @Override
         public View getDropDownView(int position, View itemView, ViewGroup parent) {
             itemView = LayoutInflater.from(mContext).inflate(R.layout.item_spinner_normal, null);
-            TextView tvItem = (TextView) itemView.findViewById(R.id.tv_spinner_item);
+            TextView tvItem = itemView.findViewById(R.id.tv_spinner_item);
             View dividerItem = itemView.findViewById(R.id.divider_spinner_item);
             tvItem.setText(dataList.get(position).getKey());
             try {
@@ -408,17 +407,17 @@ public class ZXSpinner extends android.support.v7.widget.AppCompatSpinner {
                 } else {
                     dividerItem.setVisibility(GONE);
                 }
-                if (showSelectedTextColor && position == getSelectedItemPosition()) {
-                    tvItem.setTextColor(selectedTextColor);
-                } else {
-//                mHolder.tvItem.setTextColor(ContextCompat.getColor(mContext, R.color.default_text_color));
-                }
                 if (showSelectedLayoutColor && position == getSelectedItemPosition()) {
                     tvItem.setTextColor(selectedTextColor);
                     itemView.setBackgroundColor(selectedLyoutColor);
                 } else {
 //                mHolder.tvItem.setTextColor(ContextCompat.getColor(mContext, R.color.default_text_color));
 //                itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.whitesmoke));
+                }
+                if (showSelectedTextColor && position == getSelectedItemPosition()) {
+                    tvItem.setTextColor(selectedTextColor);
+                } else {
+//                mHolder.tvItem.setTextColor(ContextCompat.getColor(mContext, R.color.default_text_color));
                 }
                 if (itemHeightDp != 0) {
                     LayoutParams params = tvItem.getLayoutParams();

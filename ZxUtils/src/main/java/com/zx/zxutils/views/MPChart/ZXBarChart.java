@@ -1,10 +1,10 @@
 package com.zx.zxutils.views.MPChart;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.views.MPChart.charts.BarChart;
 import com.zx.zxutils.views.MPChart.components.AxisBase;
 import com.zx.zxutils.views.MPChart.components.Description;
@@ -45,13 +45,13 @@ public class ZXBarChart extends BarChart {
         Description description = new Description();
 //        description.setText("重庆知行");
         description.setText("");
-        description.setTextColor(ContextCompat.getColor(context, R.color.lightgray));
+        description.setTextColor(ZXSystemUtil.transColor( R.color.lightgray));
         description.setYOffset(10);
         setDescription(description);
 
         //属性设置
         setNoDataText("暂未获取到数据");
-        setNoDataTextColor(ContextCompat.getColor(context, R.color.deepskyblue));
+        setNoDataTextColor(ZXSystemUtil.transColor( R.color.deepskyblue));
         setAutoScaleMinMaxEnabled(true);
         setScaleYEnabled(false);//禁止Y轴滑动
         getAxisRight().setDrawGridLines(false);//隐藏右边坐标轴横向网格线
@@ -70,7 +70,7 @@ public class ZXBarChart extends BarChart {
                 return ((int) value) + unit;
             }
         });
-        getAxisLeft().setGridColor(ContextCompat.getColor(context, R.color.gray_de));//横向背景色
+        getAxisLeft().setGridColor(ZXSystemUtil.transColor(R.color.gray_de));//横向背景色
         //图例设置
 //        getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);//图例的横向位置
 //        getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);//图例的纵向位置
@@ -133,8 +133,8 @@ public class ZXBarChart extends BarChart {
         for (int i = 0; i < dataSets.size(); i++) {
             BarDataSet dataSet = (BarDataSet) dataSets.get(i);
             entryCount = entryCount > dataSet.getEntryCount() ? entryCount : dataSet.getEntryCount();
-            dataSet.setColor(ContextCompat.getColor(context, ChartColor.getColor(i)));//颜色
-            dataSet.setHighLightColor(ContextCompat.getColor(context, R.color.halfTransparent));//高亮线颜色
+            dataSet.setColor(ZXSystemUtil.transColor( ChartColor.getColor(i)));//颜色
+            dataSet.setHighLightColor(ZXSystemUtil.transColor( R.color.halfTransparent));//高亮线颜色
         }
         super.setData(lineData);
         float groupSpace = 0.15f;

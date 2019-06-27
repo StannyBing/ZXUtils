@@ -1,6 +1,7 @@
 package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -35,11 +36,12 @@ public class SpinnerTestActivity extends BaseActivity {
         spTestSpinner.setData(datalist)
                 .showSeletedLayoutColor(true, R.color.skyblue)
                 .showSelectedTextColor(true, R.color.error_color)
-                .showDivider(true)
+                .showDivider(true, ContextCompat.getColor(this, R.color.colorPrimary))
                 .setItemHeightDp(30)
                 .setItemTextSizeSp(8)
                 .setDefaultItem("请选择...")
                 .build();
+
         spTestSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

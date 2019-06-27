@@ -1,10 +1,10 @@
 package com.zx.zxutils.views.MPChart;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.zx.zxutils.R;
+import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.views.MPChart.charts.PieChart;
 import com.zx.zxutils.views.MPChart.components.Description;
 import com.zx.zxutils.views.MPChart.components.Legend;
@@ -40,13 +40,13 @@ public class ZXPieChart extends PieChart {
         Description description = new Description();
 //        description.setText("重庆知行");
         description.setText("");
-        description.setTextColor(ContextCompat.getColor(context, R.color.lightgray));
+        description.setTextColor(ZXSystemUtil.transColor( R.color.lightgray));
         description.setYOffset(10);
         setDescription(description);
 
         //属性设置
         setNoDataText("暂未获取到数据");
-        setNoDataTextColor(ContextCompat.getColor(context, R.color.deepskyblue));
+        setNoDataTextColor(ZXSystemUtil.transColor( R.color.deepskyblue));
         setDrawEntryLabels(true);//将此设置为true以将x值文本绘制到饼图切片中
         setUsePercentValues(true);//如果启用此选项，图表中的值将以百分比形式绘制，而不是以原始值绘制。ValueFormatter为格式提供的值随后以百分比形式提供。
         setHoleRadius(40);//设置大圆里面小圆半径，和洞不是一个圆
@@ -93,17 +93,17 @@ public class ZXPieChart extends PieChart {
         //重设颜色
         int[] color = new int[pieData.getDataSet().getEntryCount()];
         for (int i = 0; i < pieData.getDataSet().getEntryCount(); i++) {
-            color[i] = ContextCompat.getColor(context, ChartColor.getColor(i));
+            color[i] = ZXSystemUtil.transColor(ChartColor.getColor(i));
         }
         dataSet.setValueFormatter(new PercentFormatter());
         dataSet.setValueTextSize(10);
         if (dataSet.getEntryCount() > 7) {
-            dataSet.setValueTextColor(ContextCompat.getColor(context, R.color.cadetblue));
-            dataSet.setValueLineColor(ContextCompat.getColor(context, R.color.white));
+            dataSet.setValueTextColor(ZXSystemUtil.transColor( R.color.cadetblue));
+            dataSet.setValueLineColor(ZXSystemUtil.transColor( R.color.white));
             dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         } else {
             dataSet.setYValuePosition(PieDataSet.ValuePosition.INSIDE_SLICE);
-            dataSet.setValueTextColor(ContextCompat.getColor(context, R.color.white));
+            dataSet.setValueTextColor(ZXSystemUtil.transColor( R.color.white));
         }
         dataSet.setColors(color);
         dataSet.setSliceSpace(4);//块间距

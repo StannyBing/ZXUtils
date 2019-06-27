@@ -18,11 +18,13 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.zx.zxutils.R;
 import com.zx.zxutils.ZXApp;
 
 import java.io.File;
@@ -117,10 +119,11 @@ public class ZXSystemUtil {
 
     /**
      * 获取app内部存储路径
+     *
      * @param context
      * @return
      */
-    public static String getAppDataPath(Context context){
+    public static String getAppDataPath(Context context) {
         return context.getFilesDir().getAbsolutePath();
     }
 
@@ -313,6 +316,18 @@ public class ZXSystemUtil {
      */
     public static float px2sp(float pxVal) {
         return (pxVal / ZXApp.getContext().getResources().getDisplayMetrics().scaledDensity);
+    }
+
+    public static int transColor(int color) {
+        try {
+            if (color > 0) {
+                return ContextCompat.getColor(ZXApp.getContext(), color);
+            } else {
+                return color;
+            }
+        } catch (Exception e) {
+            return color;
+        }
     }
 
     /**
