@@ -9,7 +9,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.zx.zxutils.R;
 import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.views.ZXNoScrllViewPager;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,7 +202,7 @@ public class ZXTabViewPager extends RelativeLayout {
             TextView tvNum = tabLayout.getTabAt(positon).getCustomView().findViewById(R.id.tv_item_tab_num);
             if (tabNum > 0) {
                 tvNum.setVisibility(VISIBLE);
-            }else {
+            } else {
                 tvNum.setVisibility(GONE);
             }
             tvNum.setText(tabNum + "");
@@ -382,6 +385,34 @@ public class ZXTabViewPager extends RelativeLayout {
      */
     public ZXTabViewPager setIndicatorHeight(int indicatorHeightPx) {
         tabLayout.setSelectedTabIndicatorHeight(indicatorHeightPx);
+        return this;
+    }
+
+    public ZXTabViewPager setIndicatorWidth(int indicatorWidthPx) {
+        try {
+            Field tabStrip = TabLayout.class.getDeclaredField("mTabStrip");
+            tabStrip.setAccessible(true);
+            Field indicatorLeft = tabStrip.getClass().getDeclaredField("mIndicatorLeft");
+            Field indicatorRight = tabStrip.getClass().getDeclaredField("mIndicatorRight");
+
+            indicatorLeft.setInt(tabStrip.getClass().newInstance(),100);
+            indicatorRight.setInt(tabStrip.getClass().newInstance(),100);
+
+
+            LinearLayout llTab = (LinearLayout) tabStrip.get(tabLayout);
+            for (int i = 0; i < llTab.getChildCount(); i++) {
+                View child = llTab.getChildAt(i);
+//                int width = child.getWidth();
+//                child.setPadding(0, 0, 0, 0);
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+////                params.leftMargin = 100;
+////                params.rightMargin = 100;
+//                child.setLayoutParams(params);
+                child.invalidate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return this;
     }
 

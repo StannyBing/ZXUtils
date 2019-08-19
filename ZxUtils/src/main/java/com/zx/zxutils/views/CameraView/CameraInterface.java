@@ -289,7 +289,7 @@ public class CameraInterface implements Camera.PreviewCallback {
     /**
      * open Camera
      */
-    void doOpenCamera(CameraOpenOverCallback callback) {
+    public void doOpenCamera(CameraOpenOverCallback callback) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             if (!CheckPermission.isCameraUseable(SELECTED_CAMERA) && this.errorLisenter != null) {
                 this.errorLisenter.onError(CameraListener.ErrorType.NotPermission);
@@ -423,7 +423,7 @@ public class CameraInterface implements Camera.PreviewCallback {
     /**
      * 销毁Camera
      */
-    void doDestroyCamera() {
+    public void doDestroyCamera() {
         errorLisenter = null;
         if (null != mCamera) {
             try {
