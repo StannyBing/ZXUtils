@@ -4,11 +4,11 @@ import android.view.View;
 
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter;
 
-
 /**
  * Created by AllenCoder on 2016/8/03.
  * A convenience class to extend when you only want to OnItemChildLongClickListener for a subset
  * of all the SimpleClickListener. This implements all methods in the
+ * {@link SimpleClickListener}
  **/
 public abstract class OnItemChildLongClickListener extends SimpleClickListener {
     @Override

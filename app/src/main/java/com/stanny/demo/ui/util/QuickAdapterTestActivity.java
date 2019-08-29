@@ -2,21 +2,28 @@ package com.stanny.demo.ui.util;
 
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RadioGroup;
 
 import com.stanny.demo.R;
+import com.stanny.demo.adapter.ExpandableItemAdapter;
 import com.stanny.demo.adapter.MultiAdapter;
 import com.stanny.demo.adapter.QuickAdapter;
 import com.stanny.demo.model.AdapterTestEntity;
+import com.stanny.demo.model.Level0Item;
+import com.stanny.demo.model.Level1Item;
+import com.stanny.demo.model.Person;
 import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter;
+import com.zx.zxutils.other.QuickAdapter.entity.MultiItemEntity;
 import com.zx.zxutils.util.ZXToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +38,11 @@ public class QuickAdapterTestActivity extends BaseActivity {
     private List<String> datas = new ArrayList<>();
     private List<AdapterTestEntity> testEntities = new ArrayList<>();
 
+    private List<MultiItemEntity> list = new ArrayList<>();
+
     private QuickAdapter quickAdapter;
     private MultiAdapter multiAdapter;
+    private ExpandableItemAdapter expandAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,18 @@ public class QuickAdapterTestActivity extends BaseActivity {
                     rvAdapter.setAdapter(quickAdapter = new QuickAdapter(datas));
                 } else if (checkedId == R.id.rb_multi) {
                     rvAdapter.setAdapter(multiAdapter = new MultiAdapter(testEntities));
+                } else if (checkedId == R.id.rb_expand) {
+                    list.addAll(generateData());
+                    rvAdapter.setAdapter(expandAdapter = new ExpandableItemAdapter(list));
+                    final GridLayoutManager manager = new GridLayoutManager(QuickAdapterTestActivity.this, 3);
+                    manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                        @Override
+                        public int getSpanSize(int position) {
+                            return expandAdapter.getItemViewType(position) == ExpandableItemAdapter.TYPE_PERSON ? 1 : manager.getSpanCount();
+                        }
+                    });
+                    rvAdapter.setLayoutManager(manager);
+                    expandAdapter.expandAll();
                 }
             }
         });
@@ -85,5 +107,29 @@ public class QuickAdapterTestActivity extends BaseActivity {
                 quickAdapter.loadMoreComplete();
             }
         }, rvAdapter);
+    }
+
+    private ArrayList<MultiItemEntity> generateData() {
+        int lv0Count = 9;
+        int lv1Count = 3;
+        int personCount = 5;
+
+        String[] nameList = {"Bob", "Andy", "Lily", "Brown", "Bruce"};
+        Random random = new Random();
+
+        ArrayList<MultiItemEntity> res = new ArrayList<>();
+        for (int i = 0; i < lv0Count; i++) {
+            Level0Item lv0 = new Level0Item("This is " + i + "th item in Level 0", "subtitle of " + i);
+            for (int j = 0; j < lv1Count; j++) {
+                Level1Item lv1 = new Level1Item("Level 1 item: " + j, "(no animation)");
+                for (int k = 0; k < personCount; k++) {
+                    lv1.addSubItem(new Person(nameList[k], random.nextInt(40)));
+                }
+                lv0.addSubItem(lv1);
+            }
+            res.add(lv0);
+        }
+
+        return res;
     }
 }

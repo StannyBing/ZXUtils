@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter;
 
-
 /**
  * create by: allen on 16/8/3.
  */

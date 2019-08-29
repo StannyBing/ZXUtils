@@ -1,5 +1,6 @@
 package com.zx.zxutils.other.QuickAdapter;
 
+import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.zx.zxutils.other.QuickAdapter.entity.SectionEntity;
@@ -47,7 +48,7 @@ public abstract class ZXSectionQuickAdapter<T extends SectionEntity, K extends Z
     }
 
     @Override
-    public void onBindViewHolder(K holder, int position) {
+    public void onBindViewHolder(@NonNull K holder, int position) {
         switch (holder.getItemViewType()) {
             case SECTION_HEADER_VIEW:
                 setFullSpan(holder);

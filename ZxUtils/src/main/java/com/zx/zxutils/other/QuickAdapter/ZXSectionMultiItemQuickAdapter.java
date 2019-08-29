@@ -2,18 +2,20 @@ package com.zx.zxutils.other.QuickAdapter;
 
 import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.util.SparseIntArray;
 import android.view.ViewGroup;
 
 import com.zx.zxutils.other.QuickAdapter.entity.IExpandable;
 import com.zx.zxutils.other.QuickAdapter.entity.MultiItemEntity;
+import com.zx.zxutils.other.QuickAdapter.entity.SectionMultiEntity;
 
 import java.util.List;
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
  */
-public abstract class ZXMultiItemQuickAdapter<T extends MultiItemEntity, K extends ZXBaseHolder> extends ZXQuickAdapter<T, K> {
+public abstract class ZXSectionMultiItemQuickAdapter<T extends SectionMultiEntity, K extends ZXBaseHolder> extends ZXQuickAdapter<T, K> {
 
     /**
      * layouts indexed with their types
@@ -23,21 +25,28 @@ public abstract class ZXMultiItemQuickAdapter<T extends MultiItemEntity, K exten
     private static final int DEFAULT_VIEW_TYPE = -0xff;
     public static final int TYPE_NOT_FOUND = -404;
 
+    protected int mSectionHeadResId;
+    protected static final int SECTION_HEADER_VIEW = 0x00000444;
+
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
      *
-     * @param data A new list is created out of this one to avoid mutable list
+     * @param sectionHeadResId The section head layout id for each item
+     * @param data             A new list is created out of this one to avoid mutable list
      */
-    public ZXMultiItemQuickAdapter(List<T> data) {
+    public ZXSectionMultiItemQuickAdapter(int sectionHeadResId, List<T> data) {
         super(data);
+        this.mSectionHeadResId = sectionHeadResId;
     }
 
     @Override
     protected int getDefItemViewType(int position) {
         T item = mData.get(position);
+
         if (item != null) {
-            return item.getItemType();
+            // check the item type include header or not
+            return item.isHeader ? SECTION_HEADER_VIEW : item.getItemType();
         }
         return DEFAULT_VIEW_TYPE;
     }
@@ -48,6 +57,10 @@ public abstract class ZXMultiItemQuickAdapter<T extends MultiItemEntity, K exten
 
     @Override
     protected K onCreateDefViewHolder(ViewGroup parent, int viewType) {
+        // add this to check viewType of section
+        if (viewType == SECTION_HEADER_VIEW)
+            return createBaseViewHolder(getItemView(mSectionHeadResId, parent));
+
         return createBaseViewHolder(parent, getLayoutId(viewType));
     }
 
@@ -55,6 +68,12 @@ public abstract class ZXMultiItemQuickAdapter<T extends MultiItemEntity, K exten
         return layouts.get(viewType, TYPE_NOT_FOUND);
     }
 
+    /**
+     * collect layout types you need
+     *
+     * @param type             The key of layout type
+     * @param layoutResId      The layoutResId of layout type
+     */
     protected void addItemType(int type, @LayoutRes int layoutResId) {
         if (layouts == null) {
             layouts = new SparseIntArray();
@@ -62,11 +81,29 @@ public abstract class ZXMultiItemQuickAdapter<T extends MultiItemEntity, K exten
         layouts.put(type, layoutResId);
     }
 
+    @Override
+    protected boolean isFixedViewType(int type) {
+        return super.isFixedViewType(type) || type == SECTION_HEADER_VIEW;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull K holder, int position) {
+        switch (holder.getItemViewType()) {
+            case SECTION_HEADER_VIEW:
+                setFullSpan(holder);
+                convertHead(holder, getItem(position - getHeaderLayoutCount()));
+                break;
+            default:
+                super.onBindViewHolder(holder, position);
+                break;
+        }
+    }
+
+    protected abstract void convertHead(K helper, T item);
 
     @Override
     public void remove(@IntRange(from = 0L) int position) {
-        if (mData == null
-                || position < 0
+        if (mData == null || position < 0
                 || position >= mData.size()) return;
 
         T entity = mData.get(position);
@@ -104,44 +141,8 @@ public abstract class ZXMultiItemQuickAdapter<T extends MultiItemEntity, K exten
         int position = getParentPosition(child);
         if (position >= 0) {
             IExpandable parent = (IExpandable) mData.get(position);
-            if (parent != child) {
-                parent.getSubItems().remove(child);
-            }
+            parent.getSubItems().remove(child);
         }
-    }
-
-    /**
-     * 该方法用于 IExpandable 树形列表。
-     * 如果不存在 Parent，则 return -1。
-     *
-     * @param position 所处列表的位置
-     * @return 父 position 在数据列表中的位置
-     */
-    public int getParentPositionInAll(int position) {
-        List<T> data = getData();
-        MultiItemEntity multiItemEntity = getItem(position);
-
-        if (isExpandable(multiItemEntity)) {
-            IExpandable IExpandable = (IExpandable) multiItemEntity;
-            for (int i = position - 1; i >= 0; i--) {
-                MultiItemEntity entity = data.get(i);
-                if (isExpandable(entity) && IExpandable.getLevel() > ((IExpandable) entity).getLevel()) {
-                    return i;
-                }
-            }
-        } else {
-            for (int i = position - 1; i >= 0; i--) {
-                MultiItemEntity entity = data.get(i);
-                if (isExpandable(entity)) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-
-    public boolean isExpandable(MultiItemEntity item) {
-        return item != null && item instanceof IExpandable;
     }
 }
 

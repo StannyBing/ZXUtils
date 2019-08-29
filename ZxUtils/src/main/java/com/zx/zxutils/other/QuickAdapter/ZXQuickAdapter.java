@@ -23,6 +23,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -42,10 +44,11 @@ import com.zx.zxutils.other.QuickAdapter.animation.ScaleInAnimation;
 import com.zx.zxutils.other.QuickAdapter.animation.SlideInBottomAnimation;
 import com.zx.zxutils.other.QuickAdapter.animation.SlideInLeftAnimation;
 import com.zx.zxutils.other.QuickAdapter.animation.SlideInRightAnimation;
+import com.zx.zxutils.other.QuickAdapter.diff.BaseQuickAdapterListUpdateCallback;
+import com.zx.zxutils.other.QuickAdapter.diff.BaseQuickDiffCallback;
 import com.zx.zxutils.other.QuickAdapter.entity.IExpandable;
 import com.zx.zxutils.other.QuickAdapter.loadmore.LoadMoreView;
 import com.zx.zxutils.other.QuickAdapter.loadmore.SimpleLoadMoreView;
-import com.zx.zxutils.other.QuickAdapter.util.MultiTypeDelegate;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -100,12 +103,6 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     private OnItemLongClickListener mOnItemLongClickListener;
     private OnItemChildClickListener mOnItemChildClickListener;
     private OnItemChildLongClickListener mOnItemChildLongClickListener;
-
-    @IntDef({ALPHAIN, SCALEIN, SLIDEIN_BOTTOM, SLIDEIN_LEFT, SLIDEIN_RIGHT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface AnimationType {
-    }
-
     private boolean mFirstOnlyEnable = true;
     private boolean mOpenAnimationEnable = false;
     private Interpolator mInterpolator = new LinearInterpolator();
@@ -132,8 +129,29 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     public static final int LOADING_VIEW = 0x00000222;
     public static final int FOOTER_VIEW = 0x00000333;
     public static final int EMPTY_VIEW = 0x00000555;
-
+    /**
+     * up fetch start
+     */
+    private boolean mUpFetchEnable;
+    private boolean mUpFetching;
+    private UpFetchListener mUpFetchListener;
     private RecyclerView mRecyclerView;
+    private int mPreLoadNumber = 1;
+
+    /**
+     * start up fetch position, default is 1.
+     */
+    private int mStartUpFetchPosition = 1;
+    /**
+     * if asFlow is true, footer/header will arrange like normal item view.
+     * only works when use {@link GridLayoutManager},and it will ignore span size.
+     */
+    private boolean headerViewAsFlow, footerViewAsFlow;
+
+    @IntDef({ALPHAIN, SCALEIN, SLIDEIN_BOTTOM, SLIDEIN_LEFT, SLIDEIN_RIGHT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface AnimationType {
+    }
 
     protected RecyclerView getRecyclerView() {
         return mRecyclerView;
@@ -145,7 +163,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
 
     private void checkNotNull() {
         if (getRecyclerView() == null) {
-            throw new RuntimeException("please bind recyclerView first!");
+            throw new IllegalStateException("please bind recyclerView first!");
         }
     }
 
@@ -153,8 +171,8 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
      * same as recyclerView.setAdapter(), and save the instance of recyclerView
      */
     public void bindToRecyclerView(RecyclerView recyclerView) {
-        if (getRecyclerView() != null) {
-            throw new RuntimeException("Don't bind twice");
+        if (getRecyclerView() == recyclerView) {
+            throw new IllegalStateException("Don't bind twice");
         }
         setRecyclerView(recyclerView);
         getRecyclerView().setAdapter(this);
@@ -256,12 +274,6 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         return tmp;
     }
 
-    /**
-     * up fetch start
-     */
-    private boolean mUpFetchEnable;
-    private boolean mUpFetching;
-    private UpFetchListener mUpFetchListener;
 
     public void setUpFetchEnable(boolean upFetch) {
         this.mUpFetchEnable = upFetch;
@@ -271,10 +283,6 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         return mUpFetchEnable;
     }
 
-    /**
-     * start up fetch position, default is 1.
-     */
-    private int mStartUpFetchPosition = 1;
 
     public void setStartUpFetchPosition(int startUpFetchPosition) {
         mStartUpFetchPosition = startUpFetchPosition;
@@ -452,11 +460,26 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     /**
      * If you have added headeview, the notification view refreshes.
      * Do not need to care about the number of headview, only need to pass in the position of the final view
+     *
      * @param position
      */
     public final void refreshNotifyItemChanged(int position) {
         notifyItemChanged(position + getHeaderLayoutCount());
     }
+
+    /**
+     * If you have added headeview, the notification view refreshes.
+     * Do not need to care about the number of headview, only need to pass in the position of the final view
+     *
+     * @param position Position other than the number of head layouts. {@link #getHeaderLayoutCount()}
+     * @param payload Optional parameter, use null to identify a "full" update
+     *
+     * @see RecyclerView.Adapter#notifyItemChanged(int, Object)
+     */
+    public final void refreshNotifyItemChanged(int position, @Nullable Object payload) {
+        notifyItemChanged(position + getHeaderLayoutCount(), payload);
+    }
+
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -496,6 +519,53 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         notifyDataSetChanged();
     }
 
+    /**
+     * use Diff setting up a new instance to data
+     *
+     * @param baseQuickDiffCallback implementation {@link BaseQuickDiffCallback}
+     */
+    public void setNewDiffData(@NonNull BaseQuickDiffCallback<T> baseQuickDiffCallback) {
+        setNewDiffData(baseQuickDiffCallback, false);
+    }
+
+    /**
+     * use Diff setting up a new instance to data.
+     * this is sync, if you need use async, see {@link #setNewDiffData(DiffUtil.DiffResult, List)}.
+     *
+     * @param baseQuickDiffCallback implementation {@link BaseQuickDiffCallback}.
+     * @param detectMoves Whether to detect the movement of the Item
+     */
+    public void setNewDiffData(@NonNull BaseQuickDiffCallback<T> baseQuickDiffCallback, boolean detectMoves) {
+        if (getEmptyViewCount() == 1) {
+            // If the current view is an empty view, set the new data directly without diff
+            setNewData(baseQuickDiffCallback.getNewList());
+            return;
+        }
+        baseQuickDiffCallback.setOldList(this.getData());
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(baseQuickDiffCallback, detectMoves);
+        diffResult.dispatchUpdatesTo(new BaseQuickAdapterListUpdateCallback(this));
+        mData = baseQuickDiffCallback.getNewList();
+    }
+
+    /**
+     * use DiffResult setting up a new instance to data
+     *
+     * If you need to use async computing Diff, please use this method.
+     * You only need to tell the calculation result,
+     * this adapter does not care about the calculation process.
+     *
+     * @param diffResult DiffResult
+     * @param newData New Data
+     */
+    public void setNewDiffData(@NonNull DiffUtil.DiffResult diffResult, @NonNull List<T> newData) {
+        if (getEmptyViewCount() == 1) {
+            // If the current view is an empty view, set the new data directly without diff
+            setNewData(newData);
+            return;
+        }
+        diffResult.dispatchUpdatesTo(new BaseQuickAdapterListUpdateCallback(ZXQuickAdapter.this));
+        mData = newData;
+    }
 
     /**
      * insert  a item associated with the specified position of adapter
@@ -688,7 +758,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     @Override
     public int getItemCount() {
         int count;
-        if (getEmptyViewCount() == 1) {
+        if (1 == getEmptyViewCount()) {
             count = 1;
             if (mHeadAndEmptyEnable && getHeaderLayoutCount() != 0) {
                 count++;
@@ -746,14 +816,12 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     }
 
     protected int getDefItemViewType(int position) {
-        if (mMultiTypeDelegate != null) {
-            return mMultiTypeDelegate.getDefItemViewType(mData, position);
-        }
         return super.getItemViewType(position);
     }
 
+    @NonNull
     @Override
-    public K onCreateViewHolder(ViewGroup parent, int viewType) {
+    public K onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         K baseViewHolder = null;
         this.mContext = parent.getContext();
         this.mLayoutInflater = LayoutInflater.from(mContext);
@@ -762,12 +830,27 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
                 baseViewHolder = getLoadingView(parent);
                 break;
             case HEADER_VIEW:
+                ViewParent headerLayoutVp = mHeaderLayout.getParent();
+                if (headerLayoutVp instanceof ViewGroup) {
+                    ((ViewGroup) headerLayoutVp).removeView(mHeaderLayout);
+                }
+
                 baseViewHolder = createBaseViewHolder(mHeaderLayout);
                 break;
             case EMPTY_VIEW:
+                ViewParent emptyLayoutVp = mEmptyLayout.getParent();
+                if (emptyLayoutVp instanceof ViewGroup) {
+                    ((ViewGroup) emptyLayoutVp).removeView(mEmptyLayout);
+                }
+
                 baseViewHolder = createBaseViewHolder(mEmptyLayout);
                 break;
             case FOOTER_VIEW:
+                ViewParent footerLayoutVp = mFooterLayout.getParent();
+                if (footerLayoutVp instanceof ViewGroup) {
+                    ((ViewGroup) footerLayoutVp).removeView(mFooterLayout);
+                }
+
                 baseViewHolder = createBaseViewHolder(mFooterLayout);
                 break;
             default:
@@ -824,7 +907,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
      * @param holder
      */
     @Override
-    public void onViewAttachedToWindow(K holder) {
+    public void onViewAttachedToWindow(@NonNull K holder) {
         super.onViewAttachedToWindow(holder);
         int type = holder.getItemViewType();
         if (type == EMPTY_VIEW || type == HEADER_VIEW || type == FOOTER_VIEW || type == LOADING_VIEW) {
@@ -851,11 +934,12 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     }
 
     @Override
-    public void onAttachedToRecyclerView(final RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull final RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
         if (manager instanceof GridLayoutManager) {
             final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+            final GridLayoutManager.SpanSizeLookup defSpanSizeLookup = gridManager.getSpanSizeLookup();
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
@@ -867,7 +951,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
                         return 1;
                     }
                     if (mSpanSizeLookup == null) {
-                        return isFixedViewType(type) ? gridManager.getSpanCount() : 1;
+                        return isFixedViewType(type) ? gridManager.getSpanCount() : defSpanSizeLookup.getSpanSize(position);
                     } else {
                         return (isFixedViewType(type)) ? gridManager.getSpanCount() : mSpanSizeLookup.getSpanSize(gridManager,
                                 position - getHeaderLayoutCount());
@@ -884,11 +968,6 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
                 LOADING_VIEW;
     }
 
-    /**
-     * if asFlow is true, footer/header will arrange like normal item view.
-     * only works when use {@link GridLayoutManager},and it will ignore span size.
-     */
-    private boolean headerViewAsFlow, footerViewAsFlow;
 
     public void setHeaderViewAsFlow(boolean headerViewAsFlow) {
         this.headerViewAsFlow = headerViewAsFlow;
@@ -927,7 +1006,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
      * @see #getDefItemViewType(int)
      */
     @Override
-    public void onBindViewHolder(K holder, int position) {
+    public void onBindViewHolder(@NonNull K holder, int position) {
         //Add up fetch logic, almost like load more, but simpler.
         autoUpFetch(position);
         //Do not move position, need to change before LoadMoreView binding
@@ -953,19 +1032,66 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         }
     }
 
-    private void bindViewClickListener(final ZXBaseHolder ZXBaseHolder) {
-        if (ZXBaseHolder == null) {
+    /**
+     * To bind different types of holder and solve different the bind events
+     *
+     * the ViewHolder is currently bound to old data and Adapter may run an efficient partial
+     * update using the payload info.  If the payload is empty,  Adapter run a full bind.
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *               item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     * @param payloads A non-null list of merged payloads. Can be empty list if requires full
+     *                 update.
+     * @see #getDefItemViewType(int)
+     */
+    @Override
+    public void onBindViewHolder(@NonNull K holder, int position, @NonNull List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
             return;
         }
-        final View view = ZXBaseHolder.itemView;
-        if (view == null) {
+        //Add up fetch logic, almost like load more, but simpler.
+        autoUpFetch(position);
+        //Do not move position, need to change before LoadMoreView binding
+        autoLoadMore(position);
+        int viewType = holder.getItemViewType();
+
+        switch (viewType) {
+            case 0:
+                convertPayloads(holder, getItem(position - getHeaderLayoutCount()), payloads);
+                break;
+            case LOADING_VIEW:
+                mLoadMoreView.convert(holder);
+                break;
+            case HEADER_VIEW:
+                break;
+            case EMPTY_VIEW:
+                break;
+            case FOOTER_VIEW:
+                break;
+            default:
+                convertPayloads(holder, getItem(position - getHeaderLayoutCount()), payloads);
+                break;
+        }
+    }
+
+
+    protected void bindViewClickListener(final K baseViewHolder) {
+        if (baseViewHolder == null) {
             return;
         }
+        final View view = baseViewHolder.itemView;
         if (getOnItemClickListener() != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setOnItemClick(v, ZXBaseHolder.getLayoutPosition() - getHeaderLayoutCount());
+                    int position = baseViewHolder.getAdapterPosition();
+                    if (position == RecyclerView.NO_POSITION) {
+                        return;
+                    }
+                    position -= getHeaderLayoutCount();
+                    setOnItemClick(v, position);
                 }
             });
         }
@@ -973,7 +1099,12 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return setOnItemLongClick(v, ZXBaseHolder.getLayoutPosition() - getHeaderLayoutCount());
+                    int position = baseViewHolder.getAdapterPosition();
+                    if (position == RecyclerView.NO_POSITION) {
+                        return false;
+                    }
+                    position -= getHeaderLayoutCount();
+                    return setOnItemLongClick(v, position);
                 }
             });
         }
@@ -1000,22 +1131,8 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         return getOnItemLongClickListener().onItemLongClick(ZXQuickAdapter.this, v, position);
     }
 
-    private MultiTypeDelegate<T> mMultiTypeDelegate;
-
-    public void setMultiTypeDelegate(MultiTypeDelegate<T> multiTypeDelegate) {
-        mMultiTypeDelegate = multiTypeDelegate;
-    }
-
-    public MultiTypeDelegate<T> getMultiTypeDelegate() {
-        return mMultiTypeDelegate;
-    }
-
     protected K onCreateDefViewHolder(ViewGroup parent, int viewType) {
-        int layoutId = mLayoutResId;
-        if (mMultiTypeDelegate != null) {
-            layoutId = mMultiTypeDelegate.getLayoutId(viewType);
-        }
-        return createBaseViewHolder(parent, layoutId);
+        return createBaseViewHolder(parent, mLayoutResId);
     }
 
     protected K createBaseViewHolder(ViewGroup parent, int layoutResId) {
@@ -1023,7 +1140,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     }
 
     /**
-     * if you want to use subclass of ZXBaseHolder in the adapter,
+     * if you want to use subclass of BaseViewHolder in the adapter,
      * you must override the method to create new ViewHolder.
      *
      * @param view view
@@ -1150,7 +1267,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
      * @param index
      * @param orientation
      */
-    public int addHeaderView(View header, int index, int orientation) {
+    public int addHeaderView(View header,final int index, int orientation) {
         if (mHeaderLayout == null) {
             mHeaderLayout = new LinearLayout(header.getContext());
             if (orientation == LinearLayout.VERTICAL) {
@@ -1162,17 +1279,18 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
             }
         }
         final int childCount = mHeaderLayout.getChildCount();
+        int mIndex =index;
         if (index < 0 || index > childCount) {
-            index = childCount;
+            mIndex = childCount;
         }
-        mHeaderLayout.addView(header, index);
+        mHeaderLayout.addView(header, mIndex);
         if (mHeaderLayout.getChildCount() == 1) {
             int position = getHeaderViewPosition();
             if (position != -1) {
                 notifyItemInserted(position);
             }
         }
-        return index;
+        return mIndex;
     }
 
     public int setHeaderView(View header) {
@@ -1356,9 +1474,9 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
 
     /**
      * bind recyclerView {@link #bindToRecyclerView(RecyclerView)} before use!
-     * Recommend you to use {@link #setEmptyView(layoutResId,viewGroup)}
-     * @see #bindToRecyclerView(RecyclerView)
+     * Recommend you to use {@link #setEmptyView(int, ViewGroup)}
      *
+     * @see #bindToRecyclerView(RecyclerView)
      */
     @Deprecated
     public void setEmptyView(int layoutResId) {
@@ -1367,6 +1485,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     }
 
     public void setEmptyView(View emptyView) {
+        int oldItemCount = getItemCount();
         boolean insert = false;
         if (mEmptyLayout == null) {
             mEmptyLayout = new FrameLayout(emptyView.getContext());
@@ -1382,13 +1501,15 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         mEmptyLayout.removeAllViews();
         mEmptyLayout.addView(emptyView);
         mIsUseEmpty = true;
-        if (insert) {
-            if (getEmptyViewCount() == 1) {
-                int position = 0;
-                if (mHeadAndEmptyEnable && getHeaderLayoutCount() != 0) {
-                    position++;
-                }
+        if (insert && getEmptyViewCount() == 1) {
+            int position = 0;
+            if (mHeadAndEmptyEnable && getHeaderLayoutCount() != 0) {
+                position++;
+            }
+            if (getItemCount() > oldItemCount) {
                 notifyItemInserted(position);
+            } else {
+                notifyDataSetChanged();
             }
         }
     }
@@ -1434,7 +1555,6 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         return mEmptyLayout;
     }
 
-    private int mPreLoadNumber = 1;
 
     @Deprecated
     public void setAutoLoadMoreSize(int preLoadNumber) {
@@ -1572,6 +1692,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     public void openLoadAnimation() {
         this.mOpenAnimationEnable = true;
     }
+
     /**
      * To close the animation when loading
      */
@@ -1594,7 +1715,24 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
      * @param helper A fully initialized helper.
      * @param item   The item that needs to be displayed.
      */
-    protected abstract void convert(K helper, T item);
+    protected abstract void convert(@NonNull K helper, T item);
+
+    /**
+     * Optional implementation this method and use the helper to adapt the view to the given item.
+     *
+     * If {@link DiffUtil.Callback#getChangePayload(int, int)} is implemented,
+     * then {@link ZXQuickAdapter#convert(ZXBaseHolder, Object)} will not execute, and will
+     * perform this method, Please implement this method for partial refresh.
+     *
+     * If use {@link RecyclerView.Adapter#notifyItemChanged(int, Object)} with payload,
+     * Will execute this method.
+     *
+     *
+     * @param helper   A fully initialized helper.
+     * @param item     The item that needs to be displayed.
+     * @param payloads payload info.
+     */
+    protected void convertPayloads(@NonNull K helper, T item, @NonNull List<Object> payloads) {}
 
     /**
      * get the specific view by position,e.g. getViewByPosition(2, R.id.textView)
@@ -1738,7 +1876,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         for (int i = position + 1; i < this.mData.size(); i++) {
             T item = getItem(i);
 
-            if (item == endItem) {
+            if (item != null && item.equals(endItem)) {
                 break;
             }
             if (isExpandable(item)) {
@@ -1778,29 +1916,25 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
     @SuppressWarnings("unchecked")
     private int recursiveCollapse(@IntRange(from = 0) int position) {
         T item = getItem(position);
-        if (!isExpandable(item)) {
+        if (item == null || !isExpandable(item)) {
             return 0;
         }
         IExpandable expandable = (IExpandable) item;
-        int subItemCount = 0;
-        if (expandable.isExpanded()) {
-            List<T> subItems = expandable.getSubItems();
-            if (null == subItems) return 0;
-
-            for (int i = subItems.size() - 1; i >= 0; i--) {
-                T subItem = subItems.get(i);
-                int pos = getItemPosition(subItem);
-                if (pos < 0) {
-                    continue;
-                }
-                if (subItem instanceof IExpandable) {
-                    subItemCount += recursiveCollapse(pos);
-                }
-                mData.remove(pos);
-                subItemCount++;
-            }
+        if (!expandable.isExpanded()) {
+            return 0;
         }
-        return subItemCount;
+        List<T> collapseList = new ArrayList<>();
+        int itemLevel = expandable.getLevel();
+        T itemTemp;
+        for (int i = position + 1, n = mData.size(); i < n; i++) {
+            itemTemp = mData.get(i);
+            if (itemTemp instanceof IExpandable && ((IExpandable) itemTemp).getLevel() <= itemLevel) {
+                break;
+            }
+            collapseList.add(itemTemp);
+        }
+        mData.removeAll(collapseList);
+        return collapseList.size();
     }
 
     /**
@@ -1856,7 +1990,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
     }
 
-    private boolean hasSubItems(IExpandable item) {
+    public boolean hasSubItems(IExpandable item) {
         if (item == null) {
             return false;
         }
@@ -1923,9 +2057,8 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
      */
     public interface OnItemChildClickListener {
         /**
-         * callback method to be invoked when an item in this view has been
-         * click and held
-         *
+         * callback method to be invoked when an itemchild in this view has been click
+         * @param adapter
          * @param view     The view whihin the ItemView that was clicked
          * @param position The position of the view int the adapter
          */
@@ -1941,7 +2074,7 @@ public abstract class ZXQuickAdapter<T, K extends ZXBaseHolder> extends Recycler
         /**
          * callback method to be invoked when an item in this view has been
          * click and held
-         *
+         * @param adapter  this ZXQuickAdapter adapter
          * @param view     The childView whihin the itemView that was clicked and held.
          * @param position The position of the view int the adapter
          * @return true if the callback consumed the long click ,false otherwise
