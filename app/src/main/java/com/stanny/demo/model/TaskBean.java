@@ -9,18 +9,16 @@ import com.zx.zxutils.other.QuickAdapter.entity.MultiItemEntity;
  * Created by luoxw on 2016/8/10.
  */
 
-public class Level1Item extends AbstractExpandableItem<Person> implements MultiItemEntity {
+public class TaskBean extends AbstractExpandableItem<SpotBean> implements MultiItemEntity {
     public String title;
-    public String subTitle;
 
-    public Level1Item(String title, String subTitle) {
-        this.subTitle = subTitle;
+    public TaskBean(String title) {
         this.title = title;
     }
 
     @Override
     public int getItemType() {
-        return ExpandableItemAdapter.TYPE_LEVEL_1;
+        return ExpandableItemAdapter.TYPE_TASK;
     }
 
     @Override

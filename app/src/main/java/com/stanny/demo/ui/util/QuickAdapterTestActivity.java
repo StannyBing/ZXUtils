@@ -2,7 +2,6 @@ package com.stanny.demo.ui.util;
 
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,9 +12,8 @@ import com.stanny.demo.adapter.ExpandableItemAdapter;
 import com.stanny.demo.adapter.MultiAdapter;
 import com.stanny.demo.adapter.QuickAdapter;
 import com.stanny.demo.model.AdapterTestEntity;
-import com.stanny.demo.model.Level0Item;
-import com.stanny.demo.model.Level1Item;
-import com.stanny.demo.model.Person;
+import com.stanny.demo.model.SpotBean;
+import com.stanny.demo.model.TaskBean;
 import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter;
 import com.zx.zxutils.other.QuickAdapter.entity.MultiItemEntity;
@@ -23,7 +21,6 @@ import com.zx.zxutils.util.ZXToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,15 +66,8 @@ public class QuickAdapterTestActivity extends BaseActivity {
                 } else if (checkedId == R.id.rb_expand) {
                     list.addAll(generateData());
                     rvAdapter.setAdapter(expandAdapter = new ExpandableItemAdapter(list));
-                    final GridLayoutManager manager = new GridLayoutManager(QuickAdapterTestActivity.this, 3);
-                    manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                        @Override
-                        public int getSpanSize(int position) {
-                            return expandAdapter.getItemViewType(position) == ExpandableItemAdapter.TYPE_PERSON ? 1 : manager.getSpanCount();
-                        }
-                    });
-                    rvAdapter.setLayoutManager(manager);
-                    expandAdapter.expandAll();
+                    rvAdapter.setLayoutManager(new LinearLayoutManager(QuickAdapterTestActivity.this));
+//                    expandAdapter.expandAll();
                 }
             }
         });
@@ -110,24 +100,18 @@ public class QuickAdapterTestActivity extends BaseActivity {
     }
 
     private ArrayList<MultiItemEntity> generateData() {
-        int lv0Count = 9;
         int lv1Count = 3;
         int personCount = 5;
 
         String[] nameList = {"Bob", "Andy", "Lily", "Brown", "Bruce"};
-        Random random = new Random();
 
         ArrayList<MultiItemEntity> res = new ArrayList<>();
-        for (int i = 0; i < lv0Count; i++) {
-            Level0Item lv0 = new Level0Item("This is " + i + "th item in Level 0", "subtitle of " + i);
-            for (int j = 0; j < lv1Count; j++) {
-                Level1Item lv1 = new Level1Item("Level 1 item: " + j, "(no animation)");
-                for (int k = 0; k < personCount; k++) {
-                    lv1.addSubItem(new Person(nameList[k], random.nextInt(40)));
-                }
-                lv0.addSubItem(lv1);
+        for (int j = 0; j < lv1Count; j++) {
+            TaskBean lv1 = new TaskBean("Level 1 item: " + j);
+            for (int k = 0; k < personCount; k++) {
+                lv1.addSubItem(new SpotBean("spot:" + nameList[k]));
             }
-            res.add(lv0);
+            res.add(lv1);
         }
 
         return res;

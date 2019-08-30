@@ -8,17 +8,15 @@ import com.zx.zxutils.other.QuickAdapter.entity.MultiItemEntity;
  * Created by luoxw on 2016/8/10.
  */
 
-public class Person implements MultiItemEntity {
-    public Person(String name, int age) {
-        this.age = age;
+public class SpotBean implements MultiItemEntity {
+    public SpotBean(String name) {
         this.name = name;
     }
 
     public String name;
-    public int age;
 
     @Override
     public int getItemType() {
-        return ExpandableItemAdapter.TYPE_PERSON;
+        return ExpandableItemAdapter.TYPE_SPOT;
     }
 }
