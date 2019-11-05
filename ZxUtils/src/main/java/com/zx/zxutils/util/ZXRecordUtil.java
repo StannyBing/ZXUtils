@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zx.zxutils.R;
-import com.zx.zxutils.forutil.ZXRecordListener;
+import com.zx.zxutils.listener.ZXRecordListener;
 
 import java.io.File;
 import java.io.IOException;

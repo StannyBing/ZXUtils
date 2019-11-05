@@ -231,7 +231,7 @@ public class ZXFileUtil {
             fis = new FileInputStream(file);
             size = fis.available();
         } else {
-            file.createNewFile();
+//            file.createNewFile();
             ZXLogUtil.loge("获取文件大小", "文件不存在!");
         }
         return size;

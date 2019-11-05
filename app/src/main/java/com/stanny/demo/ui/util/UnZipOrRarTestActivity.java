@@ -5,7 +5,7 @@ import android.widget.ProgressBar;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
-import com.zx.zxutils.forutil.ZXUnZipRarListener;
+import com.zx.zxutils.listener.ZXUnZipRarListener;
 import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.util.ZXUnZipRarUtil;

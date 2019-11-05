@@ -120,7 +120,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     int padding;
 
     @Override
-    public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
+    public void onBindViewHolder(final PhotoViewHolder holder, int position) {
+
+        final int mPosition = position;
 
         if (action == ZXPhotoPickerView.ACTION_SELECT) {
             // RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.ivPhoto.getLayoutParams();
@@ -173,9 +175,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                     @Override
                     public void onClick(View v) {
                         if (deleteListener != null) {
-                            deleteListener.OnDetele(position);
+                            deleteListener.OnDetele(mPosition);
                         } else {
-                            photoPaths.remove(position);
+                            photoPaths.remove(mPosition);
                             notifyDataSetChanged();
                         }
                     }
@@ -236,7 +238,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteListener.OnDetele(position);
+                    deleteListener.OnDetele(mPosition);
                 }
             });
 //            holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
@@ -254,7 +256,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                photoItemClickListener.onPhotoItemClick(position);
+                photoItemClickListener.onPhotoItemClick(mPosition);
 //                ZXPhotoPreview.builder()
 //                        .setPhotos(photoPaths)
 //                        .setAction(action)

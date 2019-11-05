@@ -34,6 +34,7 @@ A commonly used tool library for Android<br>
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_5.jpg"/>
                   <img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_6.jpg"/></div><br><br>
 ### 1.工具库包含以下：<br>
+　　ZXHttpTool 网络请求相关<br>
 　　ZXAnimUtil 动画方法工具类<br>
 　　ZXAppUtil App相关工具类<br>
 　　ZXBitmapUtil bitmap处理工具类，包含了drawable等<br>
@@ -103,7 +104,7 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.2.11'
+    compile 'com.github.StannyBing:ZXUtils:2.3.0'
     ```
     
     注意需要在项目的build里面添加以下代码<br>

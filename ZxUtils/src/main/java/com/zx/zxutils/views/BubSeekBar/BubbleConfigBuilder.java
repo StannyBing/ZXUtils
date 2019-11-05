@@ -38,20 +38,26 @@ public class BubbleConfigBuilder {
     int thumbTextSize;
     int thumbTextColor;
     boolean showProgressInFloat;
+    long animDuration;
     boolean touchToSeek;
+    boolean seekStepSection;
     boolean seekBySection;
     int bubbleColor;
     int bubbleTextSize;
     int bubbleTextColor;
+    boolean alwaysShowBubble;
+    long alwaysShowBubbleDelay;
+    boolean hideBubble;
+    boolean rtl;
 
-    private ZXSeekBar mZXBubSeekBar;
+    private ZXSeekBar mBubbleSeekBar;
 
-    BubbleConfigBuilder(ZXSeekBar ZXBubSeekBar) {
-        mZXBubSeekBar = ZXBubSeekBar;
+    BubbleConfigBuilder(ZXSeekBar bubbleSeekBar) {
+        mBubbleSeekBar = bubbleSeekBar;
     }
 
     public void build() {
-        mZXBubSeekBar.config(this);
+        mBubbleSeekBar.config(this);
     }
 
     public BubbleConfigBuilder min(float min) {
@@ -174,8 +180,18 @@ public class BubbleConfigBuilder {
         return this;
     }
 
+    public BubbleConfigBuilder animDuration(long duration) {
+        animDuration = duration;
+        return this;
+    }
+
     public BubbleConfigBuilder touchToSeek() {
         this.touchToSeek = true;
+        return this;
+    }
+
+    public BubbleConfigBuilder seekStepSection() {
+        this.seekStepSection = true;
         return this;
     }
 
@@ -196,6 +212,26 @@ public class BubbleConfigBuilder {
 
     public BubbleConfigBuilder bubbleTextColor(@ColorInt int color) {
         this.bubbleTextColor = color;
+        return this;
+    }
+
+    public BubbleConfigBuilder alwaysShowBubble() {
+        this.alwaysShowBubble = true;
+        return this;
+    }
+
+    public BubbleConfigBuilder alwaysShowBubbleDelay(long delay) {
+        alwaysShowBubbleDelay = delay;
+        return this;
+    }
+
+    public BubbleConfigBuilder hideBubble() {
+        this.hideBubble = true;
+        return this;
+    }
+
+    public BubbleConfigBuilder rtl(boolean rtl) {
+        this.rtl = rtl;
         return this;
     }
 
@@ -291,8 +327,16 @@ public class BubbleConfigBuilder {
         return showProgressInFloat;
     }
 
+    public long getAnimDuration() {
+        return animDuration;
+    }
+
     public boolean isTouchToSeek() {
         return touchToSeek;
+    }
+
+    public boolean isSeekStepSection() {
+        return seekStepSection;
     }
 
     public boolean isSeekBySection() {
@@ -309,5 +353,21 @@ public class BubbleConfigBuilder {
 
     public int getBubbleTextColor() {
         return bubbleTextColor;
+    }
+
+    public boolean isAlwaysShowBubble() {
+        return alwaysShowBubble;
+    }
+
+    public long getAlwaysShowBubbleDelay() {
+        return alwaysShowBubbleDelay;
+    }
+
+    public boolean isHideBubble() {
+        return hideBubble;
+    }
+
+    public boolean isRtl() {
+        return rtl;
     }
 }

@@ -33,6 +33,7 @@ Some screenshots are as follows (this screenshot is cut by 2018-8-22, and some c
 <div align=center><img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_5.jpg"/>
                   <img width="324" height="576" src="https://github.com/StannyBing/ZXUtils/blob/master/image/Screenshot_6.jpg"/></div><br><br>
 ### 1.The tool library contains the following：<br>
+　　ZXHttpTool Network Request Tool<br>
 　　ZXAnimUtil    Animation method tool class<br>
 　　ZXAppUtil    App related tools<br>
 　　ZXBitmapUtil    Bitmap processing tool class, including drawable, etc.<br>
@@ -102,7 +103,7 @@ Some screenshots are as follows (this screenshot is cut by 2018-8-22, and some c
     Import dependency packages first<br>
     
     ```
-    compile 'com.github.StannyBing:ZXUtils:2.2.11'
+    compile 'com.github.StannyBing:ZXUtils:2.3.0'
     ```
     
     Note that you need to add the following code to the project's build.<br>

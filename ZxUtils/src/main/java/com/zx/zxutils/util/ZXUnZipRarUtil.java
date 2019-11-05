@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.zx.zxutils.forutil.ZXUnZipRarListener;
+import com.zx.zxutils.listener.ZXUnZipRarListener;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;

@@ -19,6 +19,7 @@ import com.stanny.demo.ui.util.ClipboardTestActivity;
 import com.stanny.demo.ui.util.DialogTestActivity;
 import com.stanny.demo.ui.util.FormatCheckTestActivity;
 import com.stanny.demo.ui.util.FragmentTestActivity;
+import com.stanny.demo.ui.util.HttpTestActivity;
 import com.stanny.demo.ui.util.ImageLoaderTestActivity;
 import com.stanny.demo.ui.util.LightTestActivity;
 import com.stanny.demo.ui.util.LocationTestActivity;
@@ -66,6 +67,7 @@ public class MyUtilFragment extends Fragment {
     }
 
     private void initData() {
+        dataList.add(new MainEntity(HttpTestActivity.class, "ZXHttpTool", "网络请求相关", R.mipmap.util_http));
         dataList.add(new MainEntity(LocationTestActivity.class, "ZXLocationUtil", "定位相关工具", R.mipmap.util_location));
         dataList.add(new MainEntity(FragmentTestActivity.class, "ZXFragmentUtil", "Fragment工具", R.mipmap.util_fragment));
         dataList.add(new MainEntity(ClipboardTestActivity.class, "ZXClipboardUtil", "剪切板工具", R.mipmap.util_clipboard));

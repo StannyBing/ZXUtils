@@ -1,6 +1,7 @@
 package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;
@@ -26,44 +27,68 @@ public class SeekBarTestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seek_bar_test);
         ButterKnife.bind(this);
-        sbTest1.setRange(0, 50)//设置范围
-                .setProgress(35)//设置当前刻度
-                .setSectionMark(10, true)//设置分段
-                .setTrackColor(R.color.violet, R.color.__picker_item_selected_cover)//设置选择和未选的颜色
-                .setText(10, R.color.tan, 0);//设置刻度值的字体
+        sbTest1.getConfigBuilder()
+                .min(0)
+                .max(50)//设置范围
+                .progress(35)//设置当前刻度
+                .sectionCount(10)//设置分段
+                .trackColor(ContextCompat.getColor(this, R.color.violet))//设置选择和未选的颜色
+                .secondTrackColor(ContextCompat.getColor(this, R.color.__picker_item_selected_cover))
+                .bubbleTextSize(10)
+                .bubbleTextColor(ContextCompat.getColor(this, R.color.tan))
+                .sectionTextPosition(ZXSeekBar.TextPosition.SIDES)
+                .build();
 
-        sbTest2.setRange(30, 100)//设置范围
-                .setProgress(50)//设置当前刻度
-                .setSectionMark(5, true)//设置分段
-                .setTrackColor(R.color.tan, R.color.steelblue)//设置选择和未选的颜色
-                .setText(10, R.color.tan, ZXSeekBar.TextPosition.BOTTOM_SIDES);//设置刻度值的字体
+        sbTest2.getConfigBuilder()
+                .min(30)
+                .max(100)//设置范围
+                .progress(50)//设置当前刻度
+                .sectionCount(5)//设置分段
+                .trackColor(ContextCompat.getColor(this, R.color.tan))//设置选择和未选的颜色
+                .secondTrackColor(ContextCompat.getColor(this, R.color.steelblue))
+                .bubbleTextSize(10)
+                .bubbleTextColor(ContextCompat.getColor(this, R.color.tan))
+                .sectionTextPosition(ZXSeekBar.TextPosition.BOTTOM_SIDES)
+                .build();
 
-        sbTest3.setRange(0, 50)//设置范围
-                .setProgress(35)//设置当前刻度
-                .setSectionMark(10, false)//设置分段
-                .setTrackColor(R.color.colorPrimaryDark, R.color.__picker_text_120)//设置选择和未选的颜色
-                .setText(10, R.color.tan, ZXSeekBar.TextPosition.SIDES)
-                .setOnProgressChangedListener(new ZXSeekBar.OnProgressChangedListener() {
-                    @Override
-                    public void onProgressChanged(int progress, float progressFloat) {
-                        ZXToastUtil.showToast(progress + "");
-                    }
+        sbTest3.getConfigBuilder()
+                .min(0)
+                .max(50)//设置范围
+                .progress(35)//设置当前刻度
+                .sectionCount(5)//设置分段
+                .trackColor(ContextCompat.getColor(this, R.color.tan))//设置选择和未选的颜色
+                .secondTrackColor(ContextCompat.getColor(this, R.color.steelblue))
+                .bubbleTextSize(10)
+                .bubbleTextColor(ContextCompat.getColor(this, R.color.tan))
+                .sectionTextPosition(ZXSeekBar.TextPosition.BOTTOM_SIDES)
+                .build();
+        sbTest3.setOnProgressChangedListener(new ZXSeekBar.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(ZXSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+                ZXToastUtil.showToast(progress + "");
+            }
 
-                    @Override
-                    public void getProgressOnActionUp(int progress, float progressFloat) {
+            @Override
+            public void getProgressOnActionUp(ZXSeekBar bubbleSeekBar, int progress, float progressFloat) {
 
-                    }
+            }
 
-                    @Override
-                    public void getProgressOnFinally(int progress, float progressFloat) {
+            @Override
+            public void getProgressOnFinally(ZXSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
 
-                    }
-                });//设置刻度值的字体
+            }
+        });//设置刻度值的字体
 
-        sbTest4.setRange(0, 50)//设置范围
-                .setProgress(35)//设置当前刻度
-                .setSectionMark(10, true)//设置分段
-                .setTrackColor(R.color.violet, R.color.__picker_item_selected_cover)//设置选择和未选的颜色
-                .setText(20, R.color.__picker_pager_bg, ZXSeekBar.TextPosition.BELOW_SECTION_MARK);//设置刻度值的字体
+        sbTest4.getConfigBuilder()
+                .min(0)
+                .max(50)//设置范围
+                .progress(35)//设置当前刻度
+                .sectionCount(5)//设置分段
+                .trackColor(ContextCompat.getColor(this, R.color.tan))//设置选择和未选的颜色
+                .secondTrackColor(ContextCompat.getColor(this, R.color.steelblue))
+                .bubbleTextSize(10)
+                .bubbleTextColor(ContextCompat.getColor(this, R.color.tan))
+                .sectionTextPosition(ZXSeekBar.TextPosition.BOTTOM_SIDES)
+                .build();
     }
 }

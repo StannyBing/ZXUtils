@@ -1,4 +1,4 @@
-package com.zx.zxutils.forutil;
+package com.zx.zxutils.listener;
 
 /**
  * Created by Xiangb on 2017/7/14.

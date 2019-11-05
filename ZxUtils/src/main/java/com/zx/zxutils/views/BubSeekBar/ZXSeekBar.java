@@ -5,7 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,33 +19,38 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 
 import com.zx.zxutils.R;
-import com.zx.zxutils.util.ZXSystemUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.math.BigDecimal;
 
+import static com.zx.zxutils.util.ZXSystemUtil.sp2px;
 import static com.zx.zxutils.views.BubSeekBar.BubbleUtils.dp2px;
-import static com.zx.zxutils.views.BubSeekBar.BubbleUtils.sp2px;
 import static com.zx.zxutils.views.BubSeekBar.ZXSeekBar.TextPosition.BELOW_SECTION_MARK;
 import static com.zx.zxutils.views.BubSeekBar.ZXSeekBar.TextPosition.BOTTOM_SIDES;
 import static com.zx.zxutils.views.BubSeekBar.ZXSeekBar.TextPosition.SIDES;
 
 /**
- *
- * Create By Xiangb On 2017/7/19
- * 功能：带刻度的seekbar
- *
+ * A beautiful and powerful Android custom seek bar, which has a bubble view with progress
+ * appearing upon when seeking. Highly customizable, mostly demands has been considered.
+ * <p>
+ * Created by woxingxiao on 2016-10-27.
  */
 public class ZXSeekBar extends View {
 
@@ -80,8 +87,13 @@ public class ZXSeekBar extends View {
     private int mThumbTextColor; // text color of progress-text
     private boolean isShowProgressInFloat; // show bubble-progress in float or not
     private boolean isTouchToSeek; // touch anywhere on track to quickly seek
+    private boolean isSeekStepSection; // seek one step by one section, the progress is discrete
     private boolean isSeekBySection; // seek by section, the progress may not be linear
     private long mAnimDuration; // duration of animation
+    private boolean isAlwaysShowBubble; // bubble shows all time
+    private long mAlwaysShowBubbleDelay; // the delay duration before bubble shows all the time
+    private boolean isHideBubble; // hide bubble
+    private boolean isRtl; // right to left
 
     private int mBubbleColor;// color of bubble
     private int mBubbleTextSize; // text size of bubble-progress
@@ -94,6 +106,10 @@ public class ZXSeekBar extends View {
     private float mSectionOffset; // pixel length of one section
     private boolean isThumbOnDragging; // is thumb on dragging or not
     private int mTextSpace; // space between text and track
+    private boolean triggerBubbleShowing;
+    private SparseArray<String> mSectionTextArray = new SparseArray<>();
+    private float mPreThumbCenterX;
+    private boolean triggerSeekBySection;
 
     private OnProgressChangedListener mProgressListener; // progress changing listener
     private float mLeft; // space between left of track and left of the view
@@ -112,7 +128,6 @@ public class ZXSeekBar extends View {
     private boolean isTouchToSeekAnimEnd = true;
     private float mPreSecValue; // previous SectionValue
     private BubbleConfigBuilder mConfigBuilder; // config attributes
-    private boolean isChangeTextColor = false;
 
     public ZXSeekBar(Context context) {
         this(context, null);
@@ -135,17 +150,18 @@ public class ZXSeekBar extends View {
                 mTrackSize + dp2px(2));
         mThumbRadius = a.getDimensionPixelSize(R.styleable.ZXSeekBar_bsb_thumb_radius,
                 mSecondTrackSize + dp2px(2));
-        mThumbRadiusOnDragging = a.getDimensionPixelSize(R.styleable.ZXSeekBar_bsb_thumb_radius,
+        mThumbRadiusOnDragging = a.getDimensionPixelSize(R.styleable.ZXSeekBar_bsb_thumb_radius_on_dragging,
                 mSecondTrackSize * 2);
         mSectionCount = a.getInteger(R.styleable.ZXSeekBar_bsb_section_count, 10);
         mTrackColor = a.getColor(R.styleable.ZXSeekBar_bsb_track_color,
-                ZXSystemUtil.transColor( R.color.bobPrimary));
+                ContextCompat.getColor(context, R.color.bobPrimary));
         mSecondTrackColor = a.getColor(R.styleable.ZXSeekBar_bsb_second_track_color,
-                ZXSystemUtil.transColor( R.color.bobAccent));
+                ContextCompat.getColor(context, R.color.bobAccent));
         mThumbColor = a.getColor(R.styleable.ZXSeekBar_bsb_thumb_color, mSecondTrackColor);
         isShowSectionText = a.getBoolean(R.styleable.ZXSeekBar_bsb_show_section_text, false);
         mSectionTextSize = a.getDimensionPixelSize(R.styleable.ZXSeekBar_bsb_section_text_size, sp2px(14));
         mSectionTextColor = a.getColor(R.styleable.ZXSeekBar_bsb_section_text_color, mTrackColor);
+        isSeekStepSection = a.getBoolean(R.styleable.ZXSeekBar_bsb_seek_step_section, false);
         isSeekBySection = a.getBoolean(R.styleable.ZXSeekBar_bsb_seek_by_section, false);
         int pos = a.getInteger(R.styleable.ZXSeekBar_bsb_section_text_position, NONE);
         if (pos == 0) {
@@ -170,9 +186,13 @@ public class ZXSeekBar extends View {
         int duration = a.getInteger(R.styleable.ZXSeekBar_bsb_anim_duration, -1);
         mAnimDuration = duration < 0 ? 200 : duration;
         isTouchToSeek = a.getBoolean(R.styleable.ZXSeekBar_bsb_touch_to_seek, false);
+        isAlwaysShowBubble = a.getBoolean(R.styleable.ZXSeekBar_bsb_always_show_bubble, false);
+        duration = a.getInteger(R.styleable.ZXSeekBar_bsb_always_show_bubble_delay, 0);
+        mAlwaysShowBubbleDelay = duration < 0 ? 0 : duration;
+        isHideBubble = a.getBoolean(R.styleable.ZXSeekBar_bsb_hide_bubble, false);
+        isRtl = a.getBoolean(R.styleable.ZXSeekBar_bsb_rtl, false);
+        setEnabled(a.getBoolean(R.styleable.ZXSeekBar_android_enabled, isEnabled()));
         a.recycle();
-
-        initConfigByPriority();
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -180,8 +200,13 @@ public class ZXSeekBar extends View {
         mPaint.setTextAlign(Paint.Align.CENTER);
 
         mRectText = new Rect();
-
         mTextSpace = dp2px(2);
+
+        initConfigByPriority();
+
+        if (isHideBubble)
+            return;
+
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         // init BubbleView
@@ -189,105 +214,22 @@ public class ZXSeekBar extends View {
         mBubbleView.setProgressText(isShowProgressInFloat ?
                 String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
 
+        mLayoutParams = new WindowManager.LayoutParams();
+        mLayoutParams.gravity = Gravity.START | Gravity.TOP;
+        mLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        mLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        mLayoutParams.format = PixelFormat.TRANSLUCENT;
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+        // MIUI禁止了开发者使用TYPE_TOAST，Android 7.1.1 对TYPE_TOAST的使用更严格
+        if (BubbleUtils.isMIUI() || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
+        } else {
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+        }
+
         calculateRadiusOfBubble();
-    }
-
-    /**
-     * 设置范围 默认是0-100
-     *
-     * @param min
-     * @return
-     */
-    public ZXSeekBar setRange(float min, float max) {
-        mMin = min;
-        mMax = max;
-        initConfigByPriority();
-        return this;
-    }
-
-    /**
-     * 是否显示分段标记
-     *
-     * @param sectionCount
-     * @param autoAdjustMark
-     * @return
-     */
-    public ZXSeekBar setSectionMark(int sectionCount, boolean autoAdjustMark) {
-        isShowSectionMark = true;
-        mSectionCount = sectionCount;
-        isAutoAdjustSectionMark = autoAdjustMark;
-        initConfigByPriority();
-        return this;
-    }
-
-    /**
-     * 设置track的颜色
-     *
-     * @param leftColor
-     * @param rightColor
-     * @return
-     */
-    public ZXSeekBar setTrackColor(int leftColor, int rightColor) {
-        mTrackColor = ZXSystemUtil.transColor( rightColor);
-        if (!isChangeTextColor) {
-            mSectionTextColor = mTrackColor;
-        }
-        mSecondTrackColor =ZXSystemUtil.transColor(leftColor);
-        mThumbColor = mSecondTrackColor;
-        mThumbTextColor = mSecondTrackColor;
-        mBubbleColor = mSecondTrackColor;
-        initConfigByPriority();
-        return this;
-    }
-
-    /**
-     * @param textSize
-     * @param textColor
-     * @param textPosition 0:SIDES 1:BOTTOM_SIDES 2:BELOW_SECTION_MARK -1:NONE
-     * @return
-     */
-    public ZXSeekBar setText(int textSize, int textColor, int textPosition) {
-        if (textSize != -1) {
-            mSectionTextSize = sp2px(textSize);
-            mThumbTextSize = sp2px(textSize);
-            mBubbleTextSize = sp2px(textSize);
-        }
-        if (textColor != -1) {
-            mSectionTextColor = textColor;
-        }
-        mSectionTextPosition = textPosition;
-
-        isShowSectionText = true;
-        isShowThumbText = true;
-        initConfigByPriority();
-        return this;
-    }
-
-    /**
-     * @param textSize
-     * @param textColor
-     * @return
-     */
-    public ZXSeekBar setText(int textSize, int textColor) {
-        setText(textSize, textColor, 0);
-        return this;
-    }
-
-    /**
-     * @param textSize
-     * @return
-     */
-    public ZXSeekBar setText(int textSize) {
-        setText(textSize, -1);
-        return this;
-    }
-
-    /**
-     * @return
-     */
-    public ZXSeekBar setText() {
-        setText(-1);
-        return this;
     }
 
     private void initConfigByPriority() {
@@ -341,6 +283,13 @@ public class ZXSeekBar extends View {
         if (mSectionTextInterval < 1) {
             mSectionTextInterval = 1;
         }
+
+        initSectionTextArray();
+
+        if (isSeekStepSection) {
+            isSeekBySection = false;
+            isAutoAdjustSectionMark = false;
+        }
         if (isAutoAdjustSectionMark && !isShowSectionMark) {
             isAutoAdjustSectionMark = false;
         }
@@ -351,7 +300,12 @@ public class ZXSeekBar extends View {
             }
             isShowSectionMark = true;
             isAutoAdjustSectionMark = true;
-            isTouchToSeek = false;
+        }
+        if (isHideBubble) {
+            isAlwaysShowBubble = false;
+        }
+        if (isAlwaysShowBubble) {
+            setProgress(mProgress);
         }
 
         mThumbTextSize = isFloatType || isSeekBySection || (isShowSectionText && mSectionTextPosition ==
@@ -367,17 +321,25 @@ public class ZXSeekBar extends View {
         // 计算滑到两端气泡里文字需要显示的宽度，比较取最大值为气泡的半径
         String text;
         if (isShowProgressInFloat) {
-            text = float2String(mMin);
+            text = float2String(isRtl ? mMax : mMin);
         } else {
-            text = getMinText();
+            if (isRtl) {
+                text = isFloatType ? float2String(mMax) : String.valueOf((int) mMax);
+            } else {
+                text = isFloatType ? float2String(mMin) : String.valueOf((int) mMin);
+            }
         }
         mPaint.getTextBounds(text, 0, text.length(), mRectText);
         int w1 = (mRectText.width() + mTextSpace * 2) >> 1;
 
         if (isShowProgressInFloat) {
-            text = float2String(mMax);
+            text = float2String(isRtl ? mMin : mMax);
         } else {
-            text = getMaxText();
+            if (isRtl) {
+                text = isFloatType ? float2String(mMin) : String.valueOf((int) mMin);
+            } else {
+                text = isFloatType ? float2String(mMax) : String.valueOf((int) mMax);
+            }
         }
         mPaint.getTextBounds(text, 0, text.length(), mRectText);
         int w2 = (mRectText.width() + mTextSpace * 2) >> 1;
@@ -387,6 +349,31 @@ public class ZXSeekBar extends View {
         mBubbleRadius = max + mTextSpace;
     }
 
+    private void initSectionTextArray() {
+        boolean ifBelowSection = mSectionTextPosition == BELOW_SECTION_MARK;
+        boolean ifInterval = mSectionTextInterval > 1 && mSectionCount % 2 == 0;
+        float sectionValue;
+        for (int i = 0; i <= mSectionCount; i++) {
+            sectionValue = isRtl ? mMax - mSectionValue * i : mMin + mSectionValue * i;
+
+            if (ifBelowSection) {
+                if (ifInterval) {
+                    if (i % mSectionTextInterval == 0) {
+                        sectionValue = isRtl ? mMax - mSectionValue * i : mMin + mSectionValue * i;
+                    } else {
+                        continue;
+                    }
+                }
+            } else {
+                if (i != 0 && i != mSectionCount) {
+                    continue;
+                }
+            }
+
+            mSectionTextArray.put(i, isFloatType ? float2String(sectionValue) : (int) sectionValue + "");
+        }
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -394,15 +381,16 @@ public class ZXSeekBar extends View {
         int height = mThumbRadiusOnDragging * 2; // 默认高度为拖动时thumb圆的直径
         if (isShowThumbText) {
             mPaint.setTextSize(mThumbTextSize);
-            mPaint.getTextBounds("j", 0, 1, mRectText); // “j”是字母和阿拉伯数字中最高的
-            height += mRectText.height() + mTextSpace; // 如果显示实时进度，则原来基础上加上进度文字高度和间隔
+            mPaint.getTextBounds("j", 0, 1, mRectText); // j is the highest of all letters and numbers
+            height += mRectText.height(); // 如果显示实时进度，则原来基础上加上进度文字高度和间隔
         }
         if (isShowSectionText && mSectionTextPosition >= BOTTOM_SIDES) { // 如果Section值在track之下显示，比较取较大值
             mPaint.setTextSize(mSectionTextSize);
             mPaint.getTextBounds("j", 0, 1, mRectText);
-            height = Math.max(height, mThumbRadiusOnDragging * 2 + mRectText.height() + mTextSpace);
+            height = Math.max(height, mThumbRadiusOnDragging * 2 + mRectText.height());
         }
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec), height);
+        height += mTextSpace * 2;
+        setMeasuredDimension(resolveSize(dp2px(180), widthMeasureSpec), height);
 
         mLeft = getPaddingLeft() + mThumbRadiusOnDragging;
         mRight = getMeasuredWidth() - getPaddingRight() - mThumbRadiusOnDragging;
@@ -411,20 +399,20 @@ public class ZXSeekBar extends View {
             mPaint.setTextSize(mSectionTextSize);
 
             if (mSectionTextPosition == SIDES) {
-                String text = getMinText();
+                String text = mSectionTextArray.get(0);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
                 mLeft += (mRectText.width() + mTextSpace);
 
-                text = getMaxText();
+                text = mSectionTextArray.get(mSectionCount);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
                 mRight -= (mRectText.width() + mTextSpace);
             } else if (mSectionTextPosition >= BOTTOM_SIDES) {
-                String text = getMinText();
+                String text = mSectionTextArray.get(0);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
                 float max = Math.max(mThumbRadiusOnDragging, mRectText.width() / 2f);
                 mLeft = getPaddingLeft() + max + mTextSpace;
 
-                text = getMaxText();
+                text = mSectionTextArray.get(mSectionCount);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
                 max = Math.max(mThumbRadiusOnDragging, mRectText.width() / 2f);
                 mRight = getMeasuredWidth() - getPaddingRight() - max - mTextSpace;
@@ -432,12 +420,12 @@ public class ZXSeekBar extends View {
         } else if (isShowThumbText && mSectionTextPosition == NONE) {
             mPaint.setTextSize(mThumbTextSize);
 
-            String text = getMinText();
+            String text = mSectionTextArray.get(0);
             mPaint.getTextBounds(text, 0, text.length(), mRectText);
             float max = Math.max(mThumbRadiusOnDragging, mRectText.width() / 2f);
             mLeft = getPaddingLeft() + max + mTextSpace;
 
-            text = getMaxText();
+            text = mSectionTextArray.get(mSectionCount);
             mPaint.getTextBounds(text, 0, text.length(), mRectText);
             max = Math.max(mThumbRadiusOnDragging, mRectText.width() / 2f);
             mRight = getMeasuredWidth() - getPaddingRight() - max - mTextSpace;
@@ -446,9 +434,18 @@ public class ZXSeekBar extends View {
         mTrackLength = mRight - mLeft;
         mSectionOffset = mTrackLength * 1f / mSectionCount;
 
-        mBubbleView.measure(widthMeasureSpec, heightMeasureSpec);
+        if (!isHideBubble) {
+            mBubbleView.measure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
 
-        locatePositionOnScreen();
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (!isHideBubble) {
+            locatePositionInWindow();
+        }
     }
 
     /**
@@ -467,15 +464,37 @@ public class ZXSeekBar extends View {
      * 先计算进度mProgress为mMin时BubbleView的中心坐标（mBubbleCenterRawSolidX，mBubbleCenterRawSolidY），
      * 然后根据进度来增量计算横坐标mBubbleCenterRawX，再动态设置LayoutParameter.x，就实现了气泡跟随滑动移动。
      */
-    private void locatePositionOnScreen() {
-        getLocationOnScreen(mPoint);
+    private void locatePositionInWindow() {
+        getLocationInWindow(mPoint);
 
-        mBubbleCenterRawSolidX = mPoint[0] + mLeft - mBubbleView.getMeasuredWidth() / 2f;
-        mBubbleCenterRawX = mBubbleCenterRawSolidX + mTrackLength * (mProgress - mMin) / mDelta;
+        ViewParent parent = getParent();
+        if (parent instanceof View && ((View) parent).getMeasuredWidth() > 0) {
+            mPoint[0] %= ((View) parent).getMeasuredWidth();
+        }
+
+        if (isRtl) {
+            mBubbleCenterRawSolidX = mPoint[0] + mRight - mBubbleView.getMeasuredWidth() / 2f;
+        } else {
+            mBubbleCenterRawSolidX = mPoint[0] + mLeft - mBubbleView.getMeasuredWidth() / 2f;
+        }
+        mBubbleCenterRawX = calculateCenterRawXofBubbleView();
         mBubbleCenterRawSolidY = mPoint[1] - mBubbleView.getMeasuredHeight();
         mBubbleCenterRawSolidY -= dp2px(24);
         if (BubbleUtils.isMIUI()) {
-            mBubbleCenterRawSolidY += dp2px(4);
+            mBubbleCenterRawSolidY -= dp2px(4);
+        }
+
+        Context context = getContext();
+        if (context instanceof Activity) {
+            Window window = ((Activity) context).getWindow();
+            if (window != null) {
+                int flags = window.getAttributes().flags;
+                if ((flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0) {
+                    Resources res = Resources.getSystem();
+                    int id = res.getIdentifier("status_bar_height", "dimen", "android");
+                    mBubbleCenterRawSolidY += res.getDimensionPixelSize(id);
+                }
+            }
         }
     }
 
@@ -489,26 +508,27 @@ public class ZXSeekBar extends View {
 
         // draw sectionText SIDES or BOTTOM_SIDES
         if (isShowSectionText) {
-            mPaint.setTextSize(mSectionTextSize);
             mPaint.setColor(mSectionTextColor);
+            mPaint.setTextSize(mSectionTextSize);
+            mPaint.getTextBounds("0123456789", 0, "0123456789".length(), mRectText); // compute solid height
 
             if (mSectionTextPosition == SIDES) {
                 float y_ = yTop + mRectText.height() / 2f;
 
-                String text = getMinText();
+                String text = mSectionTextArray.get(0);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
                 canvas.drawText(text, xLeft + mRectText.width() / 2f, y_, mPaint);
                 xLeft += mRectText.width() + mTextSpace;
 
-                text = getMaxText();
+                text = mSectionTextArray.get(mSectionCount);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
-                canvas.drawText(text, xRight - mRectText.width() / 2f, y_, mPaint);
+                canvas.drawText(text, xRight - (mRectText.width() + 0.5f) / 2f, y_, mPaint);
                 xRight -= (mRectText.width() + mTextSpace);
 
             } else if (mSectionTextPosition >= BOTTOM_SIDES) {
                 float y_ = yTop + mThumbRadiusOnDragging + mTextSpace;
 
-                String text = getMinText();
+                String text = mSectionTextArray.get(0);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
                 y_ += mRectText.height();
                 xLeft = mLeft;
@@ -516,7 +536,7 @@ public class ZXSeekBar extends View {
                     canvas.drawText(text, xLeft, y_, mPaint);
                 }
 
-                text = getMaxText();
+                text = mSectionTextArray.get(mSectionCount);
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
                 xRight = mRight;
                 if (mSectionTextPosition == BOTTOM_SIDES) {
@@ -535,43 +555,48 @@ public class ZXSeekBar extends View {
 
         boolean isShowTextBelowSectionMark = isShowSectionText && mSectionTextPosition ==
                 BELOW_SECTION_MARK;
-        boolean conditionInterval = mSectionCount % 2 == 0;
 
         // draw sectionMark & sectionText BELOW_SECTION_MARK
         if (isShowTextBelowSectionMark || isShowSectionMark) {
-            float r = (mThumbRadiusOnDragging - dp2px(2)) / 2f;
-            float junction = mTrackLength / mDelta * Math.abs(mProgress - mMin) + mLeft; // 交汇点
             mPaint.setTextSize(mSectionTextSize);
             mPaint.getTextBounds("0123456789", 0, "0123456789".length(), mRectText); // compute solid height
 
             float x_;
             float y_ = yTop + mRectText.height() + mThumbRadiusOnDragging + mTextSpace;
+            float r = (mThumbRadiusOnDragging - dp2px(2)) / 2f;
+            float junction; // where secondTrack meets firstTrack
+            if (isRtl) {
+                junction = mRight - mTrackLength / mDelta * Math.abs(mProgress - mMin);
+            } else {
+                junction = mLeft + mTrackLength / mDelta * Math.abs(mProgress - mMin);
+            }
 
             for (int i = 0; i <= mSectionCount; i++) {
                 x_ = xLeft + i * mSectionOffset;
-                mPaint.setColor(x_ <= junction ? mSecondTrackColor : mTrackColor);
+                if (isRtl) {
+                    mPaint.setColor(x_ <= junction ? mTrackColor : mSecondTrackColor);
+                } else {
+                    mPaint.setColor(x_ <= junction ? mSecondTrackColor : mTrackColor);
+                }
                 // sectionMark
                 canvas.drawCircle(x_, yTop, r, mPaint);
 
                 // sectionText belows section
                 if (isShowTextBelowSectionMark) {
                     mPaint.setColor(mSectionTextColor);
-
-                    if (mSectionTextInterval > 1) {
-                        if (conditionInterval && i % mSectionTextInterval == 0) {
-                            float m = mMin + mSectionValue * i;
-                            canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
-                        }
-                    } else {
-                        float m = mMin + mSectionValue * i;
-                        canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
+                    if (mSectionTextArray.get(i, null) != null) {
+                        canvas.drawText(mSectionTextArray.get(i), x_, y_, mPaint);
                     }
                 }
             }
         }
 
-        if (!isThumbOnDragging) {
-            mThumbCenterX = mTrackLength / mDelta * (mProgress - mMin) + xLeft;
+        if (!isThumbOnDragging || isAlwaysShowBubble) {
+            if (isRtl) {
+                mThumbCenterX = xRight - mTrackLength / mDelta * (mProgress - mMin);
+            } else {
+                mThumbCenterX = xLeft + mTrackLength / mDelta * (mProgress - mMin);
+            }
         }
 
         // draw thumbText
@@ -592,12 +617,20 @@ public class ZXSeekBar extends View {
         // draw track
         mPaint.setColor(mSecondTrackColor);
         mPaint.setStrokeWidth(mSecondTrackSize);
-        canvas.drawLine(xLeft, yTop, mThumbCenterX, yTop, mPaint);
+        if (isRtl) {
+            canvas.drawLine(xRight, yTop, mThumbCenterX, yTop, mPaint);
+        } else {
+            canvas.drawLine(xLeft, yTop, mThumbCenterX, yTop, mPaint);
+        }
 
         // draw second track
         mPaint.setColor(mTrackColor);
         mPaint.setStrokeWidth(mTrackSize);
-        canvas.drawLine(mThumbCenterX, yTop, xRight, yTop, mPaint);
+        if (isRtl) {
+            canvas.drawLine(mThumbCenterX, yTop, xLeft, yTop, mPaint);
+        } else {
+            canvas.drawLine(mThumbCenterX, yTop, xRight, yTop, mPaint);
+        }
 
         // draw thumb
         mPaint.setColor(mThumbColor);
@@ -616,29 +649,83 @@ public class ZXSeekBar extends View {
         });
     }
 
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        if (isHideBubble || !isAlwaysShowBubble)
+            return;
+
+        if (visibility != VISIBLE) {
+            hideBubble();
+        } else {
+            if (triggerBubbleShowing) {
+                showBubble();
+            }
+        }
+        super.onVisibilityChanged(changedView, visibility);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        hideBubble();
+        super.onDetachedFromWindow();
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
     float dx;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        getParent().requestDisallowInterceptTouchEvent(true);
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+                performClick();
+                getParent().requestDisallowInterceptTouchEvent(true);
+
                 isThumbOnDragging = isThumbTouched(event);
                 if (isThumbOnDragging) {
-                    showBubble();
+                    if (isSeekBySection && !triggerSeekBySection) {
+                        triggerSeekBySection = true;
+                    }
+                    if (isAlwaysShowBubble && !triggerBubbleShowing) {
+                        triggerBubbleShowing = true;
+                    }
+                    if (!isHideBubble) {
+                        showBubble();
+                    }
+
                     invalidate();
                 } else if (isTouchToSeek && isTrackTouched(event)) {
-                    mThumbCenterX = event.getX();
-                    if (mThumbCenterX < mLeft) {
-                        mThumbCenterX = mLeft;
+                    isThumbOnDragging = true;
+                    if (isSeekBySection && !triggerSeekBySection) {
+                        triggerSeekBySection = true;
                     }
-                    if (mThumbCenterX > mRight) {
-                        mThumbCenterX = mRight;
+                    if (isAlwaysShowBubble) {
+                        hideBubble();
+                        triggerBubbleShowing = true;
                     }
-                    mProgress = (mThumbCenterX - mLeft) * mDelta / mTrackLength + mMin;
-                    mBubbleCenterRawX = mBubbleCenterRawSolidX + mTrackLength * (mProgress - mMin) / mDelta;
 
-                    showBubble();
+                    if (isSeekStepSection) {
+                        mThumbCenterX = mPreThumbCenterX = calThumbCxWhenSeekStepSection(event.getX());
+                    } else {
+                        mThumbCenterX = event.getX();
+                        if (mThumbCenterX < mLeft) {
+                            mThumbCenterX = mLeft;
+                        }
+                        if (mThumbCenterX > mRight) {
+                            mThumbCenterX = mRight;
+                        }
+                    }
+
+                    mProgress = calculateProgress();
+
+                    if (!isHideBubble) {
+                        mBubbleCenterRawX = calculateCenterRawXofBubbleView();
+                        showBubble();
+                    }
+
                     invalidate();
                 }
 
@@ -647,77 +734,117 @@ public class ZXSeekBar extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (isThumbOnDragging) {
-                    mThumbCenterX = event.getX() + dx;
-                    if (mThumbCenterX < mLeft) {
-                        mThumbCenterX = mLeft;
+                    boolean flag = true;
+
+                    if (isSeekStepSection) {
+                        float x = calThumbCxWhenSeekStepSection(event.getX());
+                        if (x != mPreThumbCenterX) {
+                            mThumbCenterX = mPreThumbCenterX = x;
+                        } else {
+                            flag = false;
+                        }
+                    } else {
+                        mThumbCenterX = event.getX() + dx;
+                        if (mThumbCenterX < mLeft) {
+                            mThumbCenterX = mLeft;
+                        }
+                        if (mThumbCenterX > mRight) {
+                            mThumbCenterX = mRight;
+                        }
                     }
-                    if (mThumbCenterX > mRight) {
-                        mThumbCenterX = mRight;
-                    }
-                    mProgress = (mThumbCenterX - mLeft) * mDelta / mTrackLength + mMin;
 
-                    mBubbleCenterRawX = mBubbleCenterRawSolidX + mTrackLength * (mProgress - mMin) / mDelta;
-                    mLayoutParams.x = (int) (mBubbleCenterRawX + 0.5f);
-                    mWindowManager.updateViewLayout(mBubbleView, mLayoutParams);
-                    mBubbleView.setProgressText(isShowProgressInFloat ?
-                            String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
+                    if (flag) {
+                        mProgress = calculateProgress();
 
-                    invalidate();
+                        if (!isHideBubble && mBubbleView.getParent() != null) {
+                            mBubbleCenterRawX = calculateCenterRawXofBubbleView();
+                            mLayoutParams.x = (int) (mBubbleCenterRawX + 0.5f);
+                            mWindowManager.updateViewLayout(mBubbleView, mLayoutParams);
+                            mBubbleView.setProgressText(isShowProgressInFloat ?
+                                    String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
+                        } else {
+                            processProgress();
+                        }
 
-                    if (mProgressListener != null) {
-                        mProgressListener.onProgressChanged(getProgress(), getProgressFloat());
+                        invalidate();
+
+                        if (mProgressListener != null) {
+                            mProgressListener.onProgressChanged(this, getProgress(), getProgressFloat(), true);
+                        }
                     }
                 }
 
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                getParent().requestDisallowInterceptTouchEvent(false);
+
                 if (isAutoAdjustSectionMark) {
                     if (isTouchToSeek) {
-                        mBubbleView.postDelayed(new Runnable() {
+                        postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 isTouchToSeekAnimEnd = false;
                                 autoAdjustSection();
                             }
-                        }, isThumbOnDragging ? 0 : 300);
+                        }, mAnimDuration);
                     } else {
                         autoAdjustSection();
                     }
                 } else if (isThumbOnDragging || isTouchToSeek) {
-                    mBubbleView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mBubbleView.animate().alpha(0f).setDuration(mAnimDuration)
-                                    .setListener(new AnimatorListenerAdapter() {
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            hideBubble();
+                    if (isHideBubble) {
+                        animate()
+                                .setDuration(mAnimDuration)
+                                .setStartDelay(!isThumbOnDragging && isTouchToSeek ? 300 : 0)
+                                .setListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        isThumbOnDragging = false;
+                                        invalidate();
+                                    }
 
-                                            isThumbOnDragging = false;
-                                            invalidate();
+                                    @Override
+                                    public void onAnimationCancel(Animator animation) {
+                                        isThumbOnDragging = false;
+                                        invalidate();
+                                    }
+                                }).start();
+                    } else {
+                        postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mBubbleView.animate()
+                                        .alpha(isAlwaysShowBubble ? 1f : 0f)
+                                        .setDuration(mAnimDuration)
+                                        .setListener(new AnimatorListenerAdapter() {
+                                            @Override
+                                            public void onAnimationEnd(Animator animation) {
+                                                if (!isAlwaysShowBubble) {
+                                                    hideBubble();
+                                                }
 
-                                            if (mProgressListener != null) {
-                                                mProgressListener.onProgressChanged(getProgress(),
-                                                        getProgressFloat());
+                                                isThumbOnDragging = false;
+                                                invalidate();
                                             }
-                                        }
 
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {
-                                            hideBubble();
+                                            @Override
+                                            public void onAnimationCancel(Animator animation) {
+                                                if (!isAlwaysShowBubble) {
+                                                    hideBubble();
+                                                }
 
-                                            isThumbOnDragging = false;
-                                            invalidate();
-                                        }
-                                    }).start();
-
-                        }
-                    }, !isThumbOnDragging && isTouchToSeek ? 300 : 0);
+                                                isThumbOnDragging = false;
+                                                invalidate();
+                                            }
+                                        }).start();
+                            }
+                        }, mAnimDuration);
+                    }
                 }
 
                 if (mProgressListener != null) {
-                    mProgressListener.getProgressOnActionUp(getProgress(), getProgressFloat());
+                    mProgressListener.onProgressChanged(this, getProgress(), getProgressFloat(), true);
+                    mProgressListener.getProgressOnActionUp(this, getProgress(), getProgressFloat());
                 }
 
                 break;
@@ -730,7 +857,11 @@ public class ZXSeekBar extends View {
      * Detect effective touch of thumb
      */
     private boolean isThumbTouched(MotionEvent event) {
-        float x = mTrackLength / mDelta * (mProgress - mMin) + mLeft;
+        if (!isEnabled())
+            return false;
+
+        float distance = mTrackLength / mDelta * (mProgress - mMin);
+        float x = isRtl ? mRight - distance : mLeft + distance;
         float y = getMeasuredHeight() / 2f;
         return (event.getX() - x) * (event.getX() - x) + (event.getY() - y) * (event.getY() - y)
                 <= (mLeft + dp2px(8)) * (mLeft + dp2px(8));
@@ -740,51 +871,31 @@ public class ZXSeekBar extends View {
      * Detect effective touch of track
      */
     private boolean isTrackTouched(MotionEvent event) {
-        return event.getX() >= getPaddingLeft() && event.getX() <= getMeasuredWidth() - getPaddingRight()
-                && event.getY() >= getPaddingTop() && event.getY() <= getPaddingTop() + mThumbRadiusOnDragging * 2;
+        return isEnabled() && event.getX() >= getPaddingLeft() && event.getX() <= getMeasuredWidth() - getPaddingRight()
+                && event.getY() >= getPaddingTop() && event.getY() <= getMeasuredHeight() - getPaddingBottom();
     }
 
     /**
-     * Showing the Bubble depends the way that the WindowManager adds a Toast type view to the Window.
-     * <p>
-     * 显示气泡
-     * 原理是利用WindowManager动态添加一个与Toast相同类型的BubbleView，消失时再移除
+     * If the thumb is being dragged, calculate the thumbCenterX when the seek_step_section is true.
      */
-    private void showBubble() {
-        if (mBubbleView.getParent() != null) {
-            return;
-        }
+    private float calThumbCxWhenSeekStepSection(float touchedX) {
+        if (touchedX <= mLeft) return mLeft;
+        if (touchedX >= mRight) return mRight;
 
-        if (mLayoutParams == null) {
-            mLayoutParams = new WindowManager.LayoutParams();
-            mLayoutParams.gravity = Gravity.START | Gravity.TOP;
-            mLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-            mLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            mLayoutParams.format = PixelFormat.TRANSLUCENT;
-            mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                    | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
-            // MIUI禁止了开发者使用TYPE_TOAST，Android 7.1.1 对TYPE_TOAST的使用更严格
-            if (BubbleUtils.isMIUI() || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
-            } else {
-                mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+        int i;
+        float x = 0;
+        for (i = 0; i <= mSectionCount; i++) {
+            x = i * mSectionOffset + mLeft;
+            if (x <= touchedX && touchedX - x <= mSectionOffset) {
+                break;
             }
         }
-        mLayoutParams.x = (int) (mBubbleCenterRawX + 0.5f);
-        mLayoutParams.y = (int) (mBubbleCenterRawSolidY + 0.5f);
 
-        mBubbleView.setAlpha(0);
-        mBubbleView.setVisibility(VISIBLE);
-        mBubbleView.animate().alpha(1f).setDuration(mAnimDuration)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                        mWindowManager.addView(mBubbleView, mLayoutParams);
-                    }
-                }).start();
-        mBubbleView.setProgressText(isShowProgressInFloat ?
-                String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
+        if (touchedX - x <= mSectionOffset / 2f) {
+            return x;
+        } else {
+            return (i + 1) * mSectionOffset + mLeft;
+        }
     }
 
     /**
@@ -818,52 +929,65 @@ public class ZXSeekBar extends View {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     mThumbCenterX = (float) animation.getAnimatedValue();
-                    mProgress = (mThumbCenterX - mLeft) * mDelta / mTrackLength + mMin;
+                    mProgress = calculateProgress();
 
-                    mBubbleCenterRawX = mBubbleCenterRawSolidX + mThumbCenterX - mLeft;
-                    mLayoutParams.x = (int) (mBubbleCenterRawX + 0.5f);
-                    if (mBubbleView.getParent() != null) {
+                    if (!isHideBubble && mBubbleView.getParent() != null) {
+                        mBubbleCenterRawX = calculateCenterRawXofBubbleView();
+                        mLayoutParams.x = (int) (mBubbleCenterRawX + 0.5f);
                         mWindowManager.updateViewLayout(mBubbleView, mLayoutParams);
+                        mBubbleView.setProgressText(isShowProgressInFloat ?
+                                String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
+                    } else {
+                        processProgress();
                     }
-                    mBubbleView.setProgressText(isShowProgressInFloat ?
-                            String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
 
                     invalidate();
 
                     if (mProgressListener != null) {
-                        mProgressListener.onProgressChanged(getProgress(), getProgressFloat());
+                        mProgressListener.onProgressChanged(ZXSeekBar.this, getProgress(),
+                                getProgressFloat(), true);
                     }
                 }
             });
         }
 
-        ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mBubbleView, View.ALPHA, 0);
-
-        if (onSection) {
-            animatorSet.setDuration(mAnimDuration).play(alphaAnim);
+        if (isHideBubble) {
+            if (!onSection) {
+                animatorSet.setDuration(mAnimDuration).playTogether(valueAnim);
+            }
         } else {
-            animatorSet.setDuration(mAnimDuration).playTogether(valueAnim, alphaAnim);
+            ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mBubbleView, View.ALPHA, isAlwaysShowBubble ? 1 : 0);
+            if (onSection) {
+                animatorSet.setDuration(mAnimDuration).play(alphaAnim);
+            } else {
+                animatorSet.setDuration(mAnimDuration).playTogether(valueAnim, alphaAnim);
+            }
         }
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                hideBubble();
+                if (!isHideBubble && !isAlwaysShowBubble) {
+                    hideBubble();
+                }
 
-                mProgress = (mThumbCenterX - mLeft) * mDelta / mTrackLength + mMin;
+                mProgress = calculateProgress();
                 isThumbOnDragging = false;
                 isTouchToSeekAnimEnd = true;
                 invalidate();
 
                 if (mProgressListener != null) {
-                    mProgressListener.getProgressOnFinally(getProgress(), getProgressFloat());
+                    mProgressListener.getProgressOnFinally(ZXSeekBar.this, getProgress(),
+                            getProgressFloat(), true);
                 }
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                hideBubble();
+                if (!isHideBubble && !isAlwaysShowBubble) {
+                    hideBubble();
+                }
 
-                mProgress = (mThumbCenterX - mLeft) * mDelta / mTrackLength + mMin;
+                mProgress = calculateProgress();
                 isThumbOnDragging = false;
                 isTouchToSeekAnimEnd = true;
                 invalidate();
@@ -873,33 +997,90 @@ public class ZXSeekBar extends View {
     }
 
     /**
+     * Showing the Bubble depends the way that the WindowManager adds a Toast type view to the Window.
+     * <p>
+     * 显示气泡
+     * 原理是利用WindowManager动态添加一个与Toast相同类型的BubbleView，消失时再移除
+     */
+    private void showBubble() {
+        if (mBubbleView == null || mBubbleView.getParent() != null) {
+            return;
+        }
+
+        mLayoutParams.x = (int) (mBubbleCenterRawX + 0.5f);
+        mLayoutParams.y = (int) (mBubbleCenterRawSolidY + 0.5f);
+
+        mBubbleView.setAlpha(0);
+        mBubbleView.setVisibility(VISIBLE);
+        mBubbleView.animate().alpha(1f).setDuration(isTouchToSeek ? 0 : mAnimDuration)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        mWindowManager.addView(mBubbleView, mLayoutParams);
+                    }
+                }).start();
+        mBubbleView.setProgressText(isShowProgressInFloat ?
+                String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
+    }
+
+    /**
      * The WindowManager removes the BubbleView from the Window.
      */
     private void hideBubble() {
+        if (mBubbleView == null)
+            return;
+
         mBubbleView.setVisibility(GONE); // 防闪烁
         if (mBubbleView.getParent() != null) {
             mWindowManager.removeViewImmediate(mBubbleView);
         }
     }
 
+    private String float2String(float value) {
+        return String.valueOf(formatFloat(value));
+    }
+
+    private float formatFloat(float value) {
+        BigDecimal bigDecimal = BigDecimal.valueOf(value);
+        return bigDecimal.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
+    }
+
+    private float calculateCenterRawXofBubbleView() {
+        if (isRtl) {
+            return mBubbleCenterRawSolidX - mTrackLength * (mProgress - mMin) / mDelta;
+        } else {
+            return mBubbleCenterRawSolidX + mTrackLength * (mProgress - mMin) / mDelta;
+        }
+    }
+
+    private float calculateProgress() {
+        if (isRtl) {
+            return (mRight - mThumbCenterX) * mDelta / mTrackLength + mMin;
+        } else {
+            return (mThumbCenterX - mLeft) * mDelta / mTrackLength + mMin;
+        }
+    }
+
+    /////// Api begins /////////////////////////////////////////////////////////////////////////////
+
     /**
      * When BubbleSeekBar's parent view is scrollable, must listener to it's scrolling and call this
      * method to correct the offsets.
      */
     public void correctOffsetWhenContainerOnScrolling() {
-        locatePositionOnScreen();
+        if (isHideBubble)
+            return;
+
+        locatePositionInWindow();
 
         if (mBubbleView.getParent() != null) {
-            postInvalidate();
+            if (isAlwaysShowBubble) {
+                mLayoutParams.y = (int) (mBubbleCenterRawSolidY + 0.5f);
+                mWindowManager.updateViewLayout(mBubbleView, mLayoutParams);
+            } else {
+                postInvalidate();
+            }
         }
-    }
-
-    private String getMinText() {
-        return isFloatType ? float2String(mMin) : String.valueOf((int) mMin);
-    }
-
-    private String getMaxText() {
-        return isFloatType ? float2String(mMax) : String.valueOf((int) mMax);
     }
 
     public float getMin() {
@@ -910,47 +1091,84 @@ public class ZXSeekBar extends View {
         return mMax;
     }
 
-
-    public ZXSeekBar setProgress(float progress) {
+    public void setProgress(float progress) {
         mProgress = progress;
 
-        mBubbleCenterRawX = mBubbleCenterRawSolidX + mTrackLength * (mProgress - mMin) / mDelta;
-
         if (mProgressListener != null) {
-            mProgressListener.onProgressChanged(getProgress(), getProgressFloat());
-            mProgressListener.getProgressOnFinally(getProgress(), getProgressFloat());
+            mProgressListener.onProgressChanged(this, getProgress(), getProgressFloat(), false);
+            mProgressListener.getProgressOnFinally(this, getProgress(), getProgressFloat(), false);
+        }
+        if (!isHideBubble) {
+            mBubbleCenterRawX = calculateCenterRawXofBubbleView();
+        }
+        if (isAlwaysShowBubble) {
+            hideBubble();
+
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showBubble();
+                    triggerBubbleShowing = true;
+                }
+            }, mAlwaysShowBubbleDelay);
+        }
+        if (isSeekBySection) {
+            triggerSeekBySection = false;
         }
 
         postInvalidate();
-        return this;
     }
 
     public int getProgress() {
-        if (isSeekBySection) {
+        return Math.round(processProgress());
+    }
+
+    public float getProgressFloat() {
+        return formatFloat(processProgress());
+    }
+
+    private float processProgress() {
+        final float progress = mProgress;
+
+        if (isSeekBySection && triggerSeekBySection) {
             float half = mSectionValue / 2;
 
-            if (mProgress >= mPreSecValue) { // increasing
-                if (mProgress >= mPreSecValue + half) {
+            if (isTouchToSeek) {
+                if (progress == mMin || progress == mMax) {
+                    return progress;
+                }
+
+                float secValue;
+                for (int i = 0; i <= mSectionCount; i++) {
+                    secValue = i * mSectionValue;
+                    if (secValue < progress && secValue + mSectionValue >= progress) {
+                        if (secValue + half > progress) {
+                            return secValue;
+                        } else {
+                            return secValue + mSectionValue;
+                        }
+                    }
+                }
+            }
+
+            if (progress >= mPreSecValue) { // increasing
+                if (progress >= mPreSecValue + half) {
                     mPreSecValue += mSectionValue;
-                    return Math.round(mPreSecValue);
+                    return mPreSecValue;
                 } else {
-                    return Math.round(mPreSecValue);
+                    return mPreSecValue;
                 }
             } else { // reducing
-                if (mProgress >= mPreSecValue - half) {
-                    return Math.round(mPreSecValue);
+                if (progress >= mPreSecValue - half) {
+                    return mPreSecValue;
                 } else {
                     mPreSecValue -= mSectionValue;
-                    return Math.round(mPreSecValue);
+                    return mPreSecValue;
                 }
             }
         }
 
-        return Math.round(mProgress);
-    }
-
-    public float getProgressFloat() {
-        return formatFloat(mProgress);
+        return progress;
     }
 
     public OnProgressChangedListener getOnProgressChangedListener() {
@@ -960,6 +1178,50 @@ public class ZXSeekBar extends View {
     public void setOnProgressChangedListener(OnProgressChangedListener onProgressChangedListener) {
         mProgressListener = onProgressChangedListener;
     }
+
+    public void setTrackColor(@ColorInt int trackColor) {
+        if (mTrackColor != trackColor) {
+            mTrackColor = trackColor;
+            invalidate();
+        }
+    }
+
+    public void setSecondTrackColor(@ColorInt int secondTrackColor) {
+        if (mSecondTrackColor != secondTrackColor) {
+            mSecondTrackColor = secondTrackColor;
+            invalidate();
+        }
+    }
+
+    public void setThumbColor(@ColorInt int thumbColor) {
+        if (mThumbColor != thumbColor) {
+            mThumbColor = thumbColor;
+            invalidate();
+        }
+    }
+
+    public void setBubbleColor(@ColorInt int bubbleColor) {
+        if (mBubbleColor != bubbleColor) {
+            mBubbleColor = bubbleColor;
+            if (mBubbleView != null) {
+                mBubbleView.invalidate();
+            }
+        }
+    }
+
+    public void setCustomSectionTextArray(@NonNull CustomSectionTextArray customSectionTextArray) {
+        mSectionTextArray = customSectionTextArray.onCustomize(mSectionCount, mSectionTextArray);
+        for (int i = 0; i <= mSectionCount; i++) {
+            if (mSectionTextArray.get(i) == null) {
+                mSectionTextArray.put(i, "");
+            }
+        }
+
+        isShowThumbText = false;
+        requestLayout();
+        invalidate();
+    }
+    /////// Api ends ///////////////////////////////////////////////////////////////////////////////
 
     void config(BubbleConfigBuilder builder) {
         mMin = builder.min;
@@ -985,18 +1247,24 @@ public class ZXSeekBar extends View {
         mThumbTextSize = builder.thumbTextSize;
         mThumbTextColor = builder.thumbTextColor;
         isShowProgressInFloat = builder.showProgressInFloat;
+        mAnimDuration = builder.animDuration;
         isTouchToSeek = builder.touchToSeek;
+        isSeekStepSection = builder.seekStepSection;
         isSeekBySection = builder.seekBySection;
         mBubbleColor = builder.bubbleColor;
         mBubbleTextSize = builder.bubbleTextSize;
         mBubbleTextColor = builder.bubbleTextColor;
+        isAlwaysShowBubble = builder.alwaysShowBubble;
+        mAlwaysShowBubbleDelay = builder.alwaysShowBubbleDelay;
+        isHideBubble = builder.hideBubble;
+        isRtl = builder.rtl;
 
         initConfigByPriority();
         calculateRadiusOfBubble();
 
         if (mProgressListener != null) {
-            mProgressListener.onProgressChanged(getProgress(), getProgressFloat());
-            mProgressListener.getProgressOnFinally(getProgress(), getProgressFloat());
+            mProgressListener.onProgressChanged(this, getProgress(), getProgressFloat(), false);
+            mProgressListener.getProgressOnFinally(this, getProgress(), getProgressFloat(), false);
         }
 
         mConfigBuilder = null;
@@ -1032,11 +1300,17 @@ public class ZXSeekBar extends View {
         mConfigBuilder.thumbTextSize = mThumbTextSize;
         mConfigBuilder.thumbTextColor = mThumbTextColor;
         mConfigBuilder.showProgressInFloat = isShowProgressInFloat;
+        mConfigBuilder.animDuration = mAnimDuration;
         mConfigBuilder.touchToSeek = isTouchToSeek;
+        mConfigBuilder.seekStepSection = isSeekStepSection;
         mConfigBuilder.seekBySection = isSeekBySection;
         mConfigBuilder.bubbleColor = mBubbleColor;
         mConfigBuilder.bubbleTextSize = mBubbleTextSize;
         mConfigBuilder.bubbleTextColor = mBubbleTextColor;
+        mConfigBuilder.alwaysShowBubble = isAlwaysShowBubble;
+        mConfigBuilder.alwaysShowBubbleDelay = mAlwaysShowBubbleDelay;
+        mConfigBuilder.hideBubble = isHideBubble;
+        mConfigBuilder.rtl = isRtl;
 
         return mConfigBuilder;
     }
@@ -1056,8 +1330,12 @@ public class ZXSeekBar extends View {
             Bundle bundle = (Bundle) state;
             mProgress = bundle.getFloat("progress");
             super.onRestoreInstanceState(bundle.getParcelable("save_instance"));
-            mBubbleView.setProgressText(isShowProgressInFloat ?
-                    String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
+
+            if (mBubbleView != null) {
+                mBubbleView.setProgressText(isShowProgressInFloat ?
+                        String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
+            }
+            setProgress(mProgress);
 
             return;
         }
@@ -1065,25 +1343,16 @@ public class ZXSeekBar extends View {
         super.onRestoreInstanceState(state);
     }
 
-    private String float2String(float value) {
-        return String.valueOf(formatFloat(value));
-    }
-
-    private float formatFloat(float value) {
-        BigDecimal bigDecimal = BigDecimal.valueOf(value);
-        return bigDecimal.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
-    }
-
     /**
      * Listen to progress onChanged, onActionUp, onFinally
      */
     public interface OnProgressChangedListener {
 
-        void onProgressChanged(int progress, float progressFloat);
+        void onProgressChanged(ZXSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser);
 
-        void getProgressOnActionUp(int progress, float progressFloat);
+        void getProgressOnActionUp(ZXSeekBar bubbleSeekBar, int progress, float progressFloat);
 
-        void getProgressOnFinally(int progress, float progressFloat);
+        void getProgressOnFinally(ZXSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser);
     }
 
     /**
@@ -1094,21 +1363,52 @@ public class ZXSeekBar extends View {
     public static abstract class OnProgressChangedListenerAdapter implements OnProgressChangedListener {
 
         @Override
-        public void onProgressChanged(int progress, float progressFloat) {
+        public void onProgressChanged(ZXSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
         }
 
         @Override
-        public void getProgressOnActionUp(int progress, float progressFloat) {
+        public void getProgressOnActionUp(ZXSeekBar bubbleSeekBar, int progress, float progressFloat) {
         }
 
         @Override
-        public void getProgressOnFinally(int progress, float progressFloat) {
+        public void getProgressOnFinally(ZXSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
         }
     }
 
-    /*******************************************************************************************
-     * ************************************  custom bubble view  ************************************
-     *******************************************************************************************/
+    /**
+     * Customize the section texts under the track according to your demands by
+     * call {@link #setCustomSectionTextArray(CustomSectionTextArray)}.
+     */
+    public interface CustomSectionTextArray {
+        /**
+         * <p>
+         * Customization goes here.
+         * </p>
+         * For example:
+         * <pre> public SparseArray<String> onCustomize(int sectionCount, @NonNull SparseArray<String> array) {
+         *     array.clear();
+         *
+         *     array.put(0, "worst");
+         *     array.put(4, "bad");
+         *     array.put(6, "ok");
+         *     array.put(8, "good");
+         *     array.put(9, "great");
+         *     array.put(10, "excellent");
+         * }</pre>
+         *
+         * @param sectionCount The section count of the {@code BubbleSeekBar}.
+         * @param array        The section texts array which had been initialized already. Customize
+         *                     the section text by changing one element's value of the SparseArray.
+         *                     The index key ∈[0, sectionCount].
+         * @return The customized section texts array. Can not be {@code null}.
+         */
+        @NonNull
+        SparseArray<String> onCustomize(int sectionCount, @NonNull SparseArray<String> array);
+    }
+
+    /***********************************************************************************************
+     **************************************  custom bubble view  ***********************************
+     **********************************************************************************************/
     private class BubbleView extends View {
 
         private Paint mBubblePaint;
@@ -1188,5 +1488,4 @@ public class ZXSeekBar extends View {
             }
         }
     }
-
 }

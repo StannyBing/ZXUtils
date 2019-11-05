@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.stanny.demo.R;
 import com.stanny.demo.model.MyEntity;
 import com.stanny.demo.ui.BaseActivity;
-import com.zx.zxutils.forutil.ZXRecordListener;
+import com.zx.zxutils.listener.ZXRecordListener;
 import com.zx.zxutils.other.ZXItemClickSupport;
 import com.zx.zxutils.util.ZXRecordUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
