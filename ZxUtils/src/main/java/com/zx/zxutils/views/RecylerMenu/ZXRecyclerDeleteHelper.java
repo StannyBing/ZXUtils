@@ -18,6 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.util.ZXScreenUtil;
 
 import java.util.ArrayList;
@@ -490,19 +491,21 @@ public class ZXRecyclerDeleteHelper implements RecyclerView.OnItemTouchListener,
 
     private boolean handleTouchEvent(MotionEvent motionEvent) {
 //        if (swipeable && bgWidth < 2) {
-        if (swipeable) {
+        if (swipeable && motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
 //            bgWidth = rView.getWidth();
+            bgWidth = act.findViewById(bgViewID).getWidth();
             if (act.findViewById(bgViewID) != null) {
                 View touchView = getTouchView(motionEvent);
-                int count = ((LinearLayout) touchView.findViewById(bgViewID)).getChildCount();
-                bgWidth = 0;
-                for (int i = 0; i < count; i++) {
-                    View child = ((LinearLayout) touchView.findViewById(bgViewID)).getChildAt(i);
-                    if (child.getVisibility() == View.VISIBLE) {
-                        bgWidth += child.getWidth();
+                if (touchView != null) {
+                    int count = ((LinearLayout) touchView.findViewById(bgViewID)).getChildCount();
+                    bgWidth = 0;
+                    for (int i = 0; i < count; i++) {
+                        View child = ((LinearLayout) touchView.findViewById(bgViewID)).getChildAt(i);
+                        if (child.getVisibility() == View.VISIBLE) {
+                            bgWidth += child.getWidth();
+                        }
                     }
                 }
-//                bgWidth = act.findViewById(bgViewID).getWidth();
             }
             heightOutsideRView = screenHeight - rView.getHeight();
         }
