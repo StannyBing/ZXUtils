@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.stanny.demo">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/> <!-- To retrieve the account name (email) as part of sign-in: -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <application
+        android:name=".func.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.stanny.demo.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:theme="@style/MainTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPickerActivity"/>
+        <activity android:name="com.zx.zxutils.views.PhotoPicker.PhotoPagerActivity"/>
+        <activity android:name=".ui.widget.TabLayoutActivity">
+        </activity>
+        <activity android:name=".ui.widget.ChartActivity">
+        </activity>
+        <activity android:name=".ui.widget.TableActivity">
+        </activity>
+        <activity android:name=".ui.widget.SlidingActivity">
+        </activity>
+        <activity android:name=".ui.widget.RecylerDeleteActivity">
+        </activity>
+        <activity android:name=".ui.widget.SwipeRefreshRecylerActivity">
+        </activity>
+        <activity android:name=".ui.util.DialogTestActivity">
+        </activity>
+        <activity android:name=".ui.util.ToastTestActivity">
+        </activity>
+        <activity android:name=".ui.util.NotifyTestActivity">
+        </activity>
+        <activity android:name=".ui.util.BroadCastTestActivity">
+        </activity>
+        <activity android:name=".ui.util.UnZipOrRarTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.PhotoPickerTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.SpinnerTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.RecordTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.SeekBarTestActivity">
+        </activity>
+        <activity android:name=".ui.util.ThreadPoolTestActivity">
+        </activity>
+        <activity android:name=".ui.util.BitmapTestActivity">
+        </activity>
+        <activity android:name=".ui.util.AnimationTestActivity">
+        </activity>
+        <activity android:name=".ui.util.LogTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.BubbleTestActivity">
+        </activity>
+        <activity android:name=".ui.util.ImageLoaderTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.ExpandViewActivity">
+        </activity>
+        <activity android:name=".ui.widget.BottomSheetActivity">
+        </activity>
+        <activity android:name=".ui.util.FormatCheckTestActivity">
+        </activity>
+        <activity android:name=".ui.util.NetWorkTestActivity">
+        </activity>
+        <activity
+            android:name=".ui.util.ScreenTestActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+        <activity android:name=".ui.util.SharedPrefTestActivity">
+        </activity>
+        <activity android:name=".ui.util.TimeTestActivity">
+        </activity>
+        <activity
+            android:name=".ui.widget.CameraActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <activity android:name=".ui.util.QuickAdapterTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.ShadowTestActivity">
+        </activity>
+        <activity android:name=".ui.widget.SlideUpTestActivity">
+        </activity>
+        <activity android:name=".ui.util.LightTestActivity">
+        </activity>
+        <activity android:name=".ui.util.MD5TestActivity">
+        </activity>
+        <activity android:name=".ui.util.ClipboardTestActivity">
+        </activity>
+        <activity android:name=".ui.util.FragmentTestActivity">
+        </activity>
+        <activity android:name=".ui.util.LocationTestActivity">
+        </activity>
+        <activity android:name=".ui.util.HttpTestActivity">
+        </activity>
+    </application>
+
+</manifest>

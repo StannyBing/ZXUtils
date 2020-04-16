@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="item_click_support" type="id" />
+    <item name="srn_root_layout" type="id" />
+    <item name="node_header" type="id" />
+    <item name="node_items" type="id" />
+    <item name="tree_items" type="id" />
+
+    <item name="BaseQuickAdapter_viewholder_support" type="id"/>
+    <item name="BaseQuickAdapter_swiping_support" type="id"/>
+    <item name="BaseQuickAdapter_dragging_support" type="id"/>
+    <item name="BaseQuickAdapter_databinding_support" type="id"/>
+</resources>

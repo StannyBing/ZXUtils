@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.util.FragmentTestActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <FrameLayout
+            android:id="@+id/fl_fragment_1"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_fragment_2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="30dp">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_fragment_3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="150dp">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_fragment_4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="130dp">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_fragment_5"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="30dp">
+
+        </FrameLayout>
+    </FrameLayout>
+
+    <com.stanny.demo.func.BtnBarView
+        android:id="@+id/btnbar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.stanny.demo.func.BtnBarView>
+
+</LinearLayout>

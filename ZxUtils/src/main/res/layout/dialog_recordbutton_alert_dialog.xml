@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="160dp"
+    android:background="@drawable/zeffect_recordbutton_dialog_tr_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/zeffect_recordbutton_dialog_imageview"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/zeffect_recordbutton_micrphone" />
+
+    <TextView
+        android:id="@+id/zeffect_recordbutton_dialog_time_tv"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="00:00"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/zeffect_recordbutton_dialog_title_tv"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="松开手指，取消发送"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+</LinearLayout>
