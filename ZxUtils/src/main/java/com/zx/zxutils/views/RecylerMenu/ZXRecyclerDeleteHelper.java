@@ -493,7 +493,11 @@ public class ZXRecyclerDeleteHelper implements RecyclerView.OnItemTouchListener,
 //        if (swipeable && bgWidth < 2) {
         if (swipeable && motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
 //            bgWidth = rView.getWidth();
-            bgWidth = act.findViewById(bgViewID).getWidth();
+            if (act.findViewById(bgViewID) != null) {
+                bgWidth = act.findViewById(bgViewID).getWidth();
+            } else {
+                return false;
+            }
             if (act.findViewById(bgViewID) != null) {
                 View touchView = getTouchView(motionEvent);
                 if (touchView != null) {

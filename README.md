@@ -104,9 +104,9 @@ A commonly used tool library for Android<br>
     先导入依赖包<br>
     
     ```
-    implementation 'com.github.StannyBing:ZXUtils:2.3.0'
+    implementation 'com.github.StannyBing:ZXUtils:2.3.3'
     如AS提示依赖冲突，可以使用以下方式
-    implementation ('com.github.StannyBing:ZXUtils:2.3.0'){
+    implementation ('com.github.StannyBing:ZXUtils:2.3.3'){
             exclude group: 'com.android.support'
             exclude group: 'com.squareup.okhttp3'
         }

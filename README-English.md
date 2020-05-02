@@ -103,9 +103,9 @@ Some screenshots are as follows (this screenshot is cut by 2018-8-22, and some c
     Import dependency packages first<br>
     
     ```
-    implementation 'com.github.StannyBing:ZXUtils:2.3.0'
+    implementation 'com.github.StannyBing:ZXUtils:2.3.3'
     If as prompts for dependency conflicts, you can use the following methods
-    implementation ('com.github.StannyBing:ZXUtils:2.3.0'){
+    implementation ('com.github.StannyBing:ZXUtils:2.3.3'){
                 exclude group: 'com.android.support'
                 exclude group: 'com.squareup.okhttp3'
             }
