@@ -371,12 +371,12 @@ public class CameraInterface implements Camera.PreviewCallback {
                 Camera.Size pictureSize = CameraParamUtil.getInstance().getPictureSize(mParams
                         .getSupportedPictureSizes(), 1200, screenProp);
 
-                mParams.setPreviewSize(previewSize.width, previewSize.height);
+//                mParams.setPreviewSize(previewSize.width, previewSize.height);
 
                 preview_width = previewSize.width;
                 preview_height = previewSize.height;
 
-                mParams.setPictureSize(pictureSize.width, pictureSize.height);
+//                mParams.setPictureSize(pictureSize.width, pictureSize.height);
 
                 if (CameraParamUtil.getInstance().isSupportedFocusMode(
                         mParams.getSupportedFocusModes(),
