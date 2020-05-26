@@ -501,6 +501,9 @@ public class ZXRecyclerDeleteHelper implements RecyclerView.OnItemTouchListener,
             if (act.findViewById(bgViewID) != null) {
                 View touchView = getTouchView(motionEvent);
                 if (touchView != null) {
+                    if (touchView.findViewById(bgViewID) == null) {
+                        return false;
+                    }
                     int count = ((LinearLayout) touchView.findViewById(bgViewID)).getChildCount();
                     bgWidth = 0;
                     for (int i = 0; i < count; i++) {

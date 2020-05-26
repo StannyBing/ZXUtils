@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.stanny.demo.R;
 import com.stanny.demo.adapter.DeleteTestAdapter;
 import com.stanny.demo.model.KeyValueEntity;
+import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter;
 import com.zx.zxutils.util.ZXToastUtil;
 import com.zx.zxutils.views.RecylerMenu.ZXRecyclerDeleteHelper;
 
@@ -35,7 +36,7 @@ public class RecylerDeleteFragment extends Fragment {
     }
 
     private void initView() {
-        deleteAdapter = new DeleteTestAdapter(getActivity(), keyValueEntities);
+        deleteAdapter = new DeleteTestAdapter(keyValueEntities);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(deleteAdapter);
         swipeHelper = new ZXRecyclerDeleteHelper(getActivity(), recyclerView)
@@ -69,6 +70,14 @@ public class RecylerDeleteFragment extends Fragment {
         keyValueEntities.add(new KeyValueEntity("nsgdfaame", "dfsegsegsdgsgs"));
         keyValueEntities.add(new KeyValueEntity("naffgme", "dfsggagdgsgs"));
         deleteAdapter.notifyDataSetChanged();
+
+        deleteAdapter.setOnLoadMoreListener(new ZXQuickAdapter.RequestLoadMoreListener(){
+
+            @Override
+            public void onLoadMoreRequested() {
+
+            }
+        });
     }
 
     public static RecylerDeleteFragment newInstance(String s) {

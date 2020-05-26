@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     useLibrary 'org.apache.http.legacy'
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.stanny.demo"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 3
-        versionName "2.3.4"
+        versionName "2.3.5"
         multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
