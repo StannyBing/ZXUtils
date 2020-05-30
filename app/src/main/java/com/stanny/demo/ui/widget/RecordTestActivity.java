@@ -14,6 +14,7 @@ import com.stanny.demo.model.MyEntity;
 import com.stanny.demo.ui.BaseActivity;
 import com.zx.zxutils.listener.ZXRecordListener;
 import com.zx.zxutils.other.ZXItemClickSupport;
+import com.zx.zxutils.util.ZXFileUtil;
 import com.zx.zxutils.util.ZXRecordUtil;
 import com.zx.zxutils.util.ZXSystemUtil;
 import com.zx.zxutils.util.ZXToastUtil;
@@ -55,7 +56,9 @@ public class RecordTestActivity extends BaseActivity {
         recordUtil.setOnRecordListener(new ZXRecordListener() {
             @Override
             public String onInitPath() {
-                return ZXSystemUtil.getSDCardPath() + System.currentTimeMillis() + "x.amr";
+                String path = ZXSystemUtil.getSDCardPath() + System.currentTimeMillis() + "x.mp3";
+                ZXFileUtil.createNewFile(path);
+                return path;
             }
 
             @Override
