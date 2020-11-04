@@ -371,12 +371,19 @@ public class CameraInterface implements Camera.PreviewCallback {
                 Camera.Size pictureSize = CameraParamUtil.getInstance().getPictureSize(mParams
                         .getSupportedPictureSizes(), 1200, screenProp);
 
-//                mParams.setPreviewSize(previewSize.width, previewSize.height);
+                mParams.setPreviewSize(previewSize.width, previewSize.height);
+//                mParams.setPreviewSize(mHolder.getSurfaceFrame().width(), mHolder.getSurfaceFrame().height());
+//                mHolder.setFixedSize(previewSize.width, previewSize.height);
+//                mParams.setPreviewSize(ZXScreenUtil.getScreenWidth(), ZXScreenUtil.getScreenHeight());
+
 
                 preview_width = previewSize.width;
                 preview_height = previewSize.height;
+//                preview_width = ZXScreenUtil.getScreenWidth();
+//                preview_height = ZXScreenUtil.getScreenHeight();
 
-//                mParams.setPictureSize(pictureSize.width, pictureSize.height);
+                mParams.setPictureSize(pictureSize.width, pictureSize.height);
+//                mParams.setPictureSize(preview_width, preview_height);
 
                 if (CameraParamUtil.getInstance().isSupportedFocusMode(
                         mParams.getSupportedFocusModes(),
@@ -396,7 +403,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                 mCamera.startPreview();//启动浏览
                 isPreviewing = true;
                 Log.i(TAG, "=== Start Preview ===");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

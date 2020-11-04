@@ -89,7 +89,9 @@ public class MediaStoreHelper {
             } else {
                 photoDirectoryAll = tempPhoto;
             }
-            photoDirectoryAll.setCoverPath(photoDirectoryAll.getPhotoPaths().get(0));
+            if (photoDirectoryAll.getPhotoPaths().size() > 0) {
+                photoDirectoryAll.setCoverPath(photoDirectoryAll.getPhotoPaths().get(0));
+            }
             directories.add(INDEX_ALL_PHOTOS, photoDirectoryAll);
 
             if (resultCallback != null) {
