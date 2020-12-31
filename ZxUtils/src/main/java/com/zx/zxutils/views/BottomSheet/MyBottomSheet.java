@@ -26,7 +26,7 @@ public class MyBottomSheet extends BottomSheetDialog {
         super.onCreate(savedInstanceState);
         int screenHeight = getScreenHeight((Activity) context);
         int statusBarHeight = getStatusBarHeight(getContext());
-        int dialogHeight = screenHeight - statusBarHeight;
+        int dialogHeight = screenHeight - 0;
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
     }
 

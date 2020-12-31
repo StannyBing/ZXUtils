@@ -8,7 +8,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 3
-        versionName "2.3.7"
+        versionName "2.3.8"
         multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
