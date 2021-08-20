@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -58,7 +60,7 @@ public class PhotoPicker {
          * @param fragment    Fragment to receive result
          * @param requestCode requestCode for result
          */
-        public void start(@NonNull Context context, @NonNull android.support.v4.app.Fragment fragment, int requestCode) {
+        public void start(@NonNull Context context, @NonNull Fragment fragment, int requestCode) {
             fragment.startActivityForResult(getIntent(context), requestCode);
         }
 
@@ -67,7 +69,7 @@ public class PhotoPicker {
          *
          * @param fragment Fragment to receive result
          */
-        public void start(@NonNull Context context, @NonNull android.support.v4.app.Fragment fragment) {
+        public void start(@NonNull Context context, @NonNull Fragment fragment) {
             fragment.startActivityForResult(getIntent(context), REQUEST_CODE);
         }
 

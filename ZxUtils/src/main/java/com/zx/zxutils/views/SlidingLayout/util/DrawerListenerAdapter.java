@@ -1,6 +1,6 @@
 package com.zx.zxutils.views.SlidingLayout.util;
 
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.view.View;
 
 import com.zx.zxutils.views.SlidingLayout.callback.DragListener;

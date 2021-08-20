@@ -18,13 +18,12 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.provider.ContactsContract;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.zx.zxutils.R;
 import com.zx.zxutils.ZXApp;
 
 import java.io.File;

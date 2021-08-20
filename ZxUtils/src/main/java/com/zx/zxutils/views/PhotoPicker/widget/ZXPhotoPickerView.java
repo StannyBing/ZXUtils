@@ -5,9 +5,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.IntDef;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import androidx.annotation.IntDef;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ public class ZXPhotoPickerView extends FrameLayout {
     private int maxCount;
 
 
-    android.support.v7.widget.RecyclerView recyclerView;
+    RecyclerView recyclerView;
     public PhotoAdapter photoAdapter;
     ArrayList<String> selectedPhotos;
 
@@ -93,7 +94,7 @@ public class ZXPhotoPickerView extends FrameLayout {
 
     private void initView(Context context, AttributeSet attrs) {
 
-        recyclerView = new android.support.v7.widget.RecyclerView(context, attrs);
+        recyclerView = new RecyclerView(context, attrs);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
         this.addView(recyclerView);
     }

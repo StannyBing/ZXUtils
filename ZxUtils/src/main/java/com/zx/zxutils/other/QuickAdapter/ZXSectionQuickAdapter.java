@@ -1,6 +1,6 @@
 package com.zx.zxutils.other.QuickAdapter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.zx.zxutils.other.QuickAdapter.entity.SectionEntity;

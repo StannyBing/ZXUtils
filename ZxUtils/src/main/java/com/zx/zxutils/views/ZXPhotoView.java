@@ -20,7 +20,7 @@ import java.util.Queue;
  *
  * @author clifford
  */
-public class ZXPhotoView extends android.support.v7.widget.AppCompatImageView  {
+public class ZXPhotoView extends androidx.appcompat.widget.AppCompatImageView  {
 
 
     ////////////////////////////////配置参数////////////////////////////////

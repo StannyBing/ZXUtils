@@ -1,7 +1,7 @@
 package com.zx.zxutils.other.QuickAdapter.loadmore;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder;
 

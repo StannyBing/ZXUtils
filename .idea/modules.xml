@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZxUtils/ZxUtils.iml" filepath="$PROJECT_DIR$/ZxUtils/ZxUtils.iml" group="ZxUtilsDemo/ZxUtils" />
-      <module fileurl="file://$PROJECT_DIR$/ZxUtilsDemo.iml" filepath="$PROJECT_DIR$/ZxUtilsDemo.iml" group="ZxUtilsDemo" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZxUtilsDemo/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ZXUtils.iml" filepath="$PROJECT_DIR$/.idea/ZXUtils.iml" group="ZXUtils" />
+      <module fileurl="file://$PROJECT_DIR$/ZxUtils/ZxUtils.iml" filepath="$PROJECT_DIR$/ZxUtils/ZxUtils.iml" group="ZXUtils/ZxUtils" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZXUtils/app" />
     </modules>
   </component>
 </project>

@@ -1,7 +1,7 @@
 package com.zx.zxutils.http;
 
 import android.os.Handler;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.zx.zxutils.util.ZXLogUtil;

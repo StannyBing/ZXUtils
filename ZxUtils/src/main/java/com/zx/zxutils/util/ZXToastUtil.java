@@ -3,7 +3,7 @@ package com.zx.zxutils.util;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

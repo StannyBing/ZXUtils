@@ -2,8 +2,8 @@ package com.stanny.demo.func;
 
 
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
-import android.support.v4.app.Fragment;
+import androidx.annotation.ColorRes;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

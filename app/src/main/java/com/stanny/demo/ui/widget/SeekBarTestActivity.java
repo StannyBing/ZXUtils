@@ -1,7 +1,7 @@
 package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 import com.stanny.demo.R;
 import com.stanny.demo.ui.BaseActivity;

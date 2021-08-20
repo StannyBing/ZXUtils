@@ -3,7 +3,7 @@ package com.zx.zxutils.views.PhotoPicker.utils;
 import android.content.Context;
 import android.net.Uri;
 import android.provider.MediaStore.Images.Media;
-import android.support.v4.content.CursorLoader;
+import androidx.loader.content.CursorLoader;
 
 import static android.provider.MediaStore.MediaColumns.MIME_TYPE;
 

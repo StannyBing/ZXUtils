@@ -1,6 +1,6 @@
 package com.stanny.demo.adapter;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.stanny.demo.R;
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder;

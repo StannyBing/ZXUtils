@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/_tb_zx_layoutTop"
         style="@style/MyTabLayoutStyle">
-    </android.support.design.widget.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 
     <TextView
         android:id="@+id/_tv_zx_dividerTop"
@@ -30,9 +30,9 @@
         android:visibility="gone"
         android:background="@color/light_gray"/>
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/_tb_zx_layoutBottom"
         style="@style/MyTabLayoutStyle"
         android:visibility="gone">
-    </android.support.design.widget.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 </LinearLayout>

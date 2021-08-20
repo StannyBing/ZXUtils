@@ -1,7 +1,7 @@
 package com.zx.zxutils.views.SlidingLayout.util;
 
 import android.content.Context;
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNavLayout;
 

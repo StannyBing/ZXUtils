@@ -1,6 +1,6 @@
 package com.zx.zxutils.util;
 
-import android.support.v4.util.SimpleArrayMap;
+import androidx.collection.SimpleArrayMap;
 
 /**
  * Created by Xiangb on 2017/5/2.

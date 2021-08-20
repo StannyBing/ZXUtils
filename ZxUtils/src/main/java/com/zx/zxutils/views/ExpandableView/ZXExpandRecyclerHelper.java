@@ -1,8 +1,8 @@
 package com.zx.zxutils.views.ExpandableView;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zx.zxutils.other.ZXExpandItemClickListener;
 

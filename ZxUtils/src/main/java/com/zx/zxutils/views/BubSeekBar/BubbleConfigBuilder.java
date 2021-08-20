@@ -1,7 +1,7 @@
 package com.zx.zxutils.views.BubSeekBar;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntRange;
 
 import static com.zx.zxutils.views.BubSeekBar.BubbleUtils.dp2px;
 import static com.zx.zxutils.views.BubSeekBar.BubbleUtils.sp2px;

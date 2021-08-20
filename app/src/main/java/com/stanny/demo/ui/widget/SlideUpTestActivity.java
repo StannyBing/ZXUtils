@@ -1,8 +1,8 @@
 package com.stanny.demo.ui.widget;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.CardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.cardview.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;

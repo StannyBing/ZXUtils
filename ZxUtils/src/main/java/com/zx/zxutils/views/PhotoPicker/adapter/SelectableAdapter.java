@@ -1,6 +1,6 @@
 package com.zx.zxutils.views.PhotoPicker.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zx.zxutils.views.PhotoPicker.entity.Photo;
 import com.zx.zxutils.views.PhotoPicker.entity.PhotoDirectory;

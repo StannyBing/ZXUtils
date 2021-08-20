@@ -16,7 +16,7 @@ import android.graphics.Path.Direction;
 import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
 import android.os.Build;
-import android.support.annotation.ColorRes;
+import androidx.annotation.ColorRes;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;

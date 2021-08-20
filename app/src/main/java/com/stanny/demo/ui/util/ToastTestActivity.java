@@ -1,8 +1,8 @@
 package com.stanny.demo.ui.util;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.content.ContextCompat;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 
 import com.stanny.demo.R;

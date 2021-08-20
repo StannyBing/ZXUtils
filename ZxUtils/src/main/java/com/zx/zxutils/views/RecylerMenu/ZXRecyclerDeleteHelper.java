@@ -7,7 +7,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,7 +18,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.zx.zxutils.util.ZXLogUtil;
 import com.zx.zxutils.util.ZXScreenUtil;
 
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package com.zx.zxutils.views.PhotoPicker.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.support.v4.view.PagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
