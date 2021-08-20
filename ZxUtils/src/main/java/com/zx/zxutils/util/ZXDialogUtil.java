@@ -30,6 +30,7 @@ import java.util.List;
 public class ZXDialogUtil {
 
 
+
     private static Handler handler = new Handler();
     //    private static ProgressDialog loadingDialog;//简单进度dialog，适用于单纯显示正在加载的情况
     //    private static Dialog dialog;//用于显示各种信息的dialog
