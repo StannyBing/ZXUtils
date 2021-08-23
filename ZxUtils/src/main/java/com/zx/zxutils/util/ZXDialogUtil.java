@@ -1,6 +1,7 @@
 package com.zx.zxutils.util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,9 +11,14 @@ import android.os.Message;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -275,6 +281,15 @@ public class ZXDialogUtil {
         buider.setPositiveButton("确定", listener);
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = ((Activity)context).getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
         dialogList.add(dialog);
         return dialog;
     }
@@ -302,6 +317,15 @@ public class ZXDialogUtil {
         buider.setNegativeButton(noBtnText, noListener);
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = ((Activity)context).getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
         dialogList.add(dialog);
         return dialog;
     }
@@ -345,6 +369,15 @@ public class ZXDialogUtil {
         buider.setNeutralButton(otherBtnText, otherBtnListener);
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = ((Activity)context).getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
         dialogList.add(dialog);
         return dialog;
     }
@@ -371,6 +404,15 @@ public class ZXDialogUtil {
         buider.setNegativeButton("取消", null);
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = ((Activity)context).getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
         dialogList.add(dialog);
         return dialog;
     }
@@ -423,6 +465,15 @@ public class ZXDialogUtil {
         }
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = ((Activity)context).getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
         dialogList.add(dialog);
         return dialog;
     }
@@ -517,6 +568,15 @@ public class ZXDialogUtil {
         }
         Dialog dialog = buider.show();
         dialog.setCanceledOnTouchOutside(canceledOnTouchOutSide);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = ((Activity)context).getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
         dialogList.add(dialog);
         return dialog;
     }
