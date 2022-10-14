@@ -82,7 +82,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
                 LEG_HALF_BASE = a.getDimensionPixelSize(R.styleable.bubble_halfBaseOfLeg, LEG_HALF_BASE);
                 MIN_LEG_DISTANCE = PADDING + LEG_HALF_BASE;
                 STROKE_WIDTH = a.getFloat(R.styleable.bubble_stroke_width, STROKE_WIDTH);
-                CORNER_RADIUS = a.getFloat(R.styleable.bubble_corner_radius, CORNER_RADIUS);
+                CORNER_RADIUS = a.getFloat(R.styleable.bubble_zx_corner_radius, CORNER_RADIUS);
             } finally {
                 if (a != null) {
                     a.recycle();

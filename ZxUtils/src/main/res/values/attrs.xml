@@ -5,7 +5,7 @@
         <attr name="shadowColor" format="color" />
         <attr name="padding" format="dimension" />
         <attr name="stroke_width" format="float" />
-        <attr name="corner_radius" format="float" />
+        <attr name="zx_corner_radius" format="float" />
         <attr name="halfBaseOfLeg" format="dimension" />
     </declare-styleable>
 

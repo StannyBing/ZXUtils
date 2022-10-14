@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ZXUtils.iml" filepath="$PROJECT_DIR$/.idea/ZXUtils.iml" group="ZXUtils" />
-      <module fileurl="file://$PROJECT_DIR$/ZxUtils/ZxUtils.iml" filepath="$PROJECT_DIR$/ZxUtils/ZxUtils.iml" group="ZXUtils/ZxUtils" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZXUtils/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZXUtils.iml" filepath="$PROJECT_DIR$/.idea/modules/ZXUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.iml" filepath="$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ZxUtils/ZXUtils.ZxUtils.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZXUtils.app.unitTest.iml" />
     </modules>
   </component>
 </project>
